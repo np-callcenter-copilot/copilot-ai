@@ -439,7 +439,7 @@ def generate_recommendations_tab() -> str:
                     <div class="component-card">
                         <div class="component-num">01</div>
                         <div class="component-tag tag-logic">Логіка</div>
-                        <div class="component-name">Cognigy / Google CCAI</div>
+                        <div class="component-name">Google CCAI</div>
                         <div class="component-desc">Компонент менеджменту логіки: RAG, NLU, маршрутизація, підказки оператору</div>
                     </div>
                     <div class="component-card">
@@ -473,7 +473,7 @@ def generate_recommendations_tab() -> str:
                             </div>
                             <div class="roadmap-row">
                                 <span class="roadmap-label label-action">Дії</span>
-                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Cognigy / Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
+                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
                             </div>
                             <div class="roadmap-row">
                                 <span class="roadmap-label label-result">Результат</span>
@@ -493,7 +493,7 @@ def generate_recommendations_tab() -> str:
                             </div>
                             <div class="roadmap-row">
                                 <span class="roadmap-label label-action">Дії</span>
-                                <span class="roadmap-text">Розгортання Cognigy / Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
+                                <span class="roadmap-text">Розгортання Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
                             </div>
                             <div class="roadmap-row">
                                 <span class="roadmap-label label-result">Результат</span>
@@ -530,23 +530,23 @@ def generate_recommendations_tab() -> str:
 
                 <div class="benefits-list">
                     <div class="benefit-item">
-                        <span class="benefit-icon">✅</span>
+
                         <span class="benefit-text"><strong>Збереження існуючих інвестицій</strong> — жодна міграція інтерфейсів, баз знань чи аналітики не потрібна</span>
                     </div>
                     <div class="benefit-item">
-                        <span class="benefit-icon">✅</span>
+
                         <span class="benefit-text"><strong>Відсутність vendor lock-in</strong> — кожен компонент замінюється незалежно без зупинки системи</span>
                     </div>
                     <div class="benefit-item">
-                        <span class="benefit-icon">✅</span>
+
                         <span class="benefit-text"><strong>Фінансова ефективність</strong> — оплата лише за функціонал, що реально використовується, без переплати за дублікати</span>
                     </div>
                     <div class="benefit-item">
-                        <span class="benefit-icon">✅</span>
+
                         <span class="benefit-text"><strong>Поступове масштабування</strong> — трьохетапний підхід мінімізує операційні ризики при переході</span>
                     </div>
                     <div class="benefit-item">
-                        <span class="benefit-icon">✅</span>
+
                         <span class="benefit-text"><strong>Суржик та локальний контекст</strong> — ElevenLabs Scribe v2 забезпечує найкращу точність для українсько-російського суржику серед протестованих рішень</span>
                     </div>
                 </div>
@@ -1573,7 +1573,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             <button class="tab" data-tab="precall">PreCall AI (5%)</button>
             <button class="tab" data-tab="it">IT & Security (30%)</button>
             <button class="tab" data-tab="business">Бізнес (10%)</button>
-            <button class="tab" data-tab="recommendations">📋 Рекомендації</button>
+            <button class="tab" data-tab="recommendations">Рекомендації</button>
         </div>
 
         <div class="tab-content active" data-content="overall">
