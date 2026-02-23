@@ -16,6 +16,7 @@ class Criterion:
     """Represents a single evaluation criterion."""
     priority: str  # Must, Should, Could
     weight: float
+    name: str  # Short criterion name from CSV column 1
     description: str
     scores: Dict[str, float] = field(default_factory=dict)
 
@@ -68,65 +69,17 @@ CATEGORY_MAP = {
     "БІЗНЕС ТА ВПРОВАДЖЕННЯ": ("business", "Бізнес", 10),
 }
 
-# Mapping of description keywords to short criterion names
-CRITERION_NAMES = {
-    # COPILOT
-    "швидкість аналіз контексту": "Швидкість аналізу AI",
-    "Next Best Action": "Підказки відповіді (NBA)",
-    "Готові скрипти відповіді": "Шаблони відповідей",
-    "Пошук відповідей у завантажених документах": "Пошук в базі знань (RAG)",
-    "Посилання на документ": "Витяг політик",
-    # ACW
-    "точність розпізнавання слів": "Транскрибація дзвінка",
-    "узагальнення суті проблеми": "Резюме дзвінка (Саммарі)",
-    "визначати одну або декілька тематик": "Автозаповнення тематик",
-    "перенесення даних із розмови": "Автозаповнення полів у CRM",
-    "Швидкість маркування": "Тегування та маркування",
-    # Analytics
-    "самостійну перевірку дзвінка": "Автоматична оцінка якості",
-    "дашбордів провайдера": "Власний аналітичний модуль",
-    "емоційний фон розмови": "Аналіз тональності (Sentiment)",
-    "миттєво знайти всі дзвінки": "Пошук за ключовими словами",
-    "Групування розмов за темами": "Топ-тематики та тренди",
-    "передачі даних аналітики": "Інтеграція з Power BI",
-    "Відстеження окупності": "ROI-аналіз",
-    "найкращих розмов по чек-листу": "Бібліотека кращих практик",
-    # PreCall AI
-    "вести природний діалог": "Голосовий асистент",
-    "класифікація мети дзвінка": "Первинне визначення тематики",
-    "Передача складних або емоційних": "Ескалація до оператора",
-    "Вирішення типових запитів": "Прості консультації",
-    # IT & Security
-    "Технічна здатність системи отримувати потік": "Інтеграція з Cisco",
-    "інтеграції ШІ в інтерфейс оператора": "Інтеграція у робоче місце",
-    "Якість перетворення аудіо": "Точність розпізнавання мови",
-    "транскрибує суржик": "Робота з суржиком",
-    "Відповідність міжнародним стандартам": "Сертифікації безпеки",
-    "стабільно працювати при одночасному": "Кількість користувачів (1000+)",
-    "автоматично розпізнає та маскує": "Видалення персональних даних",
-    "без передачі даних у зовнішню хмару": "On-premise розгортання",
-    "планування графіків операторів": "Workforce Management",
-    # Business
-    "Налаштування щоденного використання": "Складність адміністрування",
-    "Швидкість та вартість запуску тестового": "Можливість пілоту (PoC)",
-    "Внесення змін у логіку роботи": "Налаштування системи",
-    "автоматичного навчання операторів": "Навчання операторів",
-    "Тривалість від підписання контракту": "Швидкість онбордингу",
-    "Наявність клієнтів у сфері логістики": "Досвід зі схожими компаніями",
-}
-
-
-def get_criterion_name(description: str) -> str:
-    """Get short criterion name from description using keyword matching."""
-    for keyword, name in CRITERION_NAMES.items():
-        if keyword.lower() in description.lower():
-            return name
-    # Fallback: return first 40 chars of description
-    return truncate_text(description, 40)
-
 
 def parse_csv(filepath: str) -> tuple:
-    """Parse the CSV file and extract categories, criteria, and scores."""
+    """Parse the CSV file and extract categories, criteria, and scores.
+
+    CSV structure (after update):
+    - Column 0: MSCW (Must/Should/Could)
+    - Column 1: Criterion Name (short name)
+    - Column 2: Weight %
+    - Column 3: Description (detailed)
+    - Columns 4-15: Provider scores
+    """
     categories = {}
     final_scores = {}
     tco_values = {}
@@ -136,10 +89,10 @@ def parse_csv(filepath: str) -> tuple:
         reader = csv.reader(f)
         rows = list(reader)
 
-    # Find the header row with providers
+    # Find the header row with providers (now has empty column 1 for criterion name)
     header_row_idx = None
     for i, row in enumerate(rows):
-        if len(row) > 3 and row[0] == "MSCW" and row[1] == "Weight %":
+        if len(row) > 3 and row[0] == "MSCW" and row[2] == "Weight %":
             header_row_idx = i
             break
 
@@ -149,47 +102,41 @@ def parse_csv(filepath: str) -> tuple:
     # Process rows after header
     for i in range(header_row_idx + 1, len(rows)):
         row = rows[i]
-        if len(row) < 3:
+        if len(row) < 4:
             continue
 
         mscw = row[0].strip()
-        weight_str = row[1].strip()
-        description = row[2].strip() if len(row) > 2 else ""
+        criterion_name = row[1].strip()  # New: criterion name from column 1
+        weight_str = row[2].strip()
+        description = row[3].strip() if len(row) > 3 else ""
 
-        # Check if this is a category header
-        if description in CATEGORY_MAP:
-            cat_id, cat_name, cat_weight = CATEGORY_MAP[description]
+        # Check if this is a category header (mscw contains category name)
+        if mscw in CATEGORY_MAP:
+            cat_id, cat_name, cat_weight = CATEGORY_MAP[mscw]
             current_category = Category(name=cat_name, weight_percent=cat_weight)
             categories[cat_id] = current_category
             continue
 
-        # Check for category markers (rows with just category name)
-        for cat_key, (cat_id, cat_name, cat_weight) in CATEGORY_MAP.items():
-            if mscw == cat_key or description == cat_key:
-                current_category = Category(name=cat_name, weight_percent=cat_weight)
-                categories[cat_id] = current_category
-                break
-
         # Check for final score row (weight=100% and description contains "Загальна оцінка")
         if weight_str == "100%" and "Загальна оцінка" in description:
             for j, provider in enumerate(PROVIDERS):
-                if len(row) > j + 3:
-                    final_scores[provider] = row[j + 3].strip()
+                if len(row) > j + 4:
+                    final_scores[provider] = row[j + 4].strip()
             continue
 
         # Check for TCO row (contains dollar amounts like "150 - 200 000")
-        if len(row) > 3:
+        if len(row) > 4:
             # Check if row has values like "150 - 200 000" pattern
             has_tco = False
-            for cell in row[3:15]:
+            for cell in row[4:16]:
                 cell_str = str(cell).strip()
                 if cell_str and re.match(r'^\d+\s*-\s*\d+\s*000$', cell_str):
                     has_tco = True
                     break
             if has_tco:
                 for j, provider in enumerate(PROVIDERS):
-                    if len(row) > j + 3:
-                        val = row[j + 3].strip()
+                    if len(row) > j + 4:
+                        val = row[j + 4].strip()
                         if val and re.match(r'^\d+\s*-\s*\d+\s*000$', val):
                             tco_values[provider] = val
                 continue
@@ -198,8 +145,8 @@ def parse_csv(filepath: str) -> tuple:
         if weight_str and '%' in weight_str and not mscw:
             if current_category:
                 for j, provider in enumerate(PROVIDERS):
-                    if len(row) > j + 3:
-                        current_category.subtotals[provider] = row[j + 3].strip()
+                    if len(row) > j + 4:
+                        current_category.subtotals[provider] = row[j + 4].strip()
             continue
 
         # Parse criterion row
@@ -209,16 +156,20 @@ def parse_csv(filepath: str) -> tuple:
             except ValueError:
                 weight = 0
 
+            # Use criterion name from column 1, fallback to truncated description
+            name = criterion_name if criterion_name else truncate_text(description, 40)
+
             criterion = Criterion(
                 priority=mscw,
                 weight=weight,
+                name=name,
                 description=description
             )
 
-            # Extract scores for each provider
+            # Extract scores for each provider (now starting from column 4)
             for j, provider in enumerate(PROVIDERS):
-                if len(row) > j + 3:
-                    score_str = row[j + 3].strip()
+                if len(row) > j + 4:
+                    score_str = row[j + 4].strip()
                     try:
                         score = float(score_str.replace(',', '.'))
                         criterion.scores[provider] = score
@@ -335,14 +286,13 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
             score_display = str(score)
         score_cells.append(f'                        <div class="score-cell"><div class="score {score_class}">{score_display}</div></div>')
 
-    # Get short name for criterion, fallback to truncated description
-    criterion_name = get_criterion_name(criterion.description)
+    # Use criterion name directly from the parsed data
     desc_full = criterion.description.replace('\n', ' ').replace('"', "'")
 
     return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat(12, 1fr);">
                         <div class="criteria-name">
                             <span class="priority-badge {priority_class}">{priority_letter}</span>
-                            {criterion_name}
+                            {criterion.name}
                         </div>
 {chr(10).join(score_cells)}
                         <div class="expand-details">
