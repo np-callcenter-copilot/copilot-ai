@@ -68,6 +68,62 @@ CATEGORY_MAP = {
     "БІЗНЕС ТА ВПРОВАДЖЕННЯ": ("business", "Бізнес", 10),
 }
 
+# Mapping of description keywords to short criterion names
+CRITERION_NAMES = {
+    # COPILOT
+    "швидкість аналіз контексту": "Швидкість аналізу AI",
+    "Next Best Action": "Підказки відповіді (NBA)",
+    "Готові скрипти відповіді": "Шаблони відповідей",
+    "Пошук відповідей у завантажених документах": "Пошук в базі знань (RAG)",
+    "Посилання на документ": "Витяг політик",
+    # ACW
+    "точність розпізнавання слів": "Транскрибація дзвінка",
+    "узагальнення суті проблеми": "Резюме дзвінка (Саммарі)",
+    "визначати одну або декілька тематик": "Автозаповнення тематик",
+    "перенесення даних із розмови": "Автозаповнення полів у CRM",
+    "Швидкість маркування": "Тегування та маркування",
+    # Analytics
+    "самостійну перевірку дзвінка": "Автоматична оцінка якості",
+    "дашбордів провайдера": "Власний аналітичний модуль",
+    "емоційний фон розмови": "Аналіз тональності (Sentiment)",
+    "миттєво знайти всі дзвінки": "Пошук за ключовими словами",
+    "Групування розмов за темами": "Топ-тематики та тренди",
+    "передачі даних аналітики": "Інтеграція з Power BI",
+    "Відстеження окупності": "ROI-аналіз",
+    "найкращих розмов по чек-листу": "Бібліотека кращих практик",
+    # PreCall AI
+    "вести природний діалог": "Голосовий асистент",
+    "класифікація мети дзвінка": "Первинне визначення тематики",
+    "Передача складних або емоційних": "Ескалація до оператора",
+    "Вирішення типових запитів": "Прості консультації",
+    # IT & Security
+    "Технічна здатність системи отримувати потік": "Інтеграція з Cisco",
+    "інтеграції ШІ в інтерфейс оператора": "Інтеграція у робоче місце",
+    "Якість перетворення аудіо": "Точність розпізнавання мови",
+    "транскрибує суржик": "Робота з суржиком",
+    "Відповідність міжнародним стандартам": "Сертифікації безпеки",
+    "стабільно працювати при одночасному": "Кількість користувачів (1000+)",
+    "автоматично розпізнає та маскує": "Видалення персональних даних",
+    "без передачі даних у зовнішню хмару": "On-premise розгортання",
+    "планування графіків операторів": "Workforce Management",
+    # Business
+    "Налаштування щоденного використання": "Складність адміністрування",
+    "Швидкість та вартість запуску тестового": "Можливість пілоту (PoC)",
+    "Внесення змін у логіку роботи": "Налаштування системи",
+    "автоматичного навчання операторів": "Навчання операторів",
+    "Тривалість від підписання контракту": "Швидкість онбордингу",
+    "Наявність клієнтів у сфері логістики": "Досвід зі схожими компаніями",
+}
+
+
+def get_criterion_name(description: str) -> str:
+    """Get short criterion name from description using keyword matching."""
+    for keyword, name in CRITERION_NAMES.items():
+        if keyword.lower() in description.lower():
+            return name
+    # Fallback: return first 40 chars of description
+    return truncate_text(description, 40)
+
 
 def parse_csv(filepath: str) -> tuple:
     """Parse the CSV file and extract categories, criteria, and scores."""
@@ -279,14 +335,14 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
             score_display = str(score)
         score_cells.append(f'                        <div class="score-cell"><div class="score {score_class}">{score_display}</div></div>')
 
-    # Clean description for display
-    desc_short = truncate_text(criterion.description, 50)
+    # Get short name for criterion, fallback to truncated description
+    criterion_name = get_criterion_name(criterion.description)
     desc_full = criterion.description.replace('\n', ' ').replace('"', "'")
 
     return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat(12, 1fr);">
                         <div class="criteria-name">
                             <span class="priority-badge {priority_class}">{priority_letter}</span>
-                            {desc_short}
+                            {criterion_name}
                         </div>
 {chr(10).join(score_cells)}
                         <div class="expand-details">
