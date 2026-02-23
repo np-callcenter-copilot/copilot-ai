@@ -45,18 +45,18 @@ PROVIDERS = [
 ]
 
 PROVIDER_DISPLAY_NAMES = {
-    "Google Cloud CCAI": "Google<br><br>Cloud<br>CCAI",
+    "Google Cloud CCAI": "Google<br>Cloud<br>CCAI",
     "Ender Turing": "Ender<br>Turing",
     "NICE": "NICE",
     "Microsoft Copilot": "Microsoft<br>Copilot",
-    "Genesys Cloud CX": "Genesys<br><br>Cloud<br>CX",
-    "NICE Cognigy": "NICECognigy",
-    "Live Person": "Live<br>Person",
-    "Ringo stat": "Ringo<br>stat",
-    "Deca gon": "Deca<br>gon",
+    "Genesys Cloud CX": "Genesys<br>Cloud<br>CX",
+    "NICE Cognigy": "NICE Cognigy",
+    "Live Person": "LivePerson",
+    "Ringo stat": "Ringostat",
+    "Deca gon": "Decagon",
     "Eleven Labs": "Eleven<br>Labs",
-    "Poly AI": "Poly<br>AI",
-    "Get Vocal": "Get<br>Vocal"
+    "Poly AI": "Poly AI",
+    "Get Vocal": "GetVocal"
 }
 
 CATEGORY_MAP = {
@@ -389,6 +389,171 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
         </div>'''
 
 
+def generate_recommendations_tab() -> str:
+    """Generate HTML for the recommendations tab."""
+    return '''        <div class="tab-content" data-content="recommendations">
+            <div class="recommendations-section">
+                <div class="rec-header">
+                    <div class="rec-eyebrow">Фінальний розділ</div>
+                    <h3 class="rec-title">Висновки та <span class="highlight">стратегічні рекомендації</span></h3>
+                    <p class="rec-lead">
+                        Оскільки ми вже маємо високорозвинену екосистему контакт-центру — готове робоче місце оператора,
+                        дерево тематик, функціонуючу базу знань та власну систему аналітики — класичний підхід до
+                        закупівлі монолітних рішень стає недоцільним.
+                    </p>
+                </div>
+
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Ризики</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <div class="alert-box alert-red">
+                    <div class="alert-icon">⚠️</div>
+                    <div class="alert-body">
+                        <div class="alert-title">РИЗИКИ МОНОЛІТНИХ CCaaS ПЛАТФОРМ</div>
+                        <div class="alert-text">
+                            Глобальні рішення формату «все-в-одному» (Genesys Cloud CX або NICE CXone), попри свою потужність,
+                            вимагають міграції операторів у власні інтерфейси та використання вбудованих баз знань.
+                            Для нас це означатиме прив'язку до одного вендора, знецінення попередніх інвестицій у власну
+                            розробку та переплату за ліцензування дублюючого функціоналу.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Рекомендована стратегія</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <div class="strategy-card">
+                    <div class="strategy-label">API-first підхід</div>
+                    <div class="strategy-title">Відмова від коробкових систем на користь найкращих компонентів у своєму класі</div>
+                    <div class="strategy-text">
+                        Оптимальним та найбільш фінансово обґрунтованим шляхом є відмова від коробкових copilot-систем
+                        на користь API-first рішень. Технологічний стек повинен складатися з окремих найкращих у своєму класі компонентів:
+                    </div>
+                </div>
+
+                <div class="components-grid">
+                    <div class="component-card">
+                        <div class="component-num">01</div>
+                        <div class="component-tag tag-logic">Логіка</div>
+                        <div class="component-name">Cognigy / Google CCAI</div>
+                        <div class="component-desc">Компонент менеджменту логіки: RAG, NLU, маршрутизація, підказки оператору</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-num">02</div>
+                        <div class="component-tag tag-voice">Голос / STT</div>
+                        <div class="component-name">ElevenLabs Scribe v2</div>
+                        <div class="component-desc">Компонент розпізнавання голосу: стрімінгова транскрибація суржику з затримкою &lt;500мс</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-num">03</div>
+                        <div class="component-tag tag-api">Інтеграція</div>
+                        <div class="component-name">Власний інтерфейс + API</div>
+                        <div class="component-desc">Компонент інтеграції: вбудовування в наявне робоче місце оператора через API</div>
+                    </div>
+                </div>
+
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Дорожня карта впровадження</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 1</span>
+                            <div class="roadmap-title">Proof of Concept та валідація</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Перевірити життєздатність субʼєктивної гіпотези на наших реальних даних</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Cognigy / Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Підтвердження технологічної спроможності платформ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 2</span>
+                            <div class="roadmap-title">MVP — Інтеграція базового AI-асистента</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Запуск логіки Copilot та тестування інтерфейсу з операторами</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Розгортання Cognigy / Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Перевірка здатності ШІ давати релевантні підказки, автоматизувати постобробку, генерувати резюме дзвінка та отримання зворотного зв'язку від операторів</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 3</span>
+                            <div class="roadmap-title">Підключення ElevenLabs</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Досягнення цільової швидкості реакції (&lt;500 мс) та бездоганного розуміння голосового суржику</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Налаштування потокового передавання від телефонії Cisco до голосового шлюзу. Інтеграція стрімінгової моделі ElevenLabs Scribe v2 як основного інструменту транскрибації. Передача ідеально розпізнаного потокового тексту до AI-асистента.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Повноцінний real-time copilot, що працює з живим голосом на високих швидкостях та коректно обробляє суржик</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Ключові переваги підходу</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span class="benefit-text"><strong>Збереження існуючих інвестицій</strong> — жодна міграція інтерфейсів, баз знань чи аналітики не потрібна</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span class="benefit-text"><strong>Відсутність vendor lock-in</strong> — кожен компонент замінюється незалежно без зупинки системи</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span class="benefit-text"><strong>Фінансова ефективність</strong> — оплата лише за функціонал, що реально використовується, без переплати за дублікати</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span class="benefit-text"><strong>Поступове масштабування</strong> — трьохетапний підхід мінімізує операційні ризики при переході</span>
+                    </div>
+                    <div class="benefit-item">
+                        <span class="benefit-icon">✅</span>
+                        <span class="benefit-text"><strong>Суржик та локальний контекст</strong> — ElevenLabs Scribe v2 забезпечує найкращу точність для українсько-російського суржику серед протестованих рішень</span>
+                    </div>
+                </div>
+            </div>
+        </div>'''
+
+
 def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
                   tco_values: Dict[str, str]) -> str:
     """Generate the complete HTML document."""
@@ -452,7 +617,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
         }}
 
         .container {{
-            max-width: 1400px;
+            max-width: 1500px;
             margin: 0 auto;
         }}
 
@@ -710,8 +875,8 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
         }}
 
         .score.s4, .score.s4-5 {{
-            background: rgba(34, 197, 94, 0.2);
-            color: #22c55e;
+            background: rgba(250, 204, 21, 0.2);
+            color: #fbbf24;
         }}
 
         .score.s3, .score.s3-5 {{
@@ -991,6 +1156,363 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             }}
         }}
 
+        /* Recommendations Tab Styles */
+        .recommendations-section {{
+            max-width: 900px;
+            margin: 0 auto;
+        }}
+
+        .rec-header {{
+            margin-bottom: 40px;
+        }}
+
+        .rec-eyebrow {{
+            font-size: 11px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: #10b981;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }}
+
+        .rec-eyebrow::before {{
+            content: '';
+            display: inline-block;
+            width: 24px;
+            height: 1px;
+            background: #10b981;
+            opacity: 0.6;
+        }}
+
+        .rec-title {{
+            font-size: 32px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }}
+
+        .rec-title .highlight {{
+            color: #10b981;
+        }}
+
+        .rec-lead {{
+            font-size: 15px;
+            color: #9ca3af;
+            line-height: 1.7;
+            max-width: 680px;
+        }}
+
+        .rec-divider {{
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 40px 0 24px;
+        }}
+
+        .rec-divider-label {{
+            font-size: 10px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: #6b7280;
+            white-space: nowrap;
+        }}
+
+        .rec-divider-line {{
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }}
+
+        .alert-box {{
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+        }}
+
+        .alert-red {{
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }}
+
+        .alert-icon {{
+            font-size: 18px;
+            flex-shrink: 0;
+        }}
+
+        .alert-title {{
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            color: #ef4444;
+        }}
+
+        .alert-text {{
+            font-size: 14px;
+            line-height: 1.65;
+            color: #d1a0a0;
+        }}
+
+        .strategy-card {{
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }}
+
+        .strategy-card::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #10b981;
+            opacity: 0.5;
+        }}
+
+        .strategy-label {{
+            font-size: 10px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: #10b981;
+            margin-bottom: 10px;
+        }}
+
+        .strategy-title {{
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }}
+
+        .strategy-text {{
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.7;
+        }}
+
+        .components-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin: 20px 0;
+        }}
+
+        .component-card {{
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+        }}
+
+        .component-num {{
+            font-size: 11px;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 10px;
+            letter-spacing: 0.08em;
+        }}
+
+        .component-tag {{
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 4px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }}
+
+        .tag-logic {{
+            background: rgba(16, 185, 129, 0.15);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }}
+
+        .tag-voice {{
+            background: rgba(96, 165, 250, 0.1);
+            color: #60a5fa;
+            border: 1px solid rgba(96, 165, 250, 0.25);
+        }}
+
+        .tag-api {{
+            background: rgba(245, 158, 11, 0.1);
+            color: #f59e0b;
+            border: 1px solid rgba(245, 158, 11, 0.25);
+        }}
+
+        .component-name {{
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }}
+
+        .component-desc {{
+            font-size: 12px;
+            color: #9ca3af;
+            line-height: 1.5;
+        }}
+
+        .roadmap {{
+            position: relative;
+            padding-left: 32px;
+        }}
+
+        .roadmap::before {{
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 20px;
+            bottom: 20px;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }}
+
+        .roadmap-item {{
+            position: relative;
+            margin-bottom: 20px;
+        }}
+
+        .roadmap-item:last-child {{
+            margin-bottom: 0;
+        }}
+
+        .roadmap-dot {{
+            position: absolute;
+            left: -26px;
+            top: 20px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #1a1f3a;
+            border: 2px solid #10b981;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }}
+
+        .roadmap-dot-inner {{
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #10b981;
+        }}
+
+        .roadmap-card {{
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px 24px;
+        }}
+
+        .roadmap-step {{
+            font-size: 9px;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #6b7280;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 10px;
+            border-radius: 4px;
+            display: inline-block;
+            margin-bottom: 12px;
+        }}
+
+        .roadmap-title {{
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }}
+
+        .roadmap-row {{
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }}
+
+        .roadmap-row:last-child {{
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }}
+
+        .roadmap-label {{
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding-top: 2px;
+            min-width: 60px;
+        }}
+
+        .label-goal {{
+            color: #10b981;
+        }}
+
+        .label-action {{
+            color: #f59e0b;
+        }}
+
+        .label-result {{
+            color: #60a5fa;
+        }}
+
+        .roadmap-text {{
+            font-size: 13px;
+            color: #9ca3af;
+            line-height: 1.55;
+        }}
+
+        .benefits-list {{
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }}
+
+        .benefit-item {{
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 16px 20px;
+        }}
+
+        .benefit-icon {{
+            font-size: 16px;
+            flex-shrink: 0;
+        }}
+
+        .benefit-text {{
+            font-size: 14px;
+            color: #9ca3af;
+            line-height: 1.55;
+        }}
+
+        .benefit-text strong {{
+            color: #e0e6ed;
+        }}
+
+        @media (max-width: 900px) {{
+            .components-grid {{
+                grid-template-columns: 1fr;
+            }}
+        }}
+
         @media (max-width: 768px) {{
             h1 {{
                 font-size: 32px;
@@ -1051,6 +1573,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             <button class="tab" data-tab="precall">PreCall AI (5%)</button>
             <button class="tab" data-tab="it">IT & Security (30%)</button>
             <button class="tab" data-tab="business">Бізнес (10%)</button>
+            <button class="tab" data-tab="recommendations">📋 Рекомендації</button>
         </div>
 
         <div class="tab-content active" data-content="overall">
@@ -1099,6 +1622,8 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
         </div>
 
 {chr(10).join(category_tabs)}
+
+{generate_recommendations_tab()}
 
     </div>
 
