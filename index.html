@@ -2831,31 +2831,6 @@
                 </div>
 
                 <div class="rec-divider">
-                    <span class="rec-divider-label">01 / Ключові висновки</span>
-                    <div class="rec-divider-line"></div>
-                </div>
-
-                <div class="strategy-alert-card" style="border-color: rgba(255,255,255,0.15);">
-
-                        <div class="strategy-title">Ризики монолітних CCaaS платформ</div>
-                        <div class="strategy-text">
-                            Глобальні рішення формату «все-в-одному» (Genesys Cloud CX або NICE CXone), попри свою потужність,
-                            вимагають міграції операторів у власні інтерфейси та використання вбудованих баз знань.
-                            Для нас це означатиме <strong style="color:#f59e0b;">міграцію до вендора та відмову від власних робочих місць операторів.</strong>
-                        </div>
-
-                </div>
-
-                <div class="strategy-card" style="border-color: rgba(255,255,255,0.15);">
-                    <div class="strategy-label" style="color: #9ca3af;">Важливий висновок</div>
-                    <div class="strategy-title">Жоден провайдер не закриває 100% вимог</div>
-                    <div class="strategy-text">
-                        Кожне з 12 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
-                        Ідеальне рішення — це <strong style="color:#e0e6ed;">композитна архітектура з лідерів у своїх нішах</strong> або перегляд пріоритизації та ваги must-вимог.
-                    </div>
-                </div>
-
-                <div class="rec-divider">
                     <span class="rec-divider-label">Пріоритетні провайдери</span>
                     <div class="rec-divider-line"></div>
                 </div>
@@ -2923,7 +2898,7 @@
                 </div>
 
                 <div class="rec-divider">
-                    <span class="rec-divider-label">02 / Аналіз інших провайдерів</span>
+                    <span class="rec-divider-label">Аналіз інших провайдерів</span>
                     <div class="rec-divider-line"></div>
                 </div>
 
@@ -3227,74 +3202,116 @@
                     </div>
                 </div>
 
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Дорожня карта впровадження</span>
+                    <div class="rec-divider-line"></div>
+                </div>
 
+                <div class="roadmap">
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 1</span>
+                            <div class="roadmap-title">Proof of Concept та валідація</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Перевірити життєздатність субʼєктивної гіпотези на наших реальних даних</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Підтвердження технологічної спроможності платформ</span>
+                            </div>
+                        </div>
+                    </d
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 2</span>
+                            <div class="roadmap-title">MVP — Інтеграція базового AI-асистента</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Запуск логіки Copilot та тестування інтерфейсу з операторами</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Розгортання Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Перевірка здатності ШІ давати релевантні підказки, автоматизувати постобробку, генерувати резюме дзвінка та отримання зворотного зв'язку від операторів</span>
+                            </div>
+                        </div>
+                    </d
+                    <div class="roadmap-item">
+                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                        <div class="roadmap-card">
+                            <span class="roadmap-step">Етап 3</span>
+                            <div class="roadmap-title">Підключення ElevenLabs</div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-goal">Мета</span>
+                                <span class="roadmap-text">Досягнення цільової швидкості реакції (&lt;500 мс) та бездоганного розуміння голосового суржику</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-action">Дії</span>
+                                <span class="roadmap-text">Налаштування потокового передавання від телефонії Cisco до голосового шлюзу. Інтеграція стрімінгової моделі ElevenLabs Scribe v2 як основного інструменту транскрибації. Передача ідеально розпізнаного потокового тексту до AI-асистента.</span>
+                            </div>
+                            <div class="roadmap-row">
+                                <span class="roadmap-label label-result">Результат</span>
+                                <span class="roadmap-text">Повноцінний real-time copilot, що працює з живим голосом на високих швидкостях та коректно обробляє суржик</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="rec-divider">
-                                    <span class="rec-divider-label">Дорожня карта впровадження</span>
-                                    <div class="rec-divider-line"></div>
-                                </div>
+                    <span class="rec-divider-label">Ключові висновки</span>
+                    <div class="rec-divider-line"></div>
+                </div>
 
-                                <div class="roadmap">
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                                        <div class="roadmap-card">
-                                            <span class="roadmap-step">Етап 1</span>
-                                            <div class="roadmap-title">Proof of Concept та валідація</div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-goal">Мета</span>
-                                                <span class="roadmap-text">Перевірити життєздатність субʼєктивної гіпотези на наших реальних даних</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-action">Дії</span>
-                                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-result">Результат</span>
-                                                <span class="roadmap-text">Підтвердження технологічної спроможності платформ</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                <div class="strategy-alert-card" style="border-color: rgba(255,255,255,0.15);">
 
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                                        <div class="roadmap-card">
-                                            <span class="roadmap-step">Етап 2</span>
-                                            <div class="roadmap-title">MVP — Інтеграція базового AI-асистента</div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-goal">Мета</span>
-                                                <span class="roadmap-text">Запуск логіки Copilot та тестування інтерфейсу з операторами</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-action">Дії</span>
-                                                <span class="roadmap-text">Розгортання Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-result">Результат</span>
-                                                <span class="roadmap-text">Перевірка здатності ШІ давати релевантні підказки, автоматизувати постобробку, генерувати резюме дзвінка та отримання зворотного зв'язку від операторів</span>
-                                            </div>
-                                        </div>
-                                    </div>
+                        <div class="strategy-title">Ризики монолітних CCaaS платформ</div>
+                        <div class="strategy-text">
+                            Глобальні рішення формату «все-в-одному» (Genesys Cloud CX або NICE CXone), попри свою потужність,
+                            вимагають міграції операторів у власні інтерфейси та використання вбудованих баз знань.
+                            Для нас це означатиме <strong style="color:#f59e0b;">міграцію до вендора та відмову від власних робочих місць операторів.</strong>
+                        </div>
 
-                                    <div class="roadmap-item">
-                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                                        <div class="roadmap-card">
-                                            <span class="roadmap-step">Етап 3</span>
-                                            <div class="roadmap-title">Підключення ElevenLabs</div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-goal">Мета</span>
-                                                <span class="roadmap-text">Досягнення цільової швидкості реакції (&lt;500 мс) та бездоганного розуміння голосового суржику</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-action">Дії</span>
-                                                <span class="roadmap-text">Налаштування потокового передавання від телефонії Cisco до голосового шлюзу. Інтеграція стрімінгової моделі ElevenLabs Scribe v2 як основного інструменту транскрибації. Передача ідеально розпізнаного потокового тексту до AI-асистента.</span>
-                                            </div>
-                                            <div class="roadmap-row">
-                                                <span class="roadmap-label label-result">Результат</span>
-                                                <span class="roadmap-text">Повноцінний real-time copilot, що працює з живим голосом на високих швидкостях та коректно обробляє суржик</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                </div>
+
+                <div class="strategy-card" style="border-color: rgba(255,255,255,0.15);">
+                    <div class="strategy-label" style="color: #9ca3af;">Важливий висновок</div>
+                    <div class="strategy-title">Жоден провайдер не закриває 100% вимог</div>
+                    <div class="strategy-text">
+                        Кожне з 12 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
+                        Ідеальне рішення — це <strong style="color:#e0e6ed;">композитна архітектура з лідерів у своїх нішах</strong> або перегляд пріоритизації та ваги must-вимог.
+                    </div>
+                </div>
+
+                <div class="components-grid">
+                    <div class="component-card">
+                        <div class="component-num">01</div>
+                        <div class="component-tag tag-logic">Логіка</div>
+                        <div class="component-name">Google CCAI</div>
+                        <div class="component-desc">Компонент менеджменту логіки: RAG, NLU, маршрутизація, підказки оператору</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-num">02</div>
+                        <div class="component-tag tag-voice">Голос / STT</div>
+                        <div class="component-name">ElevenLabs Scribe v2</div>
+                        <div class="component-desc">Компонент розпізнавання голосу: стрімінгова транскрибація суржику з затримкою &lt;500мс</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-num">03</div>
+                        <div class="component-tag tag-api">Інтеграція</div>
+                        <div class="component-name">Власний інтерфейс + API</div>
+                        <div class="component-desc">Компонент інтеграції: вбудовування в наявне робоче місце оператора через API</div>
+                    </div>
+                </div>
             </div>
         </div>
 
