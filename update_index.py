@@ -476,6 +476,73 @@ def generate_recommendations_tab() -> str:
                         </div>
                     </div>
                 </div>
+
+                <div class="rec-divider">
+                                    <span class="rec-divider-label">Дорожня карта впровадження</span>
+                                    <div class="rec-divider-line"></div>
+                                </div>
+
+                                <div class="roadmap">
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                                        <div class="roadmap-card">
+                                            <span class="roadmap-step">Етап 1</span>
+                                            <div class="roadmap-title">Proof of Concept та валідація</div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-goal">Мета</span>
+                                                <span class="roadmap-text">Перевірити життєздатність субʼєктивної гіпотези на наших реальних даних</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-action">Дії</span>
+                                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-result">Результат</span>
+                                                <span class="roadmap-text">Підтвердження технологічної спроможності платформ</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                                        <div class="roadmap-card">
+                                            <span class="roadmap-step">Етап 2</span>
+                                            <div class="roadmap-title">MVP — Інтеграція базового AI-асистента</div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-goal">Мета</span>
+                                                <span class="roadmap-text">Запуск логіки Copilot та тестування інтерфейсу з операторами</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-action">Дії</span>
+                                                <span class="roadmap-text">Розгортання Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-result">Результат</span>
+                                                <span class="roadmap-text">Перевірка здатності ШІ давати релевантні підказки, автоматизувати постобробку, генерувати резюме дзвінка та отримання зворотного зв'язку від операторів</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="roadmap-item">
+                                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
+                                        <div class="roadmap-card">
+                                            <span class="roadmap-step">Етап 3</span>
+                                            <div class="roadmap-title">Підключення ElevenLabs</div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-goal">Мета</span>
+                                                <span class="roadmap-text">Досягнення цільової швидкості реакції (&lt;500 мс) та бездоганного розуміння голосового суржику</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-action">Дії</span>
+                                                <span class="roadmap-text">Налаштування потокового передавання від телефонії Cisco до голосового шлюзу. Інтеграція стрімінгової моделі ElevenLabs Scribe v2 як основного інструменту транскрибації. Передача ідеально розпізнаного потокового тексту до AI-асистента.</span>
+                                            </div>
+                                            <div class="roadmap-row">
+                                                <span class="roadmap-label label-result">Результат</span>
+                                                <span class="roadmap-text">Повноцінний real-time copilot, що працює з живим голосом на високих швидкостях та коректно обробляє суржик</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
             </div>
         </div>'''
 
@@ -1521,7 +1588,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             <button class="tab" data-tab="precall">PreCall AI (5%)</button>
             <button class="tab" data-tab="it">IT & Security (30%)</button>
             <button class="tab" data-tab="business">Бізнес (10%)</button>
-            <button class="tab" data-tab="recommendations">Рекомендації</button>
+            <button class="tab" data-tab="recommendations">Висновки</button>
         </div>
 
         <div class="tab-content active" data-content="overall">
