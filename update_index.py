@@ -714,7 +714,7 @@ def generate_recommendations_tab() -> str:
                                 <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
                                 <div style="display:flex;flex-direction:column;gap:8px;">
                                     <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні підключення баз знань, скрипти в реальному часі та модуль аналітики</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span> Відсутність функціоналу пошуку Copilot, модуля ACW та аналітики</div>
                                     <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабке розпізнавання суржику та недостатній аналіз емоцій</div>
                                 </div>
                             </div>
@@ -744,7 +744,7 @@ def generate_recommendations_tab() -> str:
                             <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW та аналітики</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW, аналітики та не може замінити IVR</div>
                             </div>
                         </div>
                     </div>
