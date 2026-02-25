@@ -476,6 +476,286 @@ def generate_recommendations_tab() -> str:
                         </div>
                     </div>
                 </div>
+                <div class="rec-divider">
+                    <span class="rec-divider-label">02 / Аналіз інших провайдерів</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <!-- Provider Cards Grid - Row 1 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                    <!-- Microsoft Copilot -->
+                    <div class="strategy-card" style="border-color: rgba(74,158,255,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #60a5fa; margin-bottom: 0;">AI Ecosystem · Azure OpenAI</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#60a5fa;">78.4%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Microsoft Copilot</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Dynamics 365 · Power Platform</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Висока швидкість і точність Next Best Action для вирішення запитів</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Найкращий пошук із завантаженою базою знань із наданням прямих посилань на документи</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Гнучка адаптація відповідей під контекст розмови</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Безшовна передача даних аналітики у внутрішні системи звітності</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Найвищий рівень маскування чутливих даних клієнтів</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабше автоматичне перенесення даних саме з україномовних розмов</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус інструментарію платформи зроблено на текстові канали зв'язку</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Висока вартість ліцензій та складність налаштування</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NICE -->
+                    <div class="strategy-card" style="border-color: rgba(168,85,247,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #a855f7; margin-bottom: 0;">Enterprise Cloud Contact Center</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#a855f7;">74.9%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">NICE</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Enlighten AI · Autopilot</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкість аналізу контексту у реальному часі займає до 2 секунд</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Copilot-функціонал для супроводу оператора (підказки, генерація скриптів)</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Наявність професійного вбудованого модуля WFM</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Розвинені інструменти автоматичного навчання операторів</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна інфраструктурна платформа</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Необхідність тестування української мови для авторезюме (ACW)</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабше розпізнавання суржику порівняно з локальними продуктами</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Довгий та складний процес впровадження</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Cards Grid - Row 2 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                    <!-- Genesys Cloud CX -->
+                    <div class="strategy-card" style="border-color: rgba(251,146,60,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #fb923c; margin-bottom: 0;">Contact Center as a Service</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#fb923c;">72.7%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Genesys Cloud CX</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Genesys AI · Agent Assist</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Надійний модуль Agent Assist із високою швидкістю підказок</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Відмінне автоматичне маскування чутливої інформації</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зручне low-code налаштування без залучення ІТ</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Високий рівень масштабування та витривалість</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна платформа, що потребує переїзду</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Низька точність STT для українського аудіо</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Потенційні складнощі з визначенням глибоких підтематик</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні інструменти для ШІ-перевірки по чек-листу</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- NICE Cognigy -->
+                    <div class="strategy-card" style="border-color: rgba(168,85,247,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #a855f7; margin-bottom: 0;">Conversational AI · Bot-first</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#a855f7;">71.5%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">NICE Cognigy</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Omnichannel</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Потужний Pre-Call AI — лідер у створенні голосових ботів</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зручні візуальні конструктори low-code</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Висока швидкість NBA та відмінний пошук по документації</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає підтверджень генерації українською авторезюме</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Складнощі зі швидкістю маркування та фільтрації даних</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Гірші можливості для передачі даних у кастомне робоче місце</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Cards Grid - Row 3 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                    <!-- Live Person -->
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Text-first · AI Chatbots</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">61.2%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Live Person</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Conversational Cloud</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сильний інструментарій для чатів, месенджерів та NBA у тексті</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Високий рівень захисту та автоматичного маскування даних</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутнє підтвердження якісного розуміння українського голосу та суржику</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Контроль якості дзвінків відсутній по чек-листах</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Значне відставання у функціоналі ACW</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ringostat -->
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Call Tracking · Cloud PBX</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">57.7%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Ringostat</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">AI Analytics</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий та безкоштовний запуск тестового періоду</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Відмінний базовий рівень розпізнавання української мови та суржику</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зрозумілі дашборди та висока здатність перетравлювати великі потоки даних</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус продукту на продажі, маркетинг та аналіз реклами</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність Copilot-функцій</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабкі можливості ACW та класифікації тематик</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутня архітектура для глибокої взаємодії з API</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Cards Grid - Row 4 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+                    <!-- Decagon -->
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Generative AI · Text-first</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">57.3%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Decagon</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Customer Support Automation</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сильні інструменти для текстових скриптів та пошуку по документації</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Інтерфейс налаштувань інтуїтивно зрозумілий</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий старт пілотного проєкту на реальних даних</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність української голосової моделі для транскрибації</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабкі модулі аналітики та автоматичного контролю якості (QA)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Poly AI -->
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Voice Assistants · Conversational IVR</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">55.7%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Poly AI</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Voice Assistants</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Вузька спеціалізація у голосових асистентах (Pre-Call, заміна IVR)</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Здатність витримувати величезну кількість одночасних розмов</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Надійні протоколи захисту даних</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Менша швидкість обробки ШІ та глибина розуміння української</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні підказки та супровід живого оператора</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає інструментів для постобробки та аналітики</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Cards Grid - Row 5 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+                    <!-- Get Vocal -->
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Local Voice · AI Provider</div>
+                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">40.3%</div>
+                        </div>
+                        <div class="strategy-title" style="margin-bottom: 4px;">Get Vocal</div>
+                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Local Voice AI</div>
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий старт, готовність до локальної співпраці та недорогий тест</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Готовий функціонал безшовної ескалації розмови з бота на оператора</div>
+                                </div>
+                            </div>
+                            <div>
+                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                                <div style="display:flex;flex-direction:column;gap:8px;">
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні підключення баз знань, скрипти в реальному часі та модуль аналітики</div>
+                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабке розпізнавання суржику та недостатній аналіз емоцій</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Empty placeholder for grid alignment -->
+                    <div></div>
+                </div>
+
+
 
                 <div class="rec-divider">
                                     <span class="rec-divider-label">Дорожня карта впровадження</span>
