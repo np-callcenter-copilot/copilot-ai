@@ -429,7 +429,6 @@ def generate_recommendations_tab() -> str:
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>100% автоматизований контроль якості</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Генерація резюме розмов</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Мовна аналітика та аналіз емоцій</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Модулі аналітики та якісне навчання операторів</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Підтверджений досвід у NovaPay</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Безкоштовний пілот та швидше впровадження</div>
@@ -447,35 +446,6 @@ def generate_recommendations_tab() -> str:
                     </div>
                 </div>
 
-                <!-- ElevenLabs -->
-                <div class="strategy-card" style="border-color: rgba(74,158,255,.25); margin-bottom: 20px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                        <div class="strategy-label" style="color: #60a5fa; margin-bottom: 0;">Голосовий асистент · STT-шар</div>
-                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:#60a5fa;">40%</div>
-                    </div>
-                    <div class="strategy-title" style="margin-bottom: 4px;">ElevenLabs</div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Speech-to-Text · Scribe v2 · Streaming · Pre-Call</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Голосовий асистент та маршрутизація (Pre-Call)</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>STT — висока точність розпізнавання мови</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Scribe v2 забезпечує розпізнавання суржику</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Стрімінгова передача тексту із затримкою ~500 мс</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Нативна Cisco-інтеграція</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сертифікації безпеки</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW та аналітики</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="rec-divider">
                     <span class="rec-divider-label">02 / Аналіз інших провайдерів</span>
                     <div class="rec-divider-line"></div>
@@ -751,8 +721,34 @@ def generate_recommendations_tab() -> str:
                         </div>
                     </div>
 
-                    <!-- Empty placeholder for grid alignment -->
-                    <div></div>
+                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                        <div class="strategy-label" style="color: #60a5fa; margin-bottom: 0;">Голосовий асистент · STT-шар</div>
+                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:#60a5fa;">40%</div>
+                    </div>
+                    <div class="strategy-title" style="margin-bottom: 4px;">ElevenLabs</div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Speech-to-Text · Scribe v2 · Streaming · Pre-Call</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+                        <div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Голосовий асистент та маршрутизація (Pre-Call)</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>STT — висока точність розпізнавання мови</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Scribe v2 забезпечує розпізнавання суржику</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Стрімінгова передача тексту із затримкою ~500 мс</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Нативна Cisco-інтеграція</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сертифікації безпеки</div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
+                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW та аналітики</div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
 
 
