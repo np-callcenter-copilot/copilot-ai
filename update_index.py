@@ -6,8 +6,9 @@ Parses CSV data with provider scores and generates an interactive HTML dashboard
 
 import csv
 import re
+import shutil
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional
+from typing import Dict, List
 from pathlib import Path
 
 
@@ -69,6 +70,25 @@ CATEGORY_MAP = {
     "БІЗНЕС ТА ВПРОВАДЖЕННЯ": ("business", "Бізнес", 10),
 }
 
+# Short display labels for breakdown bars in provider score cards.
+# Derived from CATEGORY_MAP so the two sources stay in sync.
+_CATEGORY_BREAKDOWN_LABELS: Dict[str, str] = {
+    "copilot": "Copilot",
+    "acw": "ACW",
+    "analytics": "Analytics",
+    "precall": "PreCall",
+    "it": "IT/Sec",
+    "business": "Бізнес",
+}
+
+
+def _parse_score_float(score_str: str) -> float:
+    """Convert a score string like '84.1%' or '84,1' to a float."""
+    try:
+        return float(str(score_str).replace('%', '').replace(',', '.'))
+    except (ValueError, AttributeError):
+        return 0.0
+
 
 def parse_csv(filepath: str) -> tuple:
     """Parse the CSV file and extract categories, criteria, and scores.
@@ -80,68 +100,58 @@ def parse_csv(filepath: str) -> tuple:
     - Column 3: Description (detailed)
     - Columns 4-15: Provider scores
     """
-    categories = {}
-    final_scores = {}
-    tco_values = {}
-    current_category = None
+    categories: Dict[str, Category] = {}
+    final_scores: Dict[str, str] = {}
+    tco_values: Dict[str, str] = {}
+    current_category: Category | None = None
 
     with open(filepath, 'r', encoding='utf-8') as f:
-        reader = csv.reader(f)
-        rows = list(reader)
+        rows = list(csv.reader(f))
 
-    # Find the header row with providers (now has empty column 1 for criterion name)
-    header_row_idx = None
-    for i, row in enumerate(rows):
-        if len(row) > 3 and row[0] == "MSCW" and row[2] == "Weight %":
-            header_row_idx = i
-            break
-
+    # Find the header row with providers (has empty column 1 for criterion name)
+    header_row_idx = next(
+        (i for i, row in enumerate(rows)
+         if len(row) > 3 and row[0] == "MSCW" and row[2] == "Weight %"),
+        None
+    )
     if header_row_idx is None:
         raise ValueError("Could not find header row")
 
-    # Process rows after header
-    for i in range(header_row_idx + 1, len(rows)):
-        row = rows[i]
+    for row in rows[header_row_idx + 1:]:
         if len(row) < 4:
             continue
 
         mscw = row[0].strip()
-        criterion_name = row[1].strip()  # New: criterion name from column 1
+        criterion_name = row[1].strip()
         weight_str = row[2].strip()
         description = row[3].strip() if len(row) > 3 else ""
 
-        # Check if this is a category header (mscw contains category name)
+        # Category header row
         if mscw in CATEGORY_MAP:
             cat_id, cat_name, cat_weight = CATEGORY_MAP[mscw]
             current_category = Category(name=cat_name, weight_percent=cat_weight)
             categories[cat_id] = current_category
             continue
 
-        # Check for final score row (weight=100% and description contains "Загальна оцінка")
+        # Final score row
         if weight_str == "100%" and "Загальна оцінка" in description:
             for j, provider in enumerate(PROVIDERS):
                 if len(row) > j + 4:
                     final_scores[provider] = row[j + 4].strip()
             continue
 
-        # Check for TCO row (contains dollar amounts like "150 - 200 000")
+        # TCO row (values match pattern like "150 - 200 000")
         if len(row) > 4:
-            # Check if row has values like "150 - 200 000" pattern
-            has_tco = False
-            for cell in row[4:16]:
-                cell_str = str(cell).strip()
-                if cell_str and re.match(r'^\d+\s*-\s*\d+\s*000$', cell_str):
-                    has_tco = True
-                    break
-            if has_tco:
+            tco_pattern = r'^\d+\s*-\s*\d+\s*000$'
+            if any(re.match(tco_pattern, str(cell).strip()) for cell in row[4:16]):
                 for j, provider in enumerate(PROVIDERS):
                     if len(row) > j + 4:
                         val = row[j + 4].strip()
-                        if val and re.match(r'^\d+\s*-\s*\d+\s*000$', val):
+                        if val and re.match(tco_pattern, val):
                             tco_values[provider] = val
                 continue
 
-        # Check if this is a subtotal row (contains % in weight column, no MSCW)
+        # Subtotal row (has % in weight column, no MSCW)
         if weight_str and '%' in weight_str and not mscw:
             if current_category:
                 for j, provider in enumerate(PROVIDERS):
@@ -149,32 +159,23 @@ def parse_csv(filepath: str) -> tuple:
                         current_category.subtotals[provider] = row[j + 4].strip()
             continue
 
-        # Parse criterion row
-        if mscw in ['Must', 'Should', 'Could'] and current_category:
+        # Criterion row
+        if mscw in ('Must', 'Should', 'Could') and current_category:
             try:
-                weight = float(weight_str.replace(',', '.')) if weight_str else 0
+                weight = float(weight_str.replace(',', '.')) if weight_str else 0.0
             except ValueError:
-                weight = 0
+                weight = 0.0
 
-            # Use criterion name from column 1, fallback to truncated description
             name = criterion_name if criterion_name else truncate_text(description, 40)
+            criterion = Criterion(priority=mscw, weight=weight, name=name, description=description)
 
-            criterion = Criterion(
-                priority=mscw,
-                weight=weight,
-                name=name,
-                description=description
-            )
-
-            # Extract scores for each provider (now starting from column 4)
             for j, provider in enumerate(PROVIDERS):
                 if len(row) > j + 4:
                     score_str = row[j + 4].strip()
                     try:
-                        score = float(score_str.replace(',', '.'))
-                        criterion.scores[provider] = score
+                        criterion.scores[provider] = float(score_str.replace(',', '.'))
                     except (ValueError, AttributeError):
-                        criterion.scores[provider] = 0
+                        criterion.scores[provider] = 0.0
 
             current_category.criteria.append(criterion)
 
@@ -191,73 +192,117 @@ def get_score_class(score: float) -> str:
         return "s3"
     elif score >= 2:
         return "s2"
-    else:
-        return "s1"
+    return "s1"
 
 
-def get_priority_badge(priority: str) -> str:
-    """Get priority badge class and letter."""
-    if priority == "Must":
-        return "must", "M"
-    elif priority == "Should":
-        return "should", "S"
-    else:
-        return "could", "C"
+def get_priority_badge(priority: str) -> tuple:
+    """Return (css_class, letter) for a priority string."""
+    return {
+        "Must": ("must", "M"),
+        "Should": ("should", "S"),
+    }.get(priority, ("could", "C"))
 
 
 def truncate_text(text: str, max_len: int = 50) -> str:
     """Truncate text for display."""
-    if len(text) > max_len:
-        return text[:max_len] + "..."
-    return text
+    return text[:max_len] + "..." if len(text) > max_len else text
 
 
-def generate_provider_card(provider: str, rank: int, score: str, tco: str,
-                          category_scores: Dict[str, str], max_weights: Dict[str, float]) -> str:
+# ---------------------------------------------------------------------------
+# HTML fragment builders
+# ---------------------------------------------------------------------------
+
+def _render_pros_cons(pros: List[str], cons: List[str]) -> str:
+    """Render the two-column pros/cons grid shared by all strategy cards."""
+    def _items(points: List[str], color: str, symbol: str) -> str:
+        lines = "\n".join(
+            f'                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;">'
+            f'<span style="color:{color};flex-shrink:0;">{symbol}</span>{point}</div>'
+            for point in points
+        )
+        return lines
+
+    return f'''                        <div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+{_items(pros, "#10b981", "✓")}
+                            </div>
+                        </div>
+                        <div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="display:flex;flex-direction:column;gap:8px;">
+{_items(cons, "#ef4444", "✗")}
+                            </div>
+                        </div>'''
+
+
+def _render_strategy_card(
+    *,
+    border_rgba: str,
+    label_color: str,
+    label_text: str,
+    score_text: str,
+    title: str,
+    subtitle: str,
+    pros: List[str],
+    cons: List[str],
+    wrapper_style: str = "",
+    indent: str = "                ",
+) -> str:
+    """Render one provider strategy card for the recommendations tab.
+
+    All visual values are passed as arguments so the HTML structure is
+    defined exactly once — eliminating the 10-copy repetition.
+    """
+    pros_cons = _render_pros_cons(pros, cons)
+    wrapper_open = f'{indent}<div class="strategy-card" style="border-color: {border_rgba};{wrapper_style}">'
+    return f'''{wrapper_open}
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                        <div class="strategy-label" style="color: {label_color}; margin-bottom: 0;">{label_text}</div>
+                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:{label_color};">{score_text}</div>
+                    </div>
+                    <div class="strategy-title" style="margin-bottom: 4px;">{title}</div>
+                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">{subtitle}</div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+{pros_cons}
+                    </div>
+                </div>'''
+
+
+def generate_provider_card(
+    provider: str,
+    rank: int,
+    score: str,
+    tco: str,
+    category_scores: Dict[str, str],
+    max_weights: Dict[str, float],
+) -> str:
     """Generate HTML for a provider score card."""
-    rank_badge = ""
-    extra_classes = ""
+    RANK_BADGES = {1: "🥇 #1", 2: "🥈 #2", 3: "🥉 #3"}
+    RANK_CLASSES = {1: " top top-1", 2: " top top-2", 3: " top top-3"}
 
-    if rank == 1:
-        rank_badge = "🥇 #1"
-        extra_classes = " top top-1"
-    elif rank == 2:
-        rank_badge = "🥈 #2"
-        extra_classes = " top top-2"
-    elif rank == 3:
-        rank_badge = "🥉 #3"
-        extra_classes = " top top-3"
-    else:
-        rank_badge = f"#{rank}"
+    rank_badge = RANK_BADGES.get(rank, f"#{rank}")
+    extra_classes = RANK_CLASSES.get(rank, "")
+    rank_style = ' style="opacity: 0.5;"' if rank > 3 else ''
 
-    # Calculate breakdown percentages
+    # Build breakdown bars using CATEGORY_MAP as the single source of truth
+    # for cat_id ordering and max_weight; _CATEGORY_BREAKDOWN_LABELS for display names.
     breakdowns = []
-    category_labels = [
-        ("copilot", "Copilot", 15),
-        ("acw", "ACW", 25),
-        ("analytics", "Analytics", 15),
-        ("precall", "PreCall", 5),
-        ("it", "IT/Sec", 30),
-        ("business", "Бізнес", 10),
-    ]
-
-    for cat_id, label, max_weight in category_labels:
+    for csv_key, (cat_id, _cat_name, cat_max_weight) in CATEGORY_MAP.items():
+        label = _CATEGORY_BREAKDOWN_LABELS[cat_id]
         cat_score = category_scores.get(cat_id, "0%")
-        try:
-            score_val = float(cat_score.replace('%', '').replace(',', '.'))
-            fill_pct = (score_val / max_weight) * 100 if max_weight > 0 else 0
-        except (ValueError, AttributeError):
-            score_val = 0
-            fill_pct = 0
-
-        breakdowns.append(f'''                            <div class="breakdown-item">
-                                <span class="breakdown-label">{label}</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill {cat_id}" style="width: {fill_pct:.1f}%;"></div></div>
-                                <span class="breakdown-value">{cat_score}</span>
-                            </div>''')
+        score_val = _parse_score_float(cat_score)
+        fill_pct = (score_val / cat_max_weight * 100) if cat_max_weight > 0 else 0.0
+        breakdowns.append(
+            f'                            <div class="breakdown-item">\n'
+            f'                                <span class="breakdown-label">{label}</span>\n'
+            f'                                <div class="breakdown-bar">'
+            f'<div class="breakdown-fill {cat_id}" style="width: {fill_pct:.1f}%;"></div></div>\n'
+            f'                                <span class="breakdown-value">{cat_score}</span>\n'
+            f'                            </div>'
+        )
 
     score_display = score.replace('%', '')
-    rank_style = ' style="opacity: 0.5;"' if rank > 3 else ''
 
     return f'''                    <div class="provider-score-card{extra_classes}">
                         <div class="rank-badge"{rank_style}>{rank_badge}</div>
@@ -274,20 +319,17 @@ def generate_provider_card(provider: str, rank: int, score: str, tco: str,
 def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
     """Generate HTML for a criteria row."""
     priority_class, priority_letter = get_priority_badge(criterion.priority)
+    desc_full = criterion.description.replace('\n', ' ').replace('"', "'")
 
     score_cells = []
     for provider in providers:
         score = criterion.scores.get(provider, 0)
         score_class = get_score_class(score)
-        # Display as integer if it's a whole number, otherwise show decimal
-        if score == int(score):
-            score_display = str(int(score))
-        else:
-            score_display = str(score)
-        score_cells.append(f'                        <div class="score-cell"><div class="score {score_class}">{score_display}</div></div>')
-
-    # Use criterion name directly from the parsed data
-    desc_full = criterion.description.replace('\n', ' ').replace('"', "'")
+        score_display = str(int(score)) if score == int(score) else str(score)
+        score_cells.append(
+            f'                        <div class="score-cell">'
+            f'<div class="score {score_class}">{score_display}</div></div>'
+        )
 
     return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat(12, 1fr);">
                         <div class="criteria-name">
@@ -304,21 +346,20 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
 
 def generate_category_tab(cat_id: str, category: Category, providers: List[str]) -> str:
     """Generate HTML for a category tab content."""
-    rows = []
-    for criterion in category.criteria:
-        rows.append(generate_criteria_row(criterion, providers))
+    rows = "\n".join(generate_criteria_row(c, providers) for c in category.criteria)
 
-    summary_cards = []
-    for provider in providers:
-        subtotal = category.subtotals.get(provider, "0%")
-        summary_cards.append(f'''                    <div class="summary-card">
-                        <h5>{provider}</h5>
-                        <div class="value">{subtotal}</div>
-                    </div>''')
+    summary_cards = "\n".join(
+        f'                    <div class="summary-card">\n'
+        f'                        <h5>{p}</h5>\n'
+        f'                        <div class="value">{category.subtotals.get(p, "0%")}</div>\n'
+        f'                    </div>'
+        for p in providers
+    )
 
-    header_cols = []
-    for provider in providers:
-        header_cols.append(f'                        <div class="provider-column">{PROVIDER_DISPLAY_NAMES.get(provider, provider)}</div>')
+    header_cols = "\n".join(
+        f'                        <div class="provider-column">{PROVIDER_DISPLAY_NAMES.get(p, p)}</div>'
+        for p in providers
+    )
 
     return f'''        <div class="tab-content" data-content="{cat_id}">
             <div class="summary-section">
@@ -326,14 +367,14 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
                 <div class="comparison-table">
                     <div class="table-header" style="grid-template-columns: 250px repeat(12, 1fr);">
                         <div>Критерій</div>
-{chr(10).join(header_cols)}
+{header_cols}
                     </div>
 
-{chr(10).join(rows)}
+{rows}
 
                 </div>
                 <div class="summary-grid">
-{chr(10).join(summary_cards)}
+{summary_cards}
                 </div>
             </div>
         </div>'''
@@ -341,7 +382,266 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
 
 def generate_recommendations_tab() -> str:
     """Generate HTML for the recommendations tab."""
-    return '''        <div class="tab-content" data-content="recommendations">
+
+    # ------------------------------------------------------------------
+    # Priority provider cards (full-width)
+    # ------------------------------------------------------------------
+    google_card = _render_strategy_card(
+        border_rgba="rgba(245,200,66,.3)",
+        label_color="#f5c842",
+        label_text="Enterprise-рішення",
+        score_text="84.1%",
+        title="Google Cloud CCAI",
+        subtitle="Contact Center AI · Agent Assist · Dialogflow CX · Gemini",
+        wrapper_style=" margin-bottom: 16px;",
+        pros=[
+            "Нативна підтримка укр. мови з найкращим авторезюме на ринку",
+            "Спеціалізована telephony-модель — навчена на аудіо телефонних ліній та IVR-систем",
+            "Визначення тональності та емоцій у реальному часі",
+            "Нативна інтеграція з Cisco",
+            "Найвищий потенціал скорочення постобробки до 18 секунд на дзвінок",
+            "Оплата лише за необхідний набір функціоналу",
+        ],
+        cons=[
+            "Потребує тестування наших діалогів — заповнення тематик, полів та маркування розмов",
+            "Відсутність нативної інтеграції з Binotel, Power Platform, Power BI",
+            "Складність адміністрування та дорога вартість розробки",
+        ],
+    )
+
+    ender_card = _render_strategy_card(
+        border_rgba="rgba(62,207,142,.25)",
+        label_color="#10b981",
+        label_text="Співвідношення ціна / якість",
+        score_text="71.3%",
+        title="Ender Turing",
+        subtitle="Локальний продукт із розумінням типового говору",
+        wrapper_style=" margin-bottom: 16px;",
+        pros=[
+            "100% автоматизований контроль якості",
+            "Генерація резюме розмов",
+            "Модулі аналітики та якісне навчання операторів",
+            "Підтверджений досвід у NovaPay",
+            "Безкоштовний пілот та швидше впровадження",
+        ],
+        cons=[
+            "Відсутній інструмент підказок у реальному часі — не є асистентом оператора під час дзвінка",
+            "Немає функцій Pre-Call AI (голосовий бот / заміна IVR)",
+            "Слабші інтеграційні можливості — потрібна розробка API з усіма системами",
+            "Алгоритми ACW поступаються якістю великим мовним моделям (GPT, Gemini)",
+        ],
+    )
+
+    # ------------------------------------------------------------------
+    # Secondary provider cards (2-column grid rows)
+    # ------------------------------------------------------------------
+    microsoft_card = _render_strategy_card(
+        border_rgba="rgba(74,158,255,.25)",
+        label_color="#60a5fa",
+        label_text="AI Ecosystem · Azure OpenAI",
+        score_text="78.4%",
+        title="Microsoft Copilot",
+        subtitle="Dynamics 365 · Power Platform",
+        indent="                    ",
+        pros=[
+            "Висока швидкість і точність Next Best Action для вирішення запитів",
+            "Найкращий пошук із завантаженою базою знань із наданням прямих посилань на документи",
+            "Гнучка адаптація відповідей під контекст розмови",
+            "Безшовна передача даних аналітики у внутрішні системи звітності",
+            "Найвищий рівень маскування чутливих даних клієнтів",
+        ],
+        cons=[
+            "Слабше автоматичне перенесення даних саме з україномовних розмов",
+            "Фокус інструментарію платформи зроблено на текстові канали зв'язку",
+            "Висока вартість ліцензій та складність налаштування",
+        ],
+    )
+
+    nice_card = _render_strategy_card(
+        border_rgba="rgba(168,85,247,.25)",
+        label_color="#a855f7",
+        label_text="Enterprise Cloud Contact Center",
+        score_text="74.9%",
+        title="NICE",
+        subtitle="Enlighten AI · Autopilot",
+        indent="                    ",
+        pros=[
+            "Швидкість аналізу контексту у реальному часі займає до 2 секунд",
+            "Copilot-функціонал для супроводу оператора (підказки, генерація скриптів)",
+            "Наявність професійного вбудованого модуля WFM",
+            "Розвинені інструменти автоматичного навчання операторів",
+        ],
+        cons=[
+            "Глобальна міграція — повноцінна інфраструктурна платформа",
+            "Необхідність тестування української мови для авторезюме (ACW)",
+            "Слабше розпізнавання суржику порівняно з локальними продуктами",
+            "Довгий та складний процес впровадження",
+        ],
+    )
+
+    genesys_card = _render_strategy_card(
+        border_rgba="rgba(251,146,60,.25)",
+        label_color="#fb923c",
+        label_text="Contact Center as a Service",
+        score_text="72.7%",
+        title="Genesys Cloud CX",
+        subtitle="Genesys AI · Agent Assist",
+        indent="                    ",
+        pros=[
+            "Надійний модуль Agent Assist із високою швидкістю підказок",
+            "Відмінне автоматичне маскування чутливої інформації",
+            "Зручне low-code налаштування без залучення ІТ",
+            "Високий рівень масштабування та витривалість",
+        ],
+        cons=[
+            "Глобальна міграція — повноцінна платформа, що потребує переїзду",
+            "Низька точність STT для українського аудіо",
+            "Потенційні складнощі з визначенням глибоких підтематик",
+            "Відсутні інструменти для ШІ-перевірки по чек-листу",
+        ],
+    )
+
+    cognigy_card = _render_strategy_card(
+        border_rgba="rgba(168,85,247,.25)",
+        label_color="#a855f7",
+        label_text="Conversational AI · Bot-first",
+        score_text="71.5%",
+        title="NICE Cognigy",
+        subtitle="Omnichannel",
+        indent="                    ",
+        pros=[
+            "Потужний Pre-Call AI — лідер у створенні голосових ботів",
+            "Зручні візуальні конструктори low-code",
+            "Висока швидкість NBA та відмінний пошук по документації",
+        ],
+        cons=[
+            "Немає підтверджень генерації українською авторезюме",
+            "Складнощі зі швидкістю маркування та фільтрації даних",
+            "Гірші можливості для передачі даних у кастомне робоче місце",
+        ],
+    )
+
+    liveperson_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Text-first · AI Chatbots",
+        score_text="61.2%",
+        title="Live Person",
+        subtitle="Conversational Cloud",
+        indent="                    ",
+        pros=[
+            "Сильний інструментарій для чатів, месенджерів та NBA у тексті",
+            "Високий рівень захисту та автоматичного маскування даних",
+        ],
+        cons=[
+            "Відсутнє підтвердження якісного розуміння українського голосу та суржику",
+            "Контроль якості дзвінків відсутній по чек-листах",
+            "Значне відставання у функціоналі ACW",
+        ],
+    )
+
+    ringostat_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Call Tracking · Cloud PBX",
+        score_text="57.7%",
+        title="Ringostat",
+        subtitle="AI Analytics",
+        indent="                    ",
+        pros=[
+            "Швидкий та безкоштовний запуск тестового періоду",
+            "Відмінний базовий рівень розпізнавання української мови та суржику",
+            "Зрозумілі дашборди та висока здатність перетравлювати великі потоки даних",
+        ],
+        cons=[
+            "Фокус продукту на продажі, маркетинг та аналіз реклами",
+            "Відсутність Copilot-функцій",
+            "Слабкі можливості ACW та класифікації тематик",
+            "Відсутня архітектура для глибокої взаємодії з API",
+        ],
+    )
+
+    decagon_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Generative AI · Text-first",
+        score_text="57.3%",
+        title="Decagon",
+        subtitle="Customer Support Automation",
+        indent="                    ",
+        pros=[
+            "Сильні інструменти для текстових скриптів та пошуку по документації",
+            "Інтерфейс налаштувань інтуїтивно зрозумілий",
+            "Швидкий старт пілотного проєкту на реальних даних",
+        ],
+        cons=[
+            "Відсутність української голосової моделі для транскрибації",
+            "Слабкі модулі аналітики та автоматичного контролю якості (QA)",
+        ],
+    )
+
+    polyai_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Voice Assistants · Conversational IVR",
+        score_text="55.7%",
+        title="Poly AI",
+        subtitle="Voice Assistants",
+        indent="                    ",
+        pros=[
+            "Вузька спеціалізація у голосових асистентах (Pre-Call, заміна IVR)",
+            "Здатність витримувати величезну кількість одночасних розмов",
+            "Надійні протоколи захисту даних",
+        ],
+        cons=[
+            "Менша швидкість обробки ШІ та глибина розуміння української",
+            "Відсутні підказки та супровід живого оператора",
+            "Немає інструментів для постобробки та аналітики",
+        ],
+    )
+
+    getvocal_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Local Voice · AI Provider",
+        score_text="40.3%",
+        title="Get Vocal",
+        subtitle="Local Voice AI",
+        indent="                    ",
+        pros=[
+            "Швидкий старт, готовність до локальної співпраці та недорогий тест",
+            "Готовий функціонал безшовної ескалації розмови з бота на оператора",
+        ],
+        cons=[
+            "Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української",
+            " Відсутність функціоналу пошуку Copilot, модуля ACW та аналітики",
+            "Слабке розпізнавання суржику та недостатній аналіз емоцій",
+        ],
+    )
+
+    elevenlabs_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#60a5fa",
+        label_text="Голосовий асистент · STT-шар",
+        score_text="40%",
+        title="ElevenLabs",
+        subtitle="Speech-to-Text · Scribe v2 · Streaming · Pre-Call",
+        indent="                    ",
+        pros=[
+            "Голосовий асистент та маршрутизація (Pre-Call)",
+            "STT — висока точність розпізнавання мови",
+            "Scribe v2 забезпечує розпізнавання суржику",
+            "Стрімінгова передача тексту із затримкою ~500 мс",
+            "Нативна Cisco-інтеграція",
+            "Сертифікації безпеки",
+        ],
+        cons=[
+            "Не є Copilot-рішенням — лише надає транскрибацію у систему",
+            "Відсутній функціонал ACW, аналітики та не може замінити IVR",
+        ],
+    )
+
+    return f'''        <div class="tab-content" data-content="recommendations">
             <div class="recommendations-section">
                 <div class="rec-header">
                     <div class="rec-eyebrow">Фінальний розділ</div>
@@ -359,67 +659,9 @@ def generate_recommendations_tab() -> str:
                     <div class="rec-divider-line"></div>
                 </div>
 
-                <!-- Google Cloud CCAI -->
-                <div class="strategy-card" style="border-color: rgba(245,200,66,.3); margin-bottom: 16px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                        <div class="strategy-label" style="color: #f5c842; margin-bottom: 0;">Enterprise-рішення</div>
-                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:#f5c842;">84.1%</div>
-                    </div>
-                    <div class="strategy-title" style="margin-bottom: 4px;">Google Cloud CCAI</div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Contact Center AI · Agent Assist · Dialogflow CX · Gemini</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Нативна підтримка укр. мови з найкращим авторезюме на ринку</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Спеціалізована telephony-модель — навчена на аудіо телефонних ліній та IVR-систем</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Визначення тональності та емоцій у реальному часі</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Нативна інтеграція з Cisco</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Найвищий потенціал скорочення постобробки до 18 секунд на дзвінок</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Оплата лише за необхідний набір функціоналу</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Потребує тестування наших діалогів — заповнення тематик, полів та маркування розмов</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність нативної інтеграції з Binotel, Power Platform, Power BI</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Складність адміністрування та дорога вартість розробки</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{google_card}
 
-                <!-- Ender Turing -->
-                <div class="strategy-card" style="border-color: rgba(62,207,142,.25); margin-bottom: 16px;">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                        <div class="strategy-label" style="color: #10b981; margin-bottom: 0;">Співвідношення ціна / якість</div>
-                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:#10b981;">71.3%</div>
-                    </div>
-                    <div class="strategy-title" style="margin-bottom: 4px;">Ender Turing</div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Локальний продукт із розумінням типового говору</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>100% автоматизований контроль якості</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Генерація резюме розмов</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Модулі аналітики та якісне навчання операторів</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Підтверджений досвід у NovaPay</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Безкоштовний пілот та швидше впровадження</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній інструмент підказок у реальному часі — не є асистентом оператора під час дзвінка</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає функцій Pre-Call AI (голосовий бот / заміна IVR)</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабші інтеграційні можливості — потрібна розробка API з усіма системами</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Алгоритми ACW поступаються якістю великим мовним моделям (GPT, Gemini)</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+{ender_card}
 
                 <div class="rec-divider">
                     <span class="rec-divider-label">Аналіз інших провайдерів</span>
@@ -428,302 +670,37 @@ def generate_recommendations_tab() -> str:
 
                 <!-- Provider Cards Grid - Row 1 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-                    <!-- Microsoft Copilot -->
-                    <div class="strategy-card" style="border-color: rgba(74,158,255,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #60a5fa; margin-bottom: 0;">AI Ecosystem · Azure OpenAI</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#60a5fa;">78.4%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Microsoft Copilot</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Dynamics 365 · Power Platform</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Висока швидкість і точність Next Best Action для вирішення запитів</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Найкращий пошук із завантаженою базою знань із наданням прямих посилань на документи</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Гнучка адаптація відповідей під контекст розмови</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Безшовна передача даних аналітики у внутрішні системи звітності</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Найвищий рівень маскування чутливих даних клієнтів</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабше автоматичне перенесення даних саме з україномовних розмов</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус інструментарію платформи зроблено на текстові канали зв'язку</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Висока вартість ліцензій та складність налаштування</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{microsoft_card}
 
-                    <!-- NICE -->
-                    <div class="strategy-card" style="border-color: rgba(168,85,247,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #a855f7; margin-bottom: 0;">Enterprise Cloud Contact Center</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#a855f7;">74.9%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">NICE</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Enlighten AI · Autopilot</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкість аналізу контексту у реальному часі займає до 2 секунд</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Copilot-функціонал для супроводу оператора (підказки, генерація скриптів)</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Наявність професійного вбудованого модуля WFM</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Розвинені інструменти автоматичного навчання операторів</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна інфраструктурна платформа</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Необхідність тестування української мови для авторезюме (ACW)</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабше розпізнавання суржику порівняно з локальними продуктами</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Довгий та складний процес впровадження</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{nice_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 2 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-                    <!-- Genesys Cloud CX -->
-                    <div class="strategy-card" style="border-color: rgba(251,146,60,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #fb923c; margin-bottom: 0;">Contact Center as a Service</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#fb923c;">72.7%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Genesys Cloud CX</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Genesys AI · Agent Assist</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Надійний модуль Agent Assist із високою швидкістю підказок</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Відмінне автоматичне маскування чутливої інформації</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зручне low-code налаштування без залучення ІТ</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Високий рівень масштабування та витривалість</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна платформа, що потребує переїзду</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Низька точність STT для українського аудіо</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Потенційні складнощі з визначенням глибоких підтематик</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні інструменти для ШІ-перевірки по чек-листу</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{genesys_card}
 
-                    <!-- NICE Cognigy -->
-                    <div class="strategy-card" style="border-color: rgba(168,85,247,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #a855f7; margin-bottom: 0;">Conversational AI · Bot-first</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#a855f7;">71.5%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">NICE Cognigy</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Omnichannel</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Потужний Pre-Call AI — лідер у створенні голосових ботів</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зручні візуальні конструктори low-code</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Висока швидкість NBA та відмінний пошук по документації</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає підтверджень генерації українською авторезюме</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Складнощі зі швидкістю маркування та фільтрації даних</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Гірші можливості для передачі даних у кастомне робоче місце</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{cognigy_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 3 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-                    <!-- Live Person -->
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Text-first · AI Chatbots</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">61.2%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Live Person</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Conversational Cloud</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сильний інструментарій для чатів, месенджерів та NBA у тексті</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Високий рівень захисту та автоматичного маскування даних</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутнє підтвердження якісного розуміння українського голосу та суржику</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Контроль якості дзвінків відсутній по чек-листах</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Значне відставання у функціоналі ACW</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{liveperson_card}
 
-                    <!-- Ringostat -->
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Call Tracking · Cloud PBX</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">57.7%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Ringostat</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">AI Analytics</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий та безкоштовний запуск тестового періоду</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Відмінний базовий рівень розпізнавання української мови та суржику</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Зрозумілі дашборди та висока здатність перетравлювати великі потоки даних</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус продукту на продажі, маркетинг та аналіз реклами</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність Copilot-функцій</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабкі можливості ACW та класифікації тематик</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутня архітектура для глибокої взаємодії з API</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{ringostat_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 4 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-                    <!-- Decagon -->
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Generative AI · Text-first</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">57.3%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Decagon</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Customer Support Automation</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сильні інструменти для текстових скриптів та пошуку по документації</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Інтерфейс налаштувань інтуїтивно зрозумілий</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий старт пілотного проєкту на реальних даних</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність української голосової моделі для транскрибації</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабкі модулі аналітики та автоматичного контролю якості (QA)</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{decagon_card}
 
-                    <!-- Poly AI -->
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Voice Assistants · Conversational IVR</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">55.7%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Poly AI</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Voice Assistants</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Вузька спеціалізація у голосових асистентах (Pre-Call, заміна IVR)</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Здатність витримувати величезну кількість одночасних розмов</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Надійні протоколи захисту даних</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Менша швидкість обробки ШІ та глибина розуміння української</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні підказки та супровід живого оператора</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає інструментів для постобробки та аналітики</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{polyai_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 5 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-                    <!-- Get Vocal -->
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                            <div class="strategy-label" style="color: #9ca3af; margin-bottom: 0;">Local Voice · AI Provider</div>
-                            <div style="font-family:monospace;font-size:20px;font-weight:600;color:#9ca3af;">40.3%</div>
-                        </div>
-                        <div class="strategy-title" style="margin-bottom: 4px;">Get Vocal</div>
-                        <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Local Voice AI</div>
-                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Швидкий старт, готовність до локальної співпраці та недорогий тест</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Готовий функціонал безшовної ескалації розмови з бота на оператора</div>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                                <div style="display:flex;flex-direction:column;gap:8px;">
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span> Відсутність функціоналу пошуку Copilot, модуля ACW та аналітики</div>
-                                    <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабке розпізнавання суржику та недостатній аналіз емоцій</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+{getvocal_card}
 
-                    <div class="strategy-card" style="border-color: rgba(156,163,175,.25);">
-                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                        <div class="strategy-label" style="color: #60a5fa; margin-bottom: 0;">Голосовий асистент · STT-шар</div>
-                        <div style="font-family:monospace;font-size:20px;font-weight:600;color:#60a5fa;">40%</div>
-                    </div>
-                    <div class="strategy-title" style="margin-bottom: 4px;">ElevenLabs</div>
-                    <div style="font-size:11px;color:#6b7280;margin-bottom:16px;">Speech-to-Text · Scribe v2 · Streaming · Pre-Call</div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Голосовий асистент та маршрутизація (Pre-Call)</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>STT — висока точність розпізнавання мови</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Scribe v2 забезпечує розпізнавання суржику</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Стрімінгова передача тексту із затримкою ~500 мс</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Нативна Cisco-інтеграція</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#10b981;flex-shrink:0;">✓</span>Сертифікації безпеки</div>
-                            </div>
-                        </div>
-                        <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:8px;">
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
-                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW, аналітики та не може замінити IVR</div>
-                            </div>
-                        </div>
-                    </div>
-                    </div>
+{elevenlabs_card}
                 </div>
 
                 <div class="rec-divider">
@@ -840,47 +817,52 @@ def generate_recommendations_tab() -> str:
         </div>'''
 
 
-
-def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
-                  tco_values: Dict[str, str]) -> str:
+def generate_html(
+    categories: Dict[str, Category],
+    final_scores: Dict[str, str],
+    tco_values: Dict[str, str],
+) -> str:
     """Generate the complete HTML document."""
+    sorted_providers = sorted(
+        PROVIDERS,
+        key=lambda p: _parse_score_float(final_scores.get(p, "0")),
+        reverse=True,
+    )
 
-    # Sort providers by final score for ranking
-    def parse_score(s):
-        try:
-            return float(s.replace('%', '').replace(',', '.'))
-        except (ValueError, AttributeError):
-            return 0
+    # Per-provider dict of category subtotal strings
+    category_scores: Dict[str, Dict[str, str]] = {
+        provider: {
+            cat_id: cat.subtotals.get(provider, "0%")
+            for cat_id, cat in categories.items()
+        }
+        for provider in PROVIDERS
+    }
 
-    sorted_providers = sorted(PROVIDERS, key=lambda p: parse_score(final_scores.get(p, "0")), reverse=True)
+    max_weights = {cat_id: cat.weight_percent for cat_id, cat in categories.items()}
 
-    # Build category scores for each provider
-    category_scores = {}
-    for provider in PROVIDERS:
-        category_scores[provider] = {}
-        for cat_id, category in categories.items():
-            category_scores[provider][cat_id] = category.subtotals.get(provider, "0%")
+    provider_cards = "\n".join(
+        generate_provider_card(
+            provider,
+            rank,
+            final_scores.get(provider, "0%"),
+            tco_values.get(provider, "N/A"),
+            category_scores[provider],
+            max_weights,
+        )
+        for rank, provider in enumerate(sorted_providers, 1)
+    )
 
-    # Generate provider cards for overall tab
-    provider_cards = []
-    for rank, provider in enumerate(sorted_providers, 1):
-        score = final_scores.get(provider, "0%")
-        tco = tco_values.get(provider, "N/A")
-        card = generate_provider_card(provider, rank, score, tco, category_scores[provider],
-                                     {cat_id: cat.weight_percent for cat_id, cat in categories.items()})
-        provider_cards.append(card)
+    category_order = ["copilot", "acw", "analytics", "precall", "it", "business"]
+    category_tabs = "\n".join(
+        generate_category_tab(cat_id, categories[cat_id], PROVIDERS)
+        for cat_id in category_order
+        if cat_id in categories
+    )
 
-    # Generate category tabs
-    category_tabs = []
-    for cat_id in ["copilot", "acw", "analytics", "precall", "it", "business"]:
-        if cat_id in categories:
-            category_tabs.append(generate_category_tab(cat_id, categories[cat_id], PROVIDERS))
-
-    # Get winner info
     winner = sorted_providers[0] if sorted_providers else "N/A"
     winner_score = final_scores.get(winner, "0%")
 
-    html = f'''<!DOCTYPE html>
+    return f'''<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -1889,7 +1871,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
                 <h3 class="summary-title">Підсумкові оцінки</h3>
                 <div class="final-scores">
 
-{chr(10).join(provider_cards)}
+{provider_cards}
 
                 </div>
             </div>
@@ -1929,7 +1911,7 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             </div>
         </div>
 
-{chr(10).join(category_tabs)}
+{category_tabs}
 
 {generate_recommendations_tab()}
 
@@ -1969,10 +1951,8 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
 </body>
 </html>'''
 
-    return html
 
-
-def main():
+def main() -> None:
     """Main function to run the conversion."""
     script_dir = Path(__file__).parent
     csv_path = script_dir / "new_data.csv"
@@ -1981,27 +1961,26 @@ def main():
 
     print(f"Reading CSV from: {csv_path}")
 
-    # Parse CSV
     categories, final_scores, tco_values = parse_csv(str(csv_path))
 
     print(f"Parsed {len(categories)} categories:")
     for cat_id, cat in categories.items():
         print(f"  - {cat.name}: {len(cat.criteria)} criteria")
 
-    print(f"\nFinal scores:")
-    for provider, score in sorted(final_scores.items(), key=lambda x: float(x[1].replace('%', '').replace(',', '.')) if x[1] else 0, reverse=True):
+    print("\nFinal scores:")
+    for provider, score in sorted(
+        final_scores.items(),
+        key=lambda x: _parse_score_float(x[1]),
+        reverse=True,
+    ):
         print(f"  - {provider}: {score}")
 
-    # Backup existing HTML
     if html_path.exists():
-        import shutil
         shutil.copy(html_path, backup_path)
         print(f"\nBackup created: {backup_path}")
 
-    # Generate HTML
     html_content = generate_html(categories, final_scores, tco_values)
 
-    # Write HTML
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
 
