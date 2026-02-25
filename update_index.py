@@ -345,7 +345,7 @@ def generate_recommendations_tab() -> str:
             <div class="recommendations-section">
                 <div class="rec-header">
                     <div class="rec-eyebrow">Фінальний розділ</div>
-                    <h3 class="rec-title">Рекомендована <span class="highlight">архітектура</span> та пріоритетні провайдери</h3>
+                    <h3 class="rec-title">Ключові висновки аналізу</h3>
                     <p class="rec-lead">
                         Аналіз 12 рішень за методологією MSCW для AI Copilot контакт-центру на 1 000 операторів.
                         Оскільки ми вже маємо високорозвинену екосистему контакт-центру — готове робоче місце оператора,
@@ -359,16 +359,15 @@ def generate_recommendations_tab() -> str:
                     <div class="rec-divider-line"></div>
                 </div>
 
-                <div class="alert-box alert-red">
-                    <div class="alert-icon">⚠️</div>
-                    <div class="alert-body">
-                        <div class="alert-title">РИЗИКИ МОНОЛІТНИХ CCaaS ПЛАТФОРМ</div>
-                        <div class="alert-text">
+                <div class="strategy-alert-card" style="border-color: rgba(255,255,255,0.15);">
+
+                        <div class="strategy-title">Ризики монолітних CCaaS платформ</div>
+                        <div class="strategy-text">
                             Глобальні рішення формату «все-в-одному» (Genesys Cloud CX або NICE CXone), попри свою потужність,
                             вимагають міграції операторів у власні інтерфейси та використання вбудованих баз знань.
                             Для нас це означатиме <strong style="color:#f59e0b;">міграцію до вендора та відмову від власних робочих місць операторів.</strong>
                         </div>
-                    </div>
+
                 </div>
 
                 <div class="strategy-card" style="border-color: rgba(255,255,255,0.15);">
@@ -473,99 +472,6 @@ def generate_recommendations_tab() -> str:
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW та аналітики</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="rec-divider">
-                    <span class="rec-divider-label">02 / Детальний аналіз провайдерів</span>
-                    <div class="rec-divider-line"></div>
-                </div>
-
-                <!-- Provider Cards Grid -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-                    <!-- Google Cloud CCAI Card -->
-                    <div class="component-card" style="border-color: rgba(245,200,66,.25);">
-                        <div class="component-tag" style="background:rgba(245,200,66,.15);color:#f5c842;border:1px solid rgba(245,200,66,.25);">Аналітичний бекенд · ACW-лідер</div>
-                        <div class="component-name" style="margin-bottom:4px;">Google Cloud CCAI</div>
-                        <div style="font-size:10px;color:#6b7280;margin-bottom:14px;">Contact Center AI · Agent Assist · Dialogflow CX · Gemini</div>
-                        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:12px;">
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Нативна підтримка укр. мови з авторезюме на ринку</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Спеціалізована telephony-модель</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Визначення тональності та емоцій у реальному часі</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Готова інтеграція з Cisco</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Скорочення постобробки до 18 сек</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Оплата за фактичний функціонал</div>
-                            </div>
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Відсутність покрокових підказок для оператора</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Немає готових віджетів для кастомного робочого місця</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Відсутність нативних конекторів до Power Platform, Binotel</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Microsoft Card -->
-                    <div class="component-card" style="border-color: rgba(74,158,255,.25);">
-                        <div class="component-tag" style="background:rgba(74,158,255,.15);color:#60a5fa;border:1px solid rgba(74,158,255,.25);">Екосистемна платформа · Power Platform</div>
-                        <div class="component-name" style="margin-bottom:4px;">Microsoft Dynamics 365 / Copilot</div>
-                        <div style="font-size:10px;color:#6b7280;margin-bottom:14px;">Azure AI · OpenAI GPT-4o · Power Platform · Power BI</div>
-                        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:12px;">
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>OpenAI блискуче формує покрокові підказки (NBA)</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Нативна сумісність із Power Platform та Power BI</div>
-                            </div>
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Автоматизовані модулі не адаптовані під обробку голосового українського суржику</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Ender Turing Card -->
-                    <div class="component-card" style="border-color: rgba(62,207,142,.25);">
-                        <div class="component-tag" style="background:rgba(62,207,142,.15);color:#10b981;border:1px solid rgba(62,207,142,.25);">QA-лідер · Офлайн-аналітика</div>
-                        <div class="component-name" style="margin-bottom:4px;">Ender Turing</div>
-                        <div style="font-size:10px;color:#6b7280;margin-bottom:14px;">Українська розробка · Auto QA · NovaPay досвід · Офлайн-аналітика</div>
-                        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:12px;">
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Локальний продукт, навчений на місцевих датасетах</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Гнучкі аналітичні дашборди</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Перевірка дзвінків за чек-листами</div>
-                            </div>
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Відсутній інструмент підказок у реальному часі</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Немає функціоналу для заміни IVR</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Слабші інтеграційні можливості</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Слабша ШІ порівняно з Gemini</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>ACW поступається GPT, Gemini</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Cognigy Card -->
-                    <div class="component-card" style="border-color: rgba(168,85,247,.25);">
-                        <div class="component-tag" style="background:rgba(168,85,247,.15);color:#a855f7;border:1px solid rgba(168,85,247,.25);">Оркестратор логіки · NBA-чемпіон</div>
-                        <div class="component-name" style="margin-bottom:4px;">Cognigy.AI</div>
-                        <div style="font-size:10px;color:#6b7280;margin-bottom:14px;">Agentic AI · Conversational Orchestration · API Integration Hub</div>
-                        <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:12px;">
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні переваги</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:12px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Гнучке API (телефонія, бекенди) як основний конектор</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Швидка генерація конкретних кроків під час розмови</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#10b981;">✓</span>Точна робота з документами у RAG</div>
-                            </div>
-                            <div style="font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#6b7280;margin-bottom:8px;">Глобальні обмеження</div>
-                            <div style="display:flex;flex-direction:column;gap:6px;">
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Підтримує укр. мову через сервіси перекладу — впливає на швидкість</div>
-                                <div style="display:flex;gap:8px;font-size:12px;color:#9ca3af;"><span style="color:#ef4444;">✗</span>Слабкий Auto QA</div>
                             </div>
                         </div>
                     </div>
@@ -1277,6 +1183,27 @@ def generate_html(categories: Dict[str, Category], final_scores: Dict[str, str],
             font-size: 14px;
             line-height: 1.65;
             color: #d1a0a0;
+        }}
+
+        .strategy-alert-card {{
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 28px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }}
+
+        .strategy-alert-card::before {{
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e97451;
+            opacity: 0.5;
         }}
 
         .strategy-card {{
