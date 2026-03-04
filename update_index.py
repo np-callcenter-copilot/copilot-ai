@@ -787,7 +787,7 @@ def generate_recommendations_tab() -> str:
                     <div class="component-card">
                         <div class="component-num">01</div>
                         <div class="component-tag tag-logic">Логіка</div>
-                        <div class="component-name">Google CCAI</div>
+                        <div class="component-name">Google CCAI / Cresta AI</div>
                         <div class="component-desc">Компонент менеджменту логіки: RAG, NLU, маршрутизація, підказки оператору</div>
                     </div>
                     <div class="component-card">
@@ -798,6 +798,12 @@ def generate_recommendations_tab() -> str:
                     </div>
                     <div class="component-card">
                         <div class="component-num">03</div>
+                        <div class="component-tag tag-voice">Аналітика</div>
+                        <div class="component-name">Ender Turing</div>
+                        <div class="component-desc">Власні аналітичні модулі, глибоке розпізнавання емоцій, чіткі метрики</div>
+                    </div>
+                    <div class="component-card">
+                        <div class="component-num">04</div>
                         <div class="component-tag tag-api">Інтеграція</div>
                         <div class="component-name">Власний інтерфейс + API</div>
                         <div class="component-desc">Компонент інтеграції: вбудовування в наявне робоче місце оператора через API</div>
@@ -1585,7 +1591,7 @@ def generate_html(
 
         .components-grid {{
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(4, 1fr);
             gap: 16px;
             margin: 20px 0;
         }}
