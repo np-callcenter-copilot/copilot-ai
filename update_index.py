@@ -94,7 +94,7 @@ def _parse_score_float(score_str: str) -> float:
         return 0.0
 
 
-def parse_csv(filepath: str) -> tuple:
+def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
     """Parse the CSV file and extract categories, criteria, and scores.
 
     CSV structure (after update):
@@ -110,7 +110,7 @@ def parse_csv(filepath: str) -> tuple:
     current_category: Category | None = None
 
     with open(filepath, 'r', encoding='utf-8') as f:
-        rows = list(csv.reader(f))
+        rows = list(csv.reader(f, delimiter=delimiter))
 
     # Find the header row with providers (has empty column 1 for criterion name)
     header_row_idx = next(
@@ -324,7 +324,7 @@ def generate_provider_card(
 def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
     """Generate HTML for a criteria row."""
     priority_class, priority_letter = get_priority_badge(criterion.priority)
-    desc_full = criterion.description.replace('\n', ' ').replace('"', "'")
+    desc_full = criterion.description.replace('"', "'").replace('\n', '<br>')
 
     score_cells = []
     for provider in providers:
@@ -399,7 +399,7 @@ def generate_recommendations_tab() -> str:
         score_text="85.1%",
         title="Cresta AI",
         subtitle="Real-Time Assist · Agent Copilot · Ocean-1",
-        wrapper_style=" margin-bottom: 16px;",
+        indent="                    ",
         pros=[
             "Ocean-1: власна модель від ех-співробітників OpenAI з мультимовною підтримкою",
             "Найкращий Copilot на ринку, глибока постобробка, нативна інтеграція у робоче місце оператора, висока точність аналітики",
@@ -420,7 +420,7 @@ def generate_recommendations_tab() -> str:
         score_text="81.5%",
         title="Google Cloud CCAI",
         subtitle="Contact Center AI · Agent Assist · Dialogflow CX · Gemini",
-        wrapper_style=" margin-bottom: 16px;",
+        indent="                    ",
         pros=[
             "Нативна підтримка української мови з кращим авторезюме. Підтримка 100+ мов через Google NLU",
             "Спеціалізована telephony-модель, навчена на аудіо телефонних ліній та IVR-систем",
@@ -705,124 +705,57 @@ def generate_recommendations_tab() -> str:
                 </div>
 
                 <div class="rec-divider">
-                    <span class="rec-divider-label">Пріоритетні провайдери</span>
-                    <div class="rec-divider-line"></div>
-                </div>
-
-{cresta_card}
-
-{google_card}
-
-                <div class="rec-divider">
-                    <span class="rec-divider-label">Аналіз інших провайдерів</span>
+                    <span class="rec-divider-label">Аналіз Провайдерів</span>
                     <div class="rec-divider-line"></div>
                 </div>
 
                 <!-- Provider Cards Grid - Row 1 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+{cresta_card}
+
+{google_card}
+                </div>
+
+                <!-- Provider Cards Grid - Row 2 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {nice_card}
 
 {microsoft_card}
                 </div>
 
-                <!-- Provider Cards Grid - Row 2 -->
+                <!-- Provider Cards Grid - Row 3 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {genesys_card}
 
 {cognigy_card}
                 </div>
 
-                <!-- Provider Cards Grid - Row 3 -->
+                <!-- Provider Cards Grid - Row 4 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {ender_card}
 
 {liveperson_card}
                 </div>
 
-                <!-- Provider Cards Grid - Row 4 -->
+                <!-- Provider Cards Grid - Row 5 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {decagon_card}
 
 {polyai_card}
                 </div>
 
-                <!-- Provider Cards Grid - Row 5 -->
+                <!-- Provider Cards Grid - Row 6 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {ringostat_card}
 
 {unitalk_card}
                 </div>
 
-                <!-- Provider Cards Grid - Row 6 -->
+                <!-- Provider Cards Grid - Row 7 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
 {elevenlabs_card}
 
 {getvocal_card}
-                </div>
-
-                <div class="rec-divider">
-                    <span class="rec-divider-label">Дорожня карта впровадження</span>
-                    <div class="rec-divider-line"></div>
-                </div>
-
-                <div class="roadmap">
-                    <div class="roadmap-item">
-                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                        <div class="roadmap-card">
-                            <span class="roadmap-step">Етап 1</span>
-                            <div class="roadmap-title">Proof of Concept та валідація</div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-goal">Мета</span>
-                                <span class="roadmap-text">Перевірити життєздатність субʼєктивної гіпотези на наших реальних даних</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-action">Дії</span>
-                                <span class="roadmap-text">Створення тестового RAG-середовища на базі Google CCAI із завантаженням наших політик для перевірки точності відповідей LLM. Тестування API ElevenLabs на вибірці аудіозаписів.</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-result">Результат</span>
-                                <span class="roadmap-text">Підтвердження технологічної спроможності платформ</span>
-                            </div>
-                        </div>
-                    </d
-                    <div class="roadmap-item">
-                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                        <div class="roadmap-card">
-                            <span class="roadmap-step">Етап 2</span>
-                            <div class="roadmap-title">MVP — Інтеграція базового AI-асистента</div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-goal">Мета</span>
-                                <span class="roadmap-text">Запуск логіки Copilot та тестування інтерфейсу з операторами</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-action">Дії</span>
-                                <span class="roadmap-text">Розгортання Google CCAI: підключення до існуючої бази знань та виведення базового віджета у наявне робоче місце оператора.</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-result">Результат</span>
-                                <span class="roadmap-text">Перевірка здатності ШІ давати релевантні підказки, автоматизувати постобробку, генерувати резюме дзвінка та отримання зворотного зв'язку від операторів</span>
-                            </div>
-                        </div>
-                    </d
-                    <div class="roadmap-item">
-                        <div class="roadmap-dot"><div class="roadmap-dot-inner"></div></div>
-                        <div class="roadmap-card">
-                            <span class="roadmap-step">Етап 3</span>
-                            <div class="roadmap-title">Підключення ElevenLabs</div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-goal">Мета</span>
-                                <span class="roadmap-text">Досягнення цільової швидкості реакції (&lt;500 мс) та бездоганного розуміння голосового суржику</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-action">Дії</span>
-                                <span class="roadmap-text">Налаштування потокового передавання від телефонії Cisco до голосового шлюзу. Інтеграція стрімінгової моделі ElevenLabs Scribe v2 як основного інструменту транскрибації. Передача ідеально розпізнаного потокового тексту до AI-асистента.</span>
-                            </div>
-                            <div class="roadmap-row">
-                                <span class="roadmap-label label-result">Результат</span>
-                                <span class="roadmap-text">Повноцінний real-time copilot, що працює з живим голосом на високих швидкостях та коректно обробляє суржик</span>
-                            </div>
-                        </div>
-                    </div>
                 </div>
 
                 <div class="rec-divider">
@@ -2022,7 +1955,7 @@ def main() -> None:
 
     print(f"Reading CSV from: {csv_path}")
 
-    categories, final_scores, tco_values = parse_csv(str(csv_path))
+    categories, final_scores, tco_values = parse_csv(str(csv_path), delimiter=';')
 
     print(f"Parsed {len(categories)} categories:")
     for cat_id, cat in categories.items():
