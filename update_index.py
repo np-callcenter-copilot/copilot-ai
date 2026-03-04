@@ -34,14 +34,16 @@ class Category:
 PROVIDERS = [
     "Google Cloud CCAI",
     "Ender Turing",
+    "Uni Talk",
     "NICE",
     "Microsoft Copilot",
     "Genesys Cloud CX",
     "NICE Cognigy",
+    "Cresta",
     "Live Person",
-    "Ringo stat",
-    "Deca gon",
-    "Eleven Labs",
+    "Ringostat",
+    "Decagon",
+    "11 Labs",
     "Poly AI",
     "Get Vocal"
 ]
@@ -49,16 +51,18 @@ PROVIDERS = [
 PROVIDER_DISPLAY_NAMES = {
     "Google Cloud CCAI": "Google<br>Cloud<br>CCAI",
     "Ender Turing": "Ender<br>Turing",
+    "Uni Talk": "Uni Talk",
     "NICE": "NICE",
     "Microsoft Copilot": "Microsoft<br>Copilot",
     "Genesys Cloud CX": "Genesys<br>Cloud<br>CX",
     "NICE Cognigy": "NICE Cognigy",
+    "Cresta": "Cresta",
     "Live Person": "LivePerson",
-    "Ringo stat": "Ringostat",
-    "Deca gon": "Decagon",
-    "Eleven Labs": "Eleven<br>Labs",
+    "Ringostat": "Ringostat",
+    "Decagon": "Decagon",
+    "11 Labs": "11 Labs",
     "Poly AI": "Poly AI",
-    "Get Vocal": "GetVocal"
+    "Get Vocal": "Get Vocal"
 }
 
 CATEGORY_MAP = {
@@ -291,7 +295,8 @@ def generate_provider_card(
     for csv_key, (cat_id, _cat_name, cat_max_weight) in CATEGORY_MAP.items():
         label = _CATEGORY_BREAKDOWN_LABELS[cat_id]
         cat_score = category_scores.get(cat_id, "0%")
-        score_val = _parse_score_float(cat_score)
+        score_part = cat_score.split(' / ')[0]
+        score_val = _parse_score_float(score_part)
         fill_pct = (score_val / cat_max_weight * 100) if cat_max_weight > 0 else 0.0
         breakdowns.append(
             f'                            <div class="breakdown-item">\n'
@@ -331,7 +336,8 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
             f'<div class="score {score_class}">{score_display}</div></div>'
         )
 
-    return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat(12, 1fr);">
+    n = len(providers)
+    return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat({n}, 1fr);">
                         <div class="criteria-name">
                             <span class="priority-badge {priority_class}">{priority_letter}</span>
                             {criterion.name}
@@ -365,7 +371,7 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
             <div class="summary-section">
                 <h3 class="summary-title">{category.name} ({category.weight_percent}%) - Оцінка провайдерів</h3>
                 <div class="comparison-table">
-                    <div class="table-header" style="grid-template-columns: 250px repeat(12, 1fr);">
+                    <div class="table-header" style="grid-template-columns: 250px repeat({len(providers)}, 1fr);">
                         <div>Критерій</div>
 {header_cols}
                     </div>
@@ -386,26 +392,47 @@ def generate_recommendations_tab() -> str:
     # ------------------------------------------------------------------
     # Priority provider cards (full-width)
     # ------------------------------------------------------------------
+    cresta_card = _render_strategy_card(
+        border_rgba="rgba(34,211,238,.3)",
+        label_color="#22d3ee",
+        label_text="Real-Time Assist · Agent Copilot · #1 Score",
+        score_text="85.1%",
+        title="Cresta AI",
+        subtitle="Real-Time Assist · Agent Copilot · Ocean-1",
+        wrapper_style=" margin-bottom: 16px;",
+        pros=[
+            "Ocean-1: власна модель від ех-співробітників OpenAI з мультимовною підтримкою",
+            "Найкращий Copilot на ринку, глибока постобробка, нативна інтеграція у робоче місце оператора, висока точність аналітики",
+            "Cresta має українське венчурне коріння від фонду Roosh Ventures Сергія Токарєва (раунд $80 млн у 2022)",
+            "Email-підтримка як повноцінний канал комунікації",
+        ],
+        cons=[
+            "Потребує тестування діалогів та суржику — авторезюме, заповнення тематик, полів та маркування розмов",
+            "Відсутність нативної інтеграції з Binotel, Power Platform, Power BI",
+            "Тривале налаштування та непрозора вартість розробки",
+        ],
+    )
+
     google_card = _render_strategy_card(
         border_rgba="rgba(245,200,66,.3)",
         label_color="#f5c842",
-        label_text="Enterprise-рішення",
-        score_text="84.1%",
+        label_text="Enterprise-рішення · #2 Score",
+        score_text="81.5%",
         title="Google Cloud CCAI",
         subtitle="Contact Center AI · Agent Assist · Dialogflow CX · Gemini",
         wrapper_style=" margin-bottom: 16px;",
         pros=[
-            "Нативна підтримка укр. мови з найкращим авторезюме на ринку",
-            "Спеціалізована telephony-модель — навчена на аудіо телефонних ліній та IVR-систем",
-            "Визначення тональності та емоцій у реальному часі",
+            "Нативна підтримка української мови з кращим авторезюме. Підтримка 100+ мов через Google NLU",
+            "Спеціалізована telephony-модель, навчена на аудіо телефонних ліній та IVR-систем",
+            "Gemini — один з найпотужніших LLM у світі",
             "Нативна інтеграція з Cisco",
-            "Найвищий потенціал скорочення постобробки до 18 секунд на дзвінок",
-            "Оплата лише за необхідний набір функціоналу",
+            "Повний стек із набору інструментів. Гнучка компонентна архітектура (оплата лише за необхідний функціонал)",
         ],
         cons=[
-            "Потребує тестування наших діалогів — заповнення тематик, полів та маркування розмов",
+            "Потребує тестування діалогів та суржику — авторезюме, заповнення тематик, полів та маркування розмов",
             "Відсутність нативної інтеграції з Binotel, Power Platform, Power BI",
             "Складність адміністрування та дорога вартість розробки",
+            "Складність налаштування повного стеку",
         ],
     )
 
@@ -413,10 +440,10 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(62,207,142,.25)",
         label_color="#10b981",
         label_text="Співвідношення ціна / якість",
-        score_text="71.3%",
+        score_text="67.6%",
         title="Ender Turing",
         subtitle="Локальний продукт із розумінням типового говору",
-        wrapper_style=" margin-bottom: 16px;",
+        indent="                    ",
         pros=[
             "100% автоматизований контроль якості",
             "Генерація резюме розмов",
@@ -429,6 +456,28 @@ def generate_recommendations_tab() -> str:
             "Немає функцій Pre-Call AI (голосовий бот / заміна IVR)",
             "Слабші інтеграційні можливості — потрібна розробка API з усіма системами",
             "Алгоритми ACW поступаються якістю великим мовним моделям (GPT, Gemini)",
+        ],
+    )
+
+    unitalk_card = _render_strategy_card(
+        border_rgba="rgba(156,163,175,.25)",
+        label_color="#9ca3af",
+        label_text="Call Recording · Voice Bot",
+        score_text="45.1%",
+        title="Uni Talk",
+        subtitle="Локальний продукт · Голосовий бот",
+        indent="                    ",
+        pros=[
+            "Український продукт із функціоналом голосового бота",
+            "Швидкий і безкоштовний пілот",
+            "Інтуїтивне адміністрування та зручний інтерфейс для менеджерів",
+            "Швидкий онбординг після підписання контракту",
+        ],
+        cons=[
+            "Відсутній функціонал копайлота",
+            "Немає авторезюме дзвінка, лише транскрибація і таймлайни",
+            "Відсутня автоматична оцінка якості та аналітика",
+            "Слабке тегування та маркування розмов",
         ],
     )
 
@@ -647,7 +696,7 @@ def generate_recommendations_tab() -> str:
                     <div class="rec-eyebrow">Фінальний розділ</div>
                     <h3 class="rec-title">Ключові висновки аналізу</h3>
                     <p class="rec-lead">
-                        Аналіз 12 рішень за методологією MSCW для AI Copilot контакт-центру на 1 000 операторів.
+                        Аналіз 14 рішень за методологією MSCW для AI Copilot контакт-центру на 1 000 операторів.
                         Оскільки ми вже маємо високорозвинену екосистему контакт-центру — готове робоче місце оператора,
                         дерево тематик, функціонуючу базу знань та власну систему аналітики — класичний підхід до
                         закупівлі монолітних рішень стає недоцільним.
@@ -659,9 +708,9 @@ def generate_recommendations_tab() -> str:
                     <div class="rec-divider-line"></div>
                 </div>
 
-{google_card}
+{cresta_card}
 
-{ender_card}
+{google_card}
 
                 <div class="rec-divider">
                     <span class="rec-divider-label">Аналіз інших провайдерів</span>
@@ -670,9 +719,9 @@ def generate_recommendations_tab() -> str:
 
                 <!-- Provider Cards Grid - Row 1 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{microsoft_card}
-
 {nice_card}
+
+{microsoft_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 2 -->
@@ -684,9 +733,9 @@ def generate_recommendations_tab() -> str:
 
                 <!-- Provider Cards Grid - Row 3 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{liveperson_card}
+{ender_card}
 
-{ringostat_card}
+{liveperson_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 4 -->
@@ -697,10 +746,17 @@ def generate_recommendations_tab() -> str:
                 </div>
 
                 <!-- Provider Cards Grid - Row 5 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-{getvocal_card}
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
+{ringostat_card}
 
+{unitalk_card}
+                </div>
+
+                <!-- Provider Cards Grid - Row 6 -->
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
 {elevenlabs_card}
+
+{getvocal_card}
                 </div>
 
                 <div class="rec-divider">
@@ -788,7 +844,7 @@ def generate_recommendations_tab() -> str:
                     <div class="strategy-label" style="color: #9ca3af;">Важливий висновок</div>
                     <div class="strategy-title">Жоден провайдер не закриває 100% вимог</div>
                     <div class="strategy-text">
-                        Кожне з 12 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
+                        Кожне з 14 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
                         Ідеальне рішення — це <strong style="color:#e0e6ed;">композитна архітектура з лідерів у своїх нішах</strong> або перегляд пріоритизації та ваги must-вимог.
                     </div>
                 </div>
@@ -1053,13 +1109,16 @@ def generate_html(
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 16px;
-            overflow: hidden;
+            overflow-x: auto;
             margin-bottom: 32px;
+        }}
+
+        .comparison-table > * {{
+            min-width: max-content;
         }}
 
         .table-header {{
             display: grid;
-            grid-template-columns: 250px repeat(8, 1fr);
             gap: 1px;
             background: rgba(255, 255, 255, 0.05);
             padding: 16px;
@@ -1074,7 +1133,6 @@ def generate_html(
 
         .criteria-row {{
             display: grid;
-            grid-template-columns: 250px repeat(8, 1fr);
             gap: 1px;
             padding: 12px 16px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
@@ -1205,7 +1263,7 @@ def generate_html(
 
         .summary-grid {{
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(7, 1fr);
             gap: 16px;
         }}
 
@@ -1231,7 +1289,7 @@ def generate_html(
 
         .final-scores {{
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 20px;
             margin-bottom: 32px;
         }}
@@ -1419,9 +1477,11 @@ def generate_html(
         }}
 
         @media (max-width: 1200px) {{
-            .table-header, .criteria-row {{
-                grid-template-columns: 200px repeat(12, 1fr);
-                font-size: 11px;
+            .final-scores {{
+                grid-template-columns: repeat(4, 1fr);
+            }}
+            .summary-grid {{
+                grid-template-columns: repeat(4, 1fr);
             }}
         }}
 
@@ -1814,7 +1874,7 @@ def generate_html(
                 flex-wrap: wrap;
             }}
             .summary-grid {{
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(2, 1fr);
             }}
         }}
 
@@ -1825,7 +1885,7 @@ def generate_html(
         <header>
             <div class="header-tag">НОВА ПОШТА • R&D • 2025</div>
             <h1>AI Copilot<br>Аналіз провайдерів</h1>
-            <p class="subtitle">Порівняльна оцінка 12 провайдерів за методологією MSCW. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
+            <p class="subtitle">Порівняльна оцінка 14 провайдерів за методологією MSCW. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
 
             <div class="legend">
                 <div class="legend-item">
