@@ -1961,7 +1961,7 @@ def main() -> None:
 
     print(f"Reading CSV from: {csv_path}")
 
-    categories, final_scores, tco_values = parse_csv(str(csv_path), delimiter=';')
+    categories, final_scores, tco_values = parse_csv(str(csv_path), delimiter=',')
 
     print(f"Parsed {len(categories)} categories:")
     for cat_id, cat in categories.items():
