@@ -980,6 +980,42 @@
             }
         }
 
+        .panel{display:none;padding:0 0 80px}
+        .panel.on{display:block}
+
+        .hero{padding:24px 32px 20px;border-bottom:1px solid var(--border);
+          display:flex;align-items:flex-end;justify-content:space-between;gap:16px}
+        .hero h2{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:900;
+          letter-spacing:-.03em;line-height:1.15}
+        .hero p{font-size:11px;color:var(--muted);margin-top:4px;line-height:1.6;max-width:600px}
+        .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-start}
+        .chip{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:500;
+          padding:3px 8px;border-radius:20px;border:1px solid;letter-spacing:.04em;white-space:nowrap}
+
+        .sl{font-family:'JetBrains Mono',monospace;font-size:8px;font-weight:500;
+          letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+          padding:20px 32px 8px;display:flex;align-items:center;gap:10px}
+        .sl::before{content:'//';color:var(--ai);opacity:.6}
+        .sl::after{content:'';flex:1;height:1px;background:var(--border)}
+
+        .diag-wrap{margin:0 32px;border:1px solid var(--border2);border-radius:8px;
+          overflow-x:auto;background:#0b0e14}
+        .diag-wrap:active{cursor:grabbing}
+        .diag-wrap svg{display:block}
+
+        .legend{display:flex;gap:18px;padding:8px 32px 0;flex-wrap:wrap;align-items:center}
+        .leg{display:flex;align-items:center;gap:6px;
+          font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted)}
+
+        .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 32px}
+        .pgc{border-radius:6px;padding:12px 14px;border:1px solid}
+        .pgc.w{background:var(--warn-bg);border-color:var(--warn-b)}
+        .pgc.g{background:var(--ai-bg);border-color:var(--ai-b)}
+        .pgc-t{font-size:11px;font-weight:700;margin-bottom:4px}
+        .pgc.w .pgc-t{color:var(--warn)}
+        .pgc.g .pgc-t{color:var(--ai)}
+        .pgc-d{font-size:10.5px;line-height:1.65;color:#a0b0c8}
+
     </style>
 <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/diagram-js.css">
     <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/bpmn-font/css/bpmn.css">
@@ -1027,6 +1063,8 @@ window.__bpmnData = {
         </header>
 
         <div class="tabs">
+            <button class="tab" data-tab="asis">AS-IS</button>
+            <button class="tab" data-tab="tobe">TO-BE</button>
             <button class="tab active" data-tab="overall">Загальний рейтинг</button>
             <button class="tab" data-tab="copilot">Copilot</button>
             <button class="tab" data-tab="acw">Постобробка</button>
@@ -1035,8 +1073,6 @@ window.__bpmnData = {
             <button class="tab" data-tab="it">IT & Security</button>
             <button class="tab" data-tab="business">Бізнес</button>
             <button class="tab" data-tab="recommendations">Висновки</button>
-            <button class="tab" data-tab="asis">AS-IS</button>
-            <button class="tab" data-tab="tobe">TO-BE</button>
         </div>
 
         <div class="tab-content active" data-content="overall">
@@ -3108,7 +3144,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Потребує тестування діалогів та суржику — авторезюме, заповнення тематик, полів та маркування розмов</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність нативної інтеграції з Binotel, Power Platform, Power BI</div>
@@ -3137,7 +3173,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Потребує тестування діалогів та суржику — авторезюме, заповнення тематик, полів та маркування розмов</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність нативної інтеграції з Binotel, Power Platform, Power BI</div>
@@ -3169,7 +3205,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна інфраструктурна платформа</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Необхідність тестування української мови для авторезюме (ACW)</div>
@@ -3199,7 +3235,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабше автоматичне перенесення даних саме з україномовних розмов</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус інструментарію платформи зроблено на текстові канали зв'язку</div>
@@ -3231,7 +3267,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Глобальна міграція — повноцінна платформа, що потребує переїзду</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Низька точність STT для українського аудіо</div>
@@ -3259,7 +3295,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає підтверджень генерації українською авторезюме</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Складнощі зі швидкістю маркування та фільтрації даних</div>
@@ -3290,7 +3326,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній інструмент підказок у реальному часі — не є асистентом оператора під час дзвінка</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Немає функцій Pre-Call AI (голосовий бот / заміна IVR)</div>
@@ -3317,7 +3353,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутнє підтвердження якісного розуміння українського голосу та суржику</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Контроль якості дзвінків відсутній по чек-листах</div>
@@ -3348,7 +3384,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність української голосової моделі для транскрибації</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Слабкі модулі аналітики та автоматичного контролю якості (QA)</div>
@@ -3374,7 +3410,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Менша швидкість обробки ШІ та глибина розуміння української</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутні підказки та супровід живого оператора</div>
@@ -3404,7 +3440,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Фокус продукту на продажі, маркетинг та аналіз реклами</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність Copilot-функцій</div>
@@ -3433,7 +3469,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал копайлота</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Максимум 15 API-запитів на секунду</div>
@@ -3469,7 +3505,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Не є Copilot-рішенням — лише надає транскрибацію у систему</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутній функціонал ACW, аналітики та не може замінити IVR</div>
@@ -3494,7 +3530,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                         <div>
-                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Обмеження</div>
+                            <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Ризики</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української</div>
                                 <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;"><span style="color:#ef4444;flex-shrink:0;">✗</span>Відсутність функціоналу пошуку Copilot, модуля ACW та аналітики</div>
@@ -3563,9 +3599,6 @@ window.__bpmnData = {
                     <div class="rec-divider-line"></div>
                 </div>
 
-                <div class="bpmn-scroll-wrap">
-
-                </div>
                 <div style="border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:#080b12">
                   <svg viewBox="0 0 1360 400" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Mulish,sans-serif">
                     <defs>
@@ -3696,137 +3729,286 @@ window.__bpmnData = {
             </div>
         </div>
 
-        <div class="tab-content" data-content="asis">
-            <div class="bpmn-section">
-                <div class="bpmn-hero">
-                    <div>
-                        <div class="bpmn-eyebrow" style="color:#ff7040">AS-IS</div>
-                        <h3 class="bpmn-title">Поточний процес контакт-центру</h3>
-                        <p class="bpmn-lead">6 учасників: Клієнт · Cisco · EVA (Omilia) · Запис (MP3) · Оператор · Робоче місце</p>
-                    </div>
-                    <div class="bpmn-chips">
-                        <span class="bpmn-chip" style="border-color:#1a3060;color:#4a8cff">Cisco — телефонія</span>
-                        <span class="bpmn-chip" style="border-color:#4a3000;color:#f0a030">EVA — Omilia IVR</span>
-                        <span class="bpmn-chip" style="border-color:#501800;color:#ff7040">Без AI</span>
-                        <span class="bpmn-chip" style="border-color:#501800;color:#ff7040">ACW вручну ~2хв</span>
-                    </div>
-                </div>
-
-                <div id="bpmn-asis-container" class="bpmn-viewer-wrap">
-                    <div class="bpmn-controls">
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',1.3)" title="Zoom in">+</button>
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',-1)" title="Fit to screen">⊡</button>
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',0.77)" title="Zoom out">−</button>
-                    </div>
-                </div>
-
-                <div class="bpmn-problems">
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Контекст губиться при ескалації</div><div class="bpmn-prob-text">EVA ескалює на оператора → Cisco передає в чергу → оператор отримує дзвінок без жодного контексту.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Черга без первинної обробки</div><div class="bpmn-prob-text">Якщо всі оператори зайняті — клієнт очікує. Немає механізму, який би обробив запит або відповів на просте питання.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Пошук інформації — повністю вручну</div><div class="bpmn-prob-text">Оператор паралельно консультує і шукає: трекінг → AWIS → сайт → політики. Кілька систем, жодних підказок.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Опрацювання після дзвінка — 8 кроків, ~2 хв</div><div class="bpmn-prob-text">Резюме → ЕН → «хто звертається» → тематика → підтематика → причина → вид → тон. Все вручну після кожного дзвінка.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Якість консультацій не аналізується</div><div class="bpmn-prob-text">MP3 зберігається і лежить. QA — вибіркова, вручну. Більшість дзвінків ніколи не перевіряється.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Немає єдиної картини ефективності</div><div class="bpmn-prob-text">Відсутній інструмент з аналітикою по КЦ: топ-причини, динаміка навантаження, якість відповідей, відхилення.</div></div>
-                </div>
-            </div>
+        <!-- ═══ AS-IS ═══ -->
+    <div id="p-as" class="panel tab-content" data-content="asis">
+      <div class="hero">
+        <div>
+          <h2 style="color:#ff7040">AS-IS &mdash; <span style="color:var(--text)">Поточний процес</span></h2>
+          <p>6 учасників з BPMN: Клієнт · Cisco · EVA (Omilia) · Запис (MP3) · Оператор · Робоче місце</p>
         </div>
-
-        <div class="tab-content" data-content="tobe">
-            <div class="bpmn-section">
-                <div class="bpmn-hero">
-                    <div>
-                        <div class="bpmn-eyebrow" style="color:#30d890">TO-BE</div>
-                        <h3 class="bpmn-title">Процес з AI Асистентом</h3>
-                        <p class="bpmn-lead">6 учасників: Клієнт · Cisco · Запис (MP3) · AI Асистент (4 транзакції) · Оператор · CRM</p>
-                    </div>
-                    <div class="bpmn-chips">
-                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Pre-AI: RAG + ЕН</span>
-                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Real-time Copilot</span>
-                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Post-call &le;1хв</span>
-                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Deep Analysis &le;10хв</span>
-                    </div>
-                </div>
-
-                <div id="bpmn-tobe-container" class="bpmn-viewer-wrap">
-                    <div class="bpmn-controls">
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',1.3)" title="Zoom in">+</button>
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',-1)" title="Fit to screen">⊡</button>
-                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',0.77)" title="Zoom out">−</button>
-                    </div>
-                </div>
-
-
-                <div class="bpmn-problems" style="--prob-color: #30d890; --prob-bg: rgba(48,216,144,.07); --prob-border: rgba(48,216,144,.2);">
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Скоротити ACW до 13 с</div><div class="bpmn-prob-text">Автозаповнення — оператор витрачає час лише на валідацію та закриття картки.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Менше ескалацій і повторних контактів</div><div class="bpmn-prob-text">Уніфікована база знань усіх КЦ — клієнт отримує вирішення з першого дзвінка.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Однаковий рівень відповіді</div><div class="bpmn-prob-text">Менше людського фактору — однаковий рівень незалежно від досвіду оператора.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Прискорений онбординг</div><div class="bpmn-prob-text">Стандартизація знань — новий оператор з підказками працює як досвідчений.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">100% аналіз якості дзвінків</div><div class="bpmn-prob-text">Системне розуміння якості замість вибіркових перевірок.</div></div>
-                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Голосовий асистент Pre-Call</div><div class="bpmn-prob-text">Зменшення навантаження через закриття простих звернень ШІ.</div></div>
-                </div>
-            </div>
+        <div class="chips">
+          <div class="chip" style="border-color:#1a3060;color:#4a8cff">Cisco — телефонія</div>
+          <div class="chip" style="border-color:#4a3000;color:#f0a030">EVA — Omilia IVR</div>
+          <div class="chip" style="border-color:var(--warn-b);color:var(--warn)">Без AI</div>
+          <div class="chip" style="border-color:var(--warn-b);color:var(--warn)">ACW вручну</div>
         </div>
+      </div>
+      <div class="sl">Діаграма AS-IS — координати 1:1 з BPMN-файлу</div>
+      <div class="legend">
+        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s_l)"/><defs><marker id="ah_s_l" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L6,2.5 L0,5 Z" fill="#3a4a65"/></marker></defs></svg>Sequence flow</div>
+        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="5,3"/></svg>Message flow</div>
+        <div class="leg"><svg width="14" height="10"><rect x="0" y="0" width="14" height="10" rx="2" fill="#1a0800" stroke="#8a3000" stroke-width="1"/></svg>Ручна операція</div>
+        <div class="leg"><svg width="12" height="10"><polygon points="6,0 12,5 6,10 0,5" fill="#12100a" stroke="#6a5010" stroke-width="1.2"/></svg>Gateway</div>
+        <div class="leg"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#0b0e14" stroke="#3a4a65" stroke-width="1.2"/></svg>Event</div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="diag-wrap"><svg width="100%" style="min-width:900px;display:block" viewBox="-4.0 -4.0 2888.0 1298.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="ah_s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#3a4a65"/>
+      </marker>
+      <marker id="ah_m" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#2a5a8a"/>
+      </marker>
+      <marker id="ah_n" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#0c4020"/>
+      </marker>
+    </defs>
+    <rect x="0.0" y="0.0" width="2880.0" height="200.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="0.0" width="30" height="200.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,100.0)" x="15.0" y="100.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a5888" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text>
+    <rect x="0.0" y="200.0" width="2880.0" height="140.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="200.0" width="30" height="140.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,270.0)" x="15.0" y="270.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a7cee" font-family="JetBrains Mono,monospace" font-weight="600">Cisco</text>
+    <rect x="0.0" y="340.0" width="2880.0" height="250.0" fill="#150d00" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="340.0" width="30" height="250.0" fill="#150d00" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,465.0)" x="15.0" y="465.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#c08828" font-family="JetBrains Mono,monospace" font-weight="600">EVA</text>
+    <rect x="0.0" y="590.0" width="2880.0" height="260.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="590.0" width="30" height="260.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,720.0)" x="15.0" y="715.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">Запис</text><text transform="rotate(-90,15.0,720.0)" x="15.0" y="725.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">(MP3)</text>
+    <rect x="0.0" y="850.0" width="2880.0" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="850.0" width="30" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,955.0)" x="15.0" y="955.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#8860d0" font-family="JetBrains Mono,monospace" font-weight="600">Оператор</text>
+    <rect x="0.0" y="1060.0" width="2880.0" height="230.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="1060.0" width="30" height="230.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,1175.0)" x="15.0" y="1170.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#7048c0" font-family="JetBrains Mono,monospace" font-weight="600">Робоче</text><text transform="rotate(-90,15.0,1175.0)" x="15.0" y="1180.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#7048c0" font-family="JetBrains Mono,monospace" font-weight="600">місце</text>
+    <path d="M88.0,120.0 L140.0,120.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M850.0,270.0 L960.0,270.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M390.0,520.0 L525.0,520.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M575.0,520.0 L750.0,520.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="665.5" y="509.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M550.0,495.0 L550.0,440.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="565.0" y="472.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M2080.0,670.0 L2145.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2195.0,670.0 L2420.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="2320.0" y="660.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">EVA</text>
+    <path d="M2170.0,695.0 L2170.0,750.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="2210.0" y="720.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Оператор</text>
+    <path d="M2520.0,670.0 L2632.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1740.0,985.0 L1740.0,1040.0 L1540.0,1040.0 L1540.0,1000.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1641.5" y="1029.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M1400.0,960.0 L1490.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1590.0,960.0 L1715.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1765.0,960.0 L1870.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1818.0" y="949.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M2360.0,960.0 L2420.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2520.0,960.0 L2600.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2700.0,1190.0 L2792.0,1190.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M190.0,160.0 L190.0,230.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1920.0,920.0 L1920.0,160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1970.0,120.0 L2030.0,120.0 L2030.0,630.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M190.0,310.0 L190.0,630.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1060.0,270.0 L1150.0,270.0 L1150.0,920.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1350.0,1160.0 L1350.0,1000.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1350.0,1000.0 L1350.0,1160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1190.0,920.0 L1190.0,160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1240.0,120.0 L1350.0,120.0 L1350.0,920.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2650.0,1000.0 L2650.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M190.0,310.0 L190.0,520.0 L290.0,520.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M800.0,480.0 L800.0,310.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M550.0,360.0 L550.0,40.0 L1920.0,40.0 L1920.0,80.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2170.0,830.0 L2170.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2220.0,1190.0 L2310.0,1190.0 L2310.0,1000.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <circle cx="70.0" cy="120.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="1.5"/>
+    <rect x="140.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="190.0" y="118.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Здійснює</text><text x="190.0" y="129.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <rect x="1140.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1190.0" y="123.5" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Описує запит</text>
+    <rect x="1870.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1920.0" y="118.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Завершує</text><text x="1920.0" y="129.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <rect x="140.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="190.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Маршрутизує</text><text x="190.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <rect x="750.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="800.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Очікування в</text><text x="800.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">черзі</text>
+    <rect x="960.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1010.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Переадресація</text><text x="1010.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">на оператора</text>
+    <rect x="290.0" y="480.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="340.0" y="518.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Первинна</text><text x="340.0" y="529.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">консультація</text>
+    <polygon points="550.0,495.0 575.0,520.0 550.0,545.0 525.0,520.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="544.0" y1="514.0" x2="556.0" y2="526.0" stroke="#c8a030" stroke-width="1.2"/><line x1="556.0" y1="514.0" x2="544.0" y2="526.0" stroke="#c8a030" stroke-width="1.2"/><text x="550.0" y="555.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Чи вирішено</text><text x="550.0" y="565.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">запит клієнта?</text>
+    <rect x="500.0" y="360.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="550.0" y="398.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="550.0" y="409.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">інших питань</text>
+    <rect x="750.0" y="480.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="800.0" y="518.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Передати запит</text><text x="800.0" y="529.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">оператору</text>
+    <rect x="140.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="190.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Початок запису</text><text x="190.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">розмови</text>
+    <rect x="1980.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2030.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Завершення</text><text x="2030.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">запису розмови</text>
+    <polygon points="2170.0,645.0 2195.0,670.0 2170.0,695.0 2145.0,670.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="2164.0" y1="664.0" x2="2176.0" y2="676.0" stroke="#c8a030" stroke-width="1.2"/><line x1="2176.0" y1="664.0" x2="2164.0" y2="676.0" stroke="#c8a030" stroke-width="1.2"/><text x="2170.0" y="608.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Визначення</text><text x="2170.0" y="620.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">каналу</text><text x="2170.0" y="632.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">консультації</text>
+    <rect x="2120.0" y="750.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2170.0" y="788.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Фіксація запиту</text><text x="2170.0" y="799.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">оператором</text>
+    <rect x="2420.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2470.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Збереження</text><text x="2470.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">запису розмови</text>
+    <circle cx="2650.0" cy="670.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="3"/><circle cx="2650.0" cy="670.0" r="14.0" fill="#3a4a65"/>
+    <rect x="1120.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1170.0" y="952.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Приймає</text><text x="1170.0" y="963.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінок,</text><text x="1170.0" y="974.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">починає розмову</text><rect x="1124.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1141.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="1300.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1350.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Аналіз</text><text x="1350.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">запитань, пошук</text><text x="1350.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">у базі знань,</text><text x="1350.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">накладної</text><rect x="1304.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1321.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="1490.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1540.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Консультує та</text><text x="1540.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">шукає рішення</text><rect x="1494.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1511.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <polygon points="1740.0,935.0 1765.0,960.0 1740.0,985.0 1715.0,960.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="1734.0" y1="954.0" x2="1746.0" y2="966.0" stroke="#c8a030" stroke-width="1.2"/><line x1="1746.0" y1="954.0" x2="1734.0" y2="966.0" stroke="#c8a030" stroke-width="1.2"/><text x="1740.0" y="900.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text><text x="1740.0" y="912.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">задоволений</text><text x="1740.0" y="924.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">відповіддю?</text>
+    <rect x="1870.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1920.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="1920.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">інших питань чи</text><text x="1920.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">завершення</text><text x="1920.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінка</text><rect x="1874.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1891.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="2260.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2310.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Заповнення</text><text x="2310.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">резюме, запиту</text><text x="2310.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">на інші відділи</text><text x="2310.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">(опціонально)</text><rect x="2264.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2281.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="2420.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2470.0" y="952.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Заповнення</text><text x="2470.0" y="963.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">тематик, тегів,</text><text x="2470.0" y="974.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">тону дзвінка</text><rect x="2424.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2441.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="2600.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2650.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Тегування та</text><text x="2650.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">маркування</text><rect x="2604.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2621.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="1300.0" y="1160.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="1304.0" y="1164.0" width="34" height="8" rx="2" fill="#501800"/><text x="1321.0" y="1171.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="1350.0" y="1198.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Аналіз історії</text><text x="1350.0" y="1209.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">клієнта</text>
+    <rect x="2120.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2170.0" y="1182.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Створення нової</text><text x="2170.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">картки</text><text x="2170.0" y="1204.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">звернення</text><rect x="2124.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2141.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="2600.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2604.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2621.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2650.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Закриття картки</text>
+    <circle cx="2810.0" cy="1190.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="3"/><circle cx="2810.0" cy="1190.0" r="14.0" fill="#3a4a65"/>
+    </svg></div>
+      <div class="sl" style="padding-top:24px">Проблеми AS-IS</div>
+      <div class="pg">
+        <div class="pgc w"><div class="pgc-t">Контекст губиться при ескалації</div><div class="pgc-d">EVA [Передати запит] → Cisco [Черга] → Оператор отримує дзвінок без жодного контексту.</div></div>
+        <div class="pgc w"><div class="pgc-t">Оператор шукає вручну</div><div class="pgc-d">Аналіз запитань + пошук у БЗ та накладній — повністю ручний процес під час розмови.</div></div>
+        <div class="pgc w"><div class="pgc-t">ACW — 3 ручних кроки</div><div class="pgc-d">Заповнення резюме → Теги + тон → Маркування. Все вручну, 3–7 хвилин на дзвінок.</div></div>
+        <div class="pgc w"><div class="pgc-t">Запис не аналізується</div><div class="pgc-d">MP3 зберігається або фіксується вручну. QA — вибіркова, ручна, повільна.</div></div>
+        <div class="pgc w"><div class="pgc-t">Черга без обробки</div><div class="pgc-d">Якщо оператор зайнятий — клієнт просто чекає. Немає автоматичної обробки.</div></div>
+        <div class="pgc w"><div class="pgc-t">Нульова аналітика</div><div class="pgc-d">Немає BI, топ-причин звернень, тональності, compliance.</div></div>
+      </div>
+    </div>
+
+        <!-- ═══ TO-BE ═══ -->
+    <div id="p-to" class="panel tab-content" data-content="tobe">
+      <div class="hero">
+        <div>
+          <h2 style="color:#30d890">TO-BE &mdash; <span style="color:var(--text)">Процес з AI Асистентом</span></h2>
+          <p>6 учасників: Клієнт · Cisco (нова гілка) · Запис (MP3) · AI Асистент (4 транзакції) · Оператор · Робоче місце</p>
+        </div>
+        <div class="chips">
+          <div class="chip" style="border-color:#0d4028;color:#30d890">Pre-AI: RAG + ЕН</div>
+          <div class="chip" style="border-color:#0d4028;color:#30d890">Real-time Copilot</div>
+          <div class="chip" style="border-color:#0d4028;color:#30d890">Post-call &le;1хв</div>
+          <div class="chip" style="border-color:#0d4028;color:#30d890">Deep Analysis &le;10хв</div>
+        </div>
+      </div>
+      <div class="sl">Діаграма TO-BE — координати 1:1 з BPMN-файлу</div>
+      <div class="legend">
+        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a65" stroke-width="1.3"/></svg>Sequence flow</div>
+        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="5,3"/></svg>Message flow</div>
+        <div class="leg"><svg width="14" height="10"><rect x="0" y="0" width="14" height="10" rx="2" fill="#041408" stroke="#0c3820" stroke-width="1"/></svg>Новий AI-блок</div>
+        <div class="leg"><svg width="28" height="10"><rect x="0" y="1" width="28" height="8" rx="2" fill="none" stroke="#184030" stroke-dasharray="4,2" stroke-width="1"/></svg>Транзакція AI</div>
+      </div>
+      <div style="height:8px"></div>
+      <div class="diag-wrap"><svg width="100%" style="min-width:900px;display:block" viewBox="-4.0 -4.0 3148.0 1268.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="ah_s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#3a4a65"/>
+      </marker>
+      <marker id="ah_m" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#2a5a8a"/>
+      </marker>
+      <marker id="ah_n" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+        <path d="M0,0 L8,3 L0,6 Z" fill="#0c4020"/>
+      </marker>
+    </defs>
+    <rect x="0.0" y="0.0" width="3140.0" height="160.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="0.0" width="30" height="160.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,80.0)" x="15.0" y="80.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a5888" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text>
+    <rect x="0.0" y="160.0" width="3140.0" height="230.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="160.0" width="30" height="230.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,275.0)" x="15.0" y="275.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a7cee" font-family="JetBrains Mono,monospace" font-weight="600">Cisco</text>
+    <rect x="0.0" y="390.0" width="3140.0" height="160.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="390.0" width="30" height="160.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,470.0)" x="15.0" y="465.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">Запис</text><text transform="rotate(-90,15.0,470.0)" x="15.0" y="475.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">(MP3)</text>
+    <rect x="0.0" y="550.0" width="3140.0" height="350.0" fill="#030f08" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="550.0" width="30" height="350.0" fill="#030f08" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,725.0)" x="15.0" y="720.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600">AI</text><text transform="rotate(-90,15.0,725.0)" x="15.0" y="730.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600">Асистент</text>
+    <rect x="0.0" y="900.0" width="3140.0" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="900.0" width="30" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,1005.0)" x="15.0" y="1005.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#8860d0" font-family="JetBrains Mono,monospace" font-weight="600">Оператор</text>
+    <rect x="0.0" y="1110.0" width="3140.0" height="150.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="1110.0" width="30" height="150.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,1185.0)" x="15.0" y="1185.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#a888e8" font-family="JetBrains Mono,monospace" font-weight="600">CRM</text>
+    <rect x="440.0" y="570.0" width="830.0" height="310.0" rx="6" fill="#020a04" stroke="#0c3820" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="855.0" y="582.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">Pre AI Assistant</text>
+    <rect x="1410.0" y="570.0" width="330.0" height="310.0" rx="6" fill="#020a04" stroke="#0c3820" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="1575.0" y="582.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">Real-time AI</text>
+    <text x="1575.0" y="593.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">Copilot</text>
+    <rect x="1990.0" y="570.0" width="480.0" height="310.0" rx="6" fill="#020a04" stroke="#0c3820" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="2230.0" y="582.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">Post-call AI (≤1m)</text>
+    <rect x="2540.0" y="570.0" width="580.0" height="310.0" rx="6" fill="#020a04" stroke="#0c3820" stroke-width="1.5" stroke-dasharray="6,3"/>
+    <text x="2830.0" y="582.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">Deep Analysis</text>
+    <text x="2830.0" y="593.0" text-anchor="middle" font-size="11.6" fill="#30d890" font-family="JetBrains Mono,monospace" font-weight="600" opacity="0.8">(≤10m)</text>
+    <path d="M88.0,80.0 L140.0,80.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M210.0,280.0 L210.0,310.0 L285.0,310.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M335.0,310.0 L920.0,310.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="390.0" y="299.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M310.0,285.0 L310.0,230.0 L420.0,230.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="389.5" y="219.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M620.0,1190.0 L920.0,1190.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1020.0,1190.0 L2340.0,1190.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2440.0,1190.0 L2570.0,1190.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1825.0,1010.0 L1900.0,1010.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1863.0" y="999.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M1710.0,1010.0 L1775.0,1010.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1800.0,1035.0 L1800.0,1090.0 L1660.0,1090.0 L1660.0,1050.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1730.5" y="1079.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M710.0,755.0 L710.0,820.0 L920.0,820.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="725.0" y="791.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M970.0,780.0 L970.0,755.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M995.0,730.0 L1120.0,730.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1058.0" y="719.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
+    <path d="M710.0,705.0 L710.0,630.0 L920.0,630.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="725.5" y="672.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M970.0,705.0 L970.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="979.5" y="692.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
+    <path d="M600.0,730.0 L685.0,730.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M1550.0,730.0 L1600.0,730.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2120.0,730.0 L2180.0,730.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2280.0,730.0 L2340.0,730.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2670.0,725.0 L2740.0,725.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M2840.0,725.0 L2900.0,725.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M3000.0,725.0 L3052.0,725.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
+    <path d="M190.0,120.0 L190.0,200.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M210.0,280.0 L210.0,430.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M470.0,190.0 L470.0,120.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1020.0,310.0 L1330.0,310.0 L1330.0,970.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M970.0,590.0 L970.0,350.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1170.0,690.0 L1170.0,80.0 L1900.0,80.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1650.0,770.0 L1650.0,970.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1370.0,970.0 L1370.0,730.0 L1450.0,730.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2620.0,1150.0 L2620.0,765.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2390.0,770.0 L2390.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2070.0,510.0 L2070.0,690.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M2000.0,80.0 L2070.0,80.0 L2070.0,430.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1950.0,970.0 L1950.0,120.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1480.0,770.0 L1480.0,1090.0 L590.0,1090.0 L590.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M590.0,1150.0 L590.0,1090.0 L1480.0,1090.0 L1480.0,770.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M1610.0,1010.0 L1500.0,1010.0 L1500.0,770.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M550.0,770.0 L550.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <path d="M520.0,80.0 L550.0,80.0 L550.0,690.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
+    <circle cx="70.0" cy="80.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="1.5"/>
+    <rect x="140.0" y="40.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="190.0" y="78.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Здійснює</text><text x="190.0" y="89.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <rect x="420.0" y="40.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="470.0" y="83.5" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Описує запит</text>
+    <rect x="1900.0" y="40.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1950.0" y="78.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Завершує</text><text x="1950.0" y="89.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <rect x="160.0" y="200.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="210.0" y="238.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Маршрутизує</text><text x="210.0" y="249.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
+    <polygon points="310.0,285.0 335.0,310.0 310.0,335.0 285.0,310.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="304.0" y1="304.0" x2="316.0" y2="316.0" stroke="#c8a030" stroke-width="1.2"/><line x1="316.0" y1="304.0" x2="304.0" y2="316.0" stroke="#c8a030" stroke-width="1.2"/><text x="310.0" y="345.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Наявність</text><text x="310.0" y="355.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">вільного</text><text x="310.0" y="365.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">оператора?</text>
+    <rect x="420.0" y="190.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="470.0" y="217.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Переадресація</text><text x="470.0" y="228.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">на AI із</text><text x="470.0" y="239.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">проханням</text><text x="470.0" y="250.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">озвучити запит</text>
+    <rect x="920.0" y="270.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="970.0" y="308.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Переадресація</text><text x="970.0" y="319.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">на оператора</text>
+    <rect x="160.0" y="430.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="210.0" y="468.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Початок запису</text><text x="210.0" y="479.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">розмови</text>
+    <rect x="2020.0" y="430.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2070.0" y="468.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Завершення</text><text x="2070.0" y="479.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">запису розмови</text>
+    <rect x="500.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#041408" stroke="#0c3820" stroke-width="1.3"/><text x="550.0" y="717.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">Аналіз запитань</text><text x="550.0" y="728.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">\ історії</text><text x="550.0" y="739.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">клієнта. Пошук</text><text x="550.0" y="750.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">RAG \ ЕН</text>
+    <polygon points="710.0,705.0 735.0,730.0 710.0,755.0 685.0,730.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="704.0" y1="724.0" x2="716.0" y2="736.0" stroke="#c8a030" stroke-width="1.2"/><line x1="716.0" y1="724.0" x2="704.0" y2="736.0" stroke="#c8a030" stroke-width="1.2"/><text x="710.0" y="765.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">AI може надати</text><text x="710.0" y="775.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">відповідь?</text>
+    <rect x="920.0" y="780.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="970.0" y="818.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Надає відповідь</text><text x="970.0" y="829.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">клієнту</text>
+    <polygon points="970.0,705.0 995.0,730.0 970.0,755.0 945.0,730.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="964.0" y1="724.0" x2="976.0" y2="736.0" stroke="#c8a030" stroke-width="1.2"/><line x1="976.0" y1="724.0" x2="964.0" y2="736.0" stroke="#c8a030" stroke-width="1.2"/><text x="970.0" y="765.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text><text x="970.0" y="775.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">задоволений</text><text x="970.0" y="785.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">відповіддю?</text>
+    <rect x="1120.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1170.0" y="717.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="1170.0" y="728.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">інших питань чи</text><text x="1170.0" y="739.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">завершення</text><text x="1170.0" y="750.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінка</text>
+    <rect x="920.0" y="590.0" width="100.0" height="80.0" rx="4" fill="#041408" stroke="#0c3820" stroke-width="1.3"/><text x="970.0" y="622.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">Передає</text><text x="970.0" y="633.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">контекст</text><text x="970.0" y="644.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">зібраних даних</text>
+    <rect x="1450.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#041408" stroke="#0c3820" stroke-width="1.3"/><text x="1500.0" y="717.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">Аналіз</text><text x="1500.0" y="728.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">запитань, пошук</text><text x="1500.0" y="739.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">у базі знань,</text><text x="1500.0" y="750.0" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">накладної</text>
+    <rect x="1600.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#041408" stroke="#0c3820" stroke-width="1.3"/><text x="1650.0" y="711.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">Висвітлення</text><text x="1650.0" y="722.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">підказок,</text><text x="1650.0" y="733.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">історії</text><text x="1650.0" y="744.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">клієнта,</text><text x="1650.0" y="755.5" text-anchor="middle" font-size="12.3" fill="#50e8a0" font-family="Mulish,sans-serif" font-weight="700">найкращих дій</text>
+    <rect x="2020.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2070.0" y="728.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Транскрибація.</text><text x="2070.0" y="739.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Витяг сутностей</text>
+    <rect x="2180.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2230.0" y="717.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Генерація</text><text x="2230.0" y="728.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">резюме, запиту</text><text x="2230.0" y="739.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">на інші відділи</text><text x="2230.0" y="750.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">(опціонально)</text>
+    <rect x="2340.0" y="690.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2390.0" y="722.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Заповнення</text><text x="2390.0" y="733.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">тематик, тегів,</text><text x="2390.0" y="744.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">тону дзвінка</text>
+    <rect x="2570.0" y="685.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2620.0" y="712.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Перевірка</text><text x="2620.0" y="723.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">проходження</text><text x="2620.0" y="734.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">оператора по</text><text x="2620.0" y="745.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">чеклисту</text>
+    <rect x="2740.0" y="685.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2790.0" y="723.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Тегування та</text><text x="2790.0" y="734.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">маркування</text>
+    <rect x="2900.0" y="685.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2950.0" y="717.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Інтеграція</text><text x="2950.0" y="728.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">даних у</text><text x="2950.0" y="739.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">аналітику BI</text>
+    <circle cx="3070.0" cy="725.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="3"/><circle cx="3070.0" cy="725.0" r="14.0" fill="#3a4a65"/>
+    <rect x="1300.0" y="970.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1350.0" y="1002.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Приймає</text><text x="1350.0" y="1013.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінок,</text><text x="1350.0" y="1024.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">починає розмову</text><rect x="1304.0" y="974.0" width="34" height="8" rx="2" fill="#501800"/><text x="1321.0" y="981.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="1610.0" y="970.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1660.0" y="997.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Консультує,</text><text x="1660.0" y="1008.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">читаючи</text><text x="1660.0" y="1019.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">підказки, та</text><text x="1660.0" y="1030.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">шукає рішення</text><rect x="1614.0" y="974.0" width="34" height="8" rx="2" fill="#501800"/><text x="1631.0" y="981.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <polygon points="1800.0,985.0 1825.0,1010.0 1800.0,1035.0 1775.0,1010.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="1794.0" y1="1004.0" x2="1806.0" y2="1016.0" stroke="#c8a030" stroke-width="1.2"/><line x1="1806.0" y1="1004.0" x2="1794.0" y2="1016.0" stroke="#c8a030" stroke-width="1.2"/><text x="1800.0" y="948.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text><text x="1800.0" y="960.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">задоволений</text><text x="1800.0" y="972.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">відповіддю?</text>
+    <rect x="1900.0" y="970.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1950.0" y="997.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="1950.0" y="1008.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">інших питань чи</text><text x="1950.0" y="1019.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">завершення</text><text x="1950.0" y="1030.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінка</text><rect x="1904.0" y="974.0" width="34" height="8" rx="2" fill="#501800"/><text x="1921.0" y="981.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
+    <rect x="520.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="570.0" y="1188.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Аналіз історії</text><text x="570.0" y="1199.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">клієнта</text>
+    <rect x="920.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="970.0" y="1182.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Створення нової</text><text x="970.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">картки</text><text x="970.0" y="1204.5" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">звернення</text>
+    <rect x="2340.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2344.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2361.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2390.0" y="1188.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Доповнення</text><text x="2390.0" y="1199.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">картки клієнта</text>
+    <rect x="2570.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2574.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2591.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2620.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Закриття картки</text>
+    </svg></div>
+      <div class="sl" style="padding-top:24px">Нові можливості TO-BE</div>
+      <div class="pg">
+        <div class="pgc g"><div class="pgc-t">Pre-AI Assistant</div><div class="pgc-d">Cisco [немає оператора] → AI: RAG + ЕН. Відповідає сам або збирає контекст і передає оператору.</div></div>
+        <div class="pgc g"><div class="pgc-t">Real-time Copilot</div><div class="pgc-d">Двосторонній зв'язок: Оператор → AI → підказки + NBA в реальному часі. Без ручного пошуку.</div></div>
+        <div class="pgc g"><div class="pgc-t">Post-call AI &le;1 хвилини</div><div class="pgc-d">Запис → Транскрипція → Резюме → Теги → Робоче місце auto-fill. ACW з 5–7 хв до 30 сек.</div></div>
+        <div class="pgc g"><div class="pgc-t">Deep Analysis &le;10 хвилин</div><div class="pgc-d">Закриття картки → AI: чекліст оператора → маркування → BI. 100% дзвінків.</div></div>
+        <div class="pgc g"><div class="pgc-t">Context Handoff</div><div class="pgc-d">AI [Передає контекст] → Cisco → Оператор отримує дзвінок з повним контекстом.</div></div>
+        <div class="pgc g"><div class="pgc-t">BI Аналітика</div><div class="pgc-d">Deep Analysis → Інтеграція у BI. Топ-причини, тональність, compliance, CSAT в реальному часі.</div></div>
+      </div>
+    </div>
 
     </div>
 
-    <script>
-        const tabs = document.querySelectorAll('.tab');
-        const contents = document.querySelectorAll('.tab-content');
-        const _bpmnViewers = {};
+        <script>
+            const tabs = document.querySelectorAll('.tab');
+            const contents = document.querySelectorAll('.tab-content');
 
-        function _initBpmnViewer(tabId) {
-            if (_bpmnViewers[tabId]) return;
-            const xml = (window.__bpmnData || {})[tabId];
-            if (!xml) return;
-            const container = document.getElementById('bpmn-' + tabId + '-container');
-            if (!container || typeof BpmnJS === 'undefined') return;
-            const viewer = new BpmnJS({ container });
-            _bpmnViewers[tabId] = viewer;
-            viewer.importXML(xml).then(() => {
-                viewer.get('canvas').zoom('fit-viewport');
-            }).catch(err => {
-                container.innerHTML = '<p style="padding:20px;color:#888;font-size:13px">BPMN diagram requires internet connection (CDN)</p>';
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const targetTab = tab.dataset.tab;
+
+                    tabs.forEach(t => t.classList.remove('active'));
+                    contents.forEach(c => c.classList.remove('active'));
+
+                    tab.classList.add('active');
+                    document.querySelector(`[data-content="${targetTab}"]`).classList.add('active');
+                });
             });
-        }
 
-        function _bpmnZoom(tabId, factor) {
-            const v = _bpmnViewers[tabId];
-            if (!v) return;
-            const canvas = v.get('canvas');
-            if (factor === -1) { canvas.zoom('fit-viewport'); return; }
-            canvas.zoom(canvas.zoom() * factor);
-        }
+            function toggleExpand(row) {
+                const expandDetails = row.querySelector('.expand-details');
+                const allExpanded = document.querySelectorAll('.expand-details.active');
 
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                const targetTab = tab.dataset.tab;
+                allExpanded.forEach(el => {
+                    if (el !== expandDetails) {
+                        el.classList.remove('active');
+                    }
+                });
 
-                tabs.forEach(t => t.classList.remove('active'));
-                contents.forEach(c => c.classList.remove('active'));
-
-                tab.classList.add('active');
-                document.querySelector(`[data-content="${targetTab}"]`).classList.add('active');
-
-                if (targetTab === 'asis' || targetTab === 'tobe') {
-                    setTimeout(() => _initBpmnViewer(targetTab), 50);
+                if (expandDetails) {
+                    expandDetails.classList.toggle('active');
                 }
-            });
-        });
-
-        function toggleExpand(row) {
-            const expandDetails = row.querySelector('.expand-details');
-            const allExpanded = document.querySelectorAll('.expand-details.active');
-
-            allExpanded.forEach(el => {
-                if (el !== expandDetails) {
-                    el.classList.remove('active');
-                }
-            });
-
-            if (expandDetails) {
-                expandDetails.classList.toggle('active');
             }
-        }
-    </script>
+        </script>
 </body>
 </html>
