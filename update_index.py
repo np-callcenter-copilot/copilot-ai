@@ -5,6 +5,7 @@ Parses CSV data with provider scores and generates an interactive HTML dashboard
 """
 
 import csv
+import json
 import re
 import shutil
 from dataclasses import dataclass, field
@@ -812,6 +813,219 @@ def generate_recommendations_tab() -> str:
                         <div class="component-desc">Компонент інтеграції: вбудовування в наявне робоче місце оператора через API</div>
                     </div>
                 </div>
+
+                <div class="rec-divider">
+                    <span class="rec-divider-label">Технічна Архітектура TO-BE</span>
+                    <div class="rec-divider-line"></div>
+                </div>
+
+                <div class="bpmn-scroll-wrap">
+
+                </div>
+                <div style="border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:#080b12">
+                  <svg viewBox="0 0 1360 400" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Mulish,sans-serif">
+                    <defs>
+                      <marker id="a1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5a6e90"/></marker>
+                      <marker id="a2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#4a8cff"/></marker>
+                      <marker id="a3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#30d890"/></marker>
+                      <marker id="a5" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#3a4a65"/></marker>
+                    </defs>
+                    <rect x="0" y="0" width="1360" height="400" fill="#080b12"/>
+                    <!-- Lane backgrounds -->
+                    <rect x="0"    y="0" width="185"  height="370" fill="#0a0e16"/>
+                    <rect x="185"  y="0" width="185"  height="370" fill="#0c1020"/>
+                    <rect x="370"  y="0" width="185"  height="370" fill="#0a0e16"/>
+                    <rect x="555"  y="0" width="260"  height="370" fill="#0c1020"/>
+                    <rect x="815"  y="0" width="260"  height="370" fill="#0a0e16"/>
+                    <rect x="1075" y="0" width="285"  height="370" fill="#0c1020"/>
+                    <!-- Lane headers -->
+                    <rect x="0"    y="0" width="185"  height="28" fill="#111826"/>
+                    <rect x="185"  y="0" width="185"  height="28" fill="#131a2e"/>
+                    <rect x="370"  y="0" width="185"  height="28" fill="#111826"/>
+                    <rect x="555"  y="0" width="260"  height="28" fill="#131a2e"/>
+                    <rect x="815"  y="0" width="260"  height="28" fill="#111826"/>
+                    <rect x="1075" y="0" width="285"  height="28" fill="#131a2e"/>
+                    <!-- Dividers -->
+                    <line x1="185"  y1="0" x2="185"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
+                    <line x1="370"  y1="0" x2="370"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
+                    <line x1="555"  y1="0" x2="555"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
+                    <line x1="815"  y1="0" x2="815"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
+                    <line x1="1075" y1="0" x2="1075" y2="370" stroke="#1e2a40" stroke-width="1.2"/>
+                    <line x1="0" y1="28" x2="1360" y2="28" stroke="#1e2a40" stroke-width="1"/>
+                    <line x1="0" y1="370" x2="1360" y2="370" stroke="#1e2a40" stroke-width="1"/>
+                    <!-- Lane labels -->
+                    <text x="93"   y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">TELEPHONY</text>
+                    <text x="278"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">PRE AI / IVR</text>
+                    <text x="463"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">DATA PIPELINE</text>
+                    <text x="685"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">IN-CALL AI / COPILOT</text>
+                    <text x="945"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">ACW</text>
+                    <text x="1218" y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">DEEP ANALYSIS</text>
+
+                    <!-- ===== TELEPHONY ===== -->
+                    <circle cx="93" cy="72" r="16" fill="#0a0e16" stroke="#5a6e90" stroke-width="2.2"/>
+                    <line x1="93" y1="88" x2="93" y2="112" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <rect x="22" y="114" width="142" height="62" rx="8" fill="#060f1e" stroke="#1a3060" stroke-width="1.8"/>
+                    <text x="93" y="140" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Cisco &#x2192;</text>
+                    <text x="93" y="155" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">real-time streaming</text>
+                    <line x1="93" y1="176" x2="93" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
+                    <line x1="93" y1="300" x2="278" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+
+                    <!-- ===== PRE AI / IVR ===== -->
+                    <line x1="278" y1="300" x2="278" y2="208" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <polygon points="278,200 289,214 267,214" fill="#080b12" stroke="#3a4a65" stroke-width="1.5"/>
+                    <rect x="206" y="114" width="144" height="82" rx="8" fill="#0d1f45" stroke="#4a8cff" stroke-width="2.2"/>
+                    <text x="278" y="144" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">11labs / Google</text>
+                    <text x="278" y="159" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">DialogflowCX</text>
+                    <text x="278" y="178" text-anchor="middle" font-size="10" fill="#a0c0ff" font-weight="600">&#x2192; Intent</text>
+                    <line x1="350" y1="148" x2="392" y2="148" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+
+                    <!-- ===== DATA PIPELINE ===== -->
+                    <rect x="393" y="114" width="148" height="68" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
+                    <text x="467" y="144" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
+                    <text x="467" y="159" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">transcribes</text>
+                    <text x="467" y="174" text-anchor="middle" font-size="10" fill="#30d890" font-weight="600">&#x2192; context</text>
+                    <line x1="467" y1="182" x2="467" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
+                    <line x1="467" y1="300" x2="625" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+
+                    <!-- ===== IN-CALL AI / COPILOT ===== -->
+                    <!-- Ender Turing: top-right. Mapped from SVG: x=702,y=69,w=87,h=66 -->
+                    <rect x="702" y="60" width="100" height="70" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
+                    <text x="752" y="88" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
+                    <text x="752" y="103" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">transcribes</text>
+
+                    <!-- Google Agent: left-center. Mapped from SVG: x=616,y=144,w=87,h=66 -->
+                    <rect x="570" y="155" width="110" height="74" rx="8" fill="#0d1f45" stroke="#4a8cff" stroke-width="2.2"/>
+                    <text x="625" y="180" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Google Agent</text>
+                    <text x="625" y="195" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Assist &#x2192;</text>
+                    <text x="625" y="210" text-anchor="middle" font-size="10" fill="#a0c0ff">NBA\RAG</text>
+
+                    <!-- Consultation: bottom-left. Mapped from SVG: x=616,y=251,w=87,h=66 -->
+                    <rect x="570" y="262" width="110" height="68" rx="8" fill="#0a0e18" stroke="#2a3a58" stroke-width="1.8"/>
+                    <circle cx="596" cy="278" r="7" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
+                    <path d="M587,292 Q596,286 605,292" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
+                    <text x="648" y="282" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">Consultation</text>
+
+                    <!-- Flow_01k7vdu: ET left → left → down → GA top (M1230,3310 L1180,3310 L1180,3360) -->
+                    <path d="M702,95 L670,95 L670,155" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+
+                    <!-- Flow_1iyksw6: GA bottom → down → CO top (M1180,3440 L1180,3490) -->
+                    <line x1="625" y1="229" x2="625" y2="262" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+
+
+
+                    <!-- ARROW 1: Consultation right → up → Ender Turing bottom -->
+                    <path d="M680,296 L752,296 L752,130" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <!-- ARROW 2: Ender Turing right → right → down → Summary CRM left -->
+                    <path d="M802,95 L840,95 L840,299 L870,299" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <!-- solid arrow: Summary CRM → Agents validation -->
+                    <line x1="958" y1="260" x2="958" y2="116" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+
+
+
+
+                    <!-- ===== ACW ===== -->
+                    <rect x="882" y="50" width="152" height="66" rx="8" fill="#0a0e18" stroke="#2a3a58" stroke-width="1.8"/>
+                    <circle cx="908" cy="67" r="7" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
+                    <path d="M899,81 Q908,75 917,81" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
+                    <text x="958" y="76" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">Agents</text>
+                    <text x="958" y="91" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">validation</text>
+
+                    <!-- Summary CRM -->
+                    <rect x="870" y="260" width="176" height="78" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
+                    <text x="958" y="285" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Summary</text>
+                    <text x="958" y="300" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">avtomation CRM</text>
+                    <text x="958" y="315" text-anchor="middle" font-size="10" fill="#30d890" font-weight="600">EnderTuring</text>
+                    <!-- dashed to Deep Analysis -->
+                    <line x1="1034" y1="83" x2="1118" y2="83" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+
+                    <!-- ===== DEEP ANALYSIS ===== -->
+                    <line x1="1118" y1="83" x2="1188" y2="83" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
+                    <line x1="1188" y1="83" x2="1188" y2="112" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <rect x="1118" y="114" width="192" height="68" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
+                    <text x="1214" y="144" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
+                    <text x="1214" y="159" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Deep Analysis</text>
+                    <line x1="1214" y1="182" x2="1214" y2="216" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <circle cx="1214" cy="236" r="18" fill="#080b12" stroke="#5a6e90" stroke-width="3"/>
+                    <circle cx="1214" cy="236" r="11" fill="#3a4a65"/>
+                  </svg>
+                </div>
+            </div>
+        </div>'''
+
+
+def generate_asis_tab() -> str:
+    """Generate HTML for the AS-IS BPMN tab."""
+    return '''        <div class="tab-content" data-content="asis">
+            <div class="bpmn-section">
+                <div class="bpmn-hero">
+                    <div>
+                        <div class="bpmn-eyebrow" style="color:#ff7040">AS-IS</div>
+                        <h3 class="bpmn-title">Поточний процес контакт-центру</h3>
+                        <p class="bpmn-lead">6 учасників: Клієнт · Cisco · EVA (Omilia) · Запис (MP3) · Оператор · Робоче місце</p>
+                    </div>
+                    <div class="bpmn-chips">
+                        <span class="bpmn-chip" style="border-color:#1a3060;color:#4a8cff">Cisco — телефонія</span>
+                        <span class="bpmn-chip" style="border-color:#4a3000;color:#f0a030">EVA — Omilia IVR</span>
+                        <span class="bpmn-chip" style="border-color:#501800;color:#ff7040">Без AI</span>
+                        <span class="bpmn-chip" style="border-color:#501800;color:#ff7040">ACW вручну ~2хв</span>
+                    </div>
+                </div>
+
+                <div id="bpmn-asis-container" class="bpmn-viewer-wrap">
+                    <div class="bpmn-controls">
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',1.3)" title="Zoom in">+</button>
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',-1)" title="Fit to screen">⊡</button>
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('asis',0.77)" title="Zoom out">−</button>
+                    </div>
+                </div>
+
+                <div class="bpmn-problems">
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Контекст губиться при ескалації</div><div class="bpmn-prob-text">EVA ескалює на оператора → Cisco передає в чергу → оператор отримує дзвінок без жодного контексту.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Черга без первинної обробки</div><div class="bpmn-prob-text">Якщо всі оператори зайняті — клієнт очікує. Немає механізму, який би обробив запит або відповів на просте питання.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Пошук інформації — повністю вручну</div><div class="bpmn-prob-text">Оператор паралельно консультує і шукає: трекінг → AWIS → сайт → політики. Кілька систем, жодних підказок.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Опрацювання після дзвінка — 8 кроків, ~2 хв</div><div class="bpmn-prob-text">Резюме → ЕН → «хто звертається» → тематика → підтематика → причина → вид → тон. Все вручну після кожного дзвінка.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Якість консультацій не аналізується</div><div class="bpmn-prob-text">MP3 зберігається і лежить. QA — вибіркова, вручну. Більшість дзвінків ніколи не перевіряється.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title">Немає єдиної картини ефективності</div><div class="bpmn-prob-text">Відсутній інструмент з аналітикою по КЦ: топ-причини, динаміка навантаження, якість відповідей, відхилення.</div></div>
+                </div>
+            </div>
+        </div>'''
+
+
+def generate_tobe_tab() -> str:
+    """Generate HTML for the TO-BE BPMN tab."""
+    return '''        <div class="tab-content" data-content="tobe">
+            <div class="bpmn-section">
+                <div class="bpmn-hero">
+                    <div>
+                        <div class="bpmn-eyebrow" style="color:#30d890">TO-BE</div>
+                        <h3 class="bpmn-title">Процес з AI Асистентом</h3>
+                        <p class="bpmn-lead">6 учасників: Клієнт · Cisco · Запис (MP3) · AI Асистент (4 транзакції) · Оператор · CRM</p>
+                    </div>
+                    <div class="bpmn-chips">
+                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Pre-AI: RAG + ЕН</span>
+                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Real-time Copilot</span>
+                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Post-call &le;1хв</span>
+                        <span class="bpmn-chip" style="border-color:#0d4028;color:#30d890">Deep Analysis &le;10хв</span>
+                    </div>
+                </div>
+
+                <div id="bpmn-tobe-container" class="bpmn-viewer-wrap">
+                    <div class="bpmn-controls">
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',1.3)" title="Zoom in">+</button>
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',-1)" title="Fit to screen">⊡</button>
+                        <button class="bpmn-ctrl-btn" onclick="_bpmnZoom('tobe',0.77)" title="Zoom out">−</button>
+                    </div>
+                </div>
+
+
+                <div class="bpmn-problems" style="--prob-color: #30d890; --prob-bg: rgba(48,216,144,.07); --prob-border: rgba(48,216,144,.2);">
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Скоротити ACW до 13 с</div><div class="bpmn-prob-text">Автозаповнення — оператор витрачає час лише на валідацію та закриття картки.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Менше ескалацій і повторних контактів</div><div class="bpmn-prob-text">Уніфікована база знань усіх КЦ — клієнт отримує вирішення з першого дзвінка.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Однаковий рівень відповіді</div><div class="bpmn-prob-text">Менше людського фактору — однаковий рівень незалежно від досвіду оператора.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Прискорений онбординг</div><div class="bpmn-prob-text">Стандартизація знань — новий оператор з підказками працює як досвідчений.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">100% аналіз якості дзвінків</div><div class="bpmn-prob-text">Системне розуміння якості замість вибіркових перевірок.</div></div>
+                    <div class="bpmn-prob-card"><div class="bpmn-prob-title" style="color:#30d890">Голосовий асистент Pre-Call</div><div class="bpmn-prob-text">Зменшення навантаження через закриття простих звернень ШІ.</div></div>
+                </div>
             </div>
         </div>'''
 
@@ -820,6 +1034,8 @@ def generate_html(
     categories: Dict[str, Category],
     final_scores: Dict[str, str],
     tco_values: Dict[str, str],
+    asis_bpmn_xml: str = '',
+    tobe_bpmn_xml: str = '',
 ) -> str:
     """Generate the complete HTML document."""
     sorted_providers = sorted(
@@ -861,7 +1077,19 @@ def generate_html(
     winner = sorted_providers[0] if sorted_providers else "N/A"
     winner_score = final_scores.get(winner, "0%")
 
-    return f'''<!DOCTYPE html>
+    # Build BPMN data script separately to avoid f-string escaping issues
+    _asis_js = json.dumps(asis_bpmn_xml)
+    _tobe_js = json.dumps(tobe_bpmn_xml)
+    _bpmn_data_script = (
+        '<script>\n'
+        'window.__bpmnData = {\n'
+        '  asis: ' + _asis_js + ',\n'
+        '  tobe: ' + _tobe_js + '\n'
+        '};\n'
+        '</script>'
+    )
+
+    _html = f'''<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -1047,6 +1275,28 @@ def generate_html(
         .tab-content.active {{
             display: block;
         }}
+
+        .bpmn-section {{ padding: 24px 0; }}
+        .bpmn-scroll-wrap {{ overflow: auto; max-height: 700px; border: 1px solid #252e45; border-radius: 8px; margin: 0 0 24px; background: #080b12; }}
+        .bpmn-viewer-wrap {{ position: relative; height: 600px; border: 1px solid #252e45; border-radius: 8px; margin: 0 0 24px; background: #fff; overflow: hidden; }}
+        .bpmn-controls {{ position: absolute; top: 10px; right: 10px; z-index: 10; display: flex; flex-direction: column; gap: 4px; }}
+        .bpmn-ctrl-btn {{ width: 32px; height: 32px; background: rgba(10,15,28,.85); border: 1px solid #2a3a5a; border-radius: 6px; color: #a0b4d0; font-size: 16px; line-height: 1; cursor: pointer; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }}
+        .bpmn-ctrl-btn:hover {{ background: rgba(30,50,90,.95); color: #fff; }}
+        .bpmn-hero {{ display: flex; justify-content: space-between; align-items: flex-start; padding: 0 0 16px; gap: 16px; }}
+        .bpmn-eyebrow {{ font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 4px; }}
+        .bpmn-title {{ font-size: 20px; font-weight: 700; margin-bottom: 6px; }}
+        .bpmn-lead {{ font-size: 12px; color: #5a6e90; line-height: 1.6; }}
+        .bpmn-chips {{ display: flex; gap: 6px; flex-wrap: wrap; }}
+        .bpmn-chip {{ font-size: 10px; padding: 3px 10px; border-radius: 20px; border: 1px solid; }}
+        .bpmn-legend {{ display: flex; gap: 16px; flex-wrap: wrap; align-items: center; padding: 0 0 12px; font-size: 11px; color: #5a6e90; }}
+        .bpmn-leg {{ display: flex; align-items: center; gap: 6px; }}
+        .bpmn-problems {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 20px; }}
+        .bpmn-prob-card {{ background: rgba(255,255,255,.03); border: 1px solid rgba(255,70,40,.15); border-radius: 8px; padding: 14px; }}
+        .bpmn-prob-title {{ font-size: 12px; font-weight: 700; color: #ff7040; margin-bottom: 6px; }}
+        .bpmn-prob-text {{ font-size: 11px; color: #8090a8; line-height: 1.6; }}
+        .bpmn-benefit-card {{ background: rgba(255,255,255,.03); border: 1px solid rgba(48,216,144,.15); border-radius: 8px; padding: 14px; }}
+        .bpmn-benefit-title {{ font-size: 12px; font-weight: 700; color: #30d890; margin-bottom: 6px; }}
+        .bpmn-benefit-text {{ font-size: 11px; color: #8090a8; line-height: 1.6; }}
 
         .comparison-table {{
             background: rgba(255, 255, 255, 0.03);
@@ -1860,13 +2110,15 @@ def generate_html(
 
         <div class="tabs">
             <button class="tab active" data-tab="overall">Загальний рейтинг</button>
-            <button class="tab" data-tab="copilot">Copilot (15%)</button>
-            <button class="tab" data-tab="acw">Постобробка (25%)</button>
-            <button class="tab" data-tab="analytics">Аналітика & QA (15%)</button>
-            <button class="tab" data-tab="precall">PreCall AI (5%)</button>
-            <button class="tab" data-tab="it">IT & Security (30%)</button>
-            <button class="tab" data-tab="business">Бізнес (10%)</button>
+            <button class="tab" data-tab="copilot">Copilot</button>
+            <button class="tab" data-tab="acw">Постобробка</button>
+            <button class="tab" data-tab="analytics">Аналітика & QA</button>
+            <button class="tab" data-tab="precall">PreCall AI</button>
+            <button class="tab" data-tab="it">IT & Security</button>
+            <button class="tab" data-tab="business">Бізнес</button>
             <button class="tab" data-tab="recommendations">Висновки</button>
+            <button class="tab" data-tab="asis">AS-IS</button>
+            <button class="tab" data-tab="tobe">TO-BE</button>
         </div>
 
         <div class="tab-content active" data-content="overall">
@@ -1918,11 +2170,39 @@ def generate_html(
 
 {generate_recommendations_tab()}
 
+{generate_asis_tab()}
+
+{generate_tobe_tab()}
+
     </div>
 
     <script>
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.tab-content');
+        const _bpmnViewers = {{}};
+
+        function _initBpmnViewer(tabId) {{
+            if (_bpmnViewers[tabId]) return;
+            const xml = (window.__bpmnData || {{}})[tabId];
+            if (!xml) return;
+            const container = document.getElementById('bpmn-' + tabId + '-container');
+            if (!container || typeof BpmnJS === 'undefined') return;
+            const viewer = new BpmnJS({{ container }});
+            _bpmnViewers[tabId] = viewer;
+            viewer.importXML(xml).then(() => {{
+                viewer.get('canvas').zoom('fit-viewport');
+            }}).catch(err => {{
+                container.innerHTML = '<p style="padding:20px;color:#888;font-size:13px">BPMN diagram requires internet connection (CDN)</p>';
+            }});
+        }}
+
+        function _bpmnZoom(tabId, factor) {{
+            const v = _bpmnViewers[tabId];
+            if (!v) return;
+            const canvas = v.get('canvas');
+            if (factor === -1) {{ canvas.zoom('fit-viewport'); return; }}
+            canvas.zoom(canvas.zoom() * factor);
+        }}
 
         tabs.forEach(tab => {{
             tab.addEventListener('click', () => {{
@@ -1933,6 +2213,10 @@ def generate_html(
 
                 tab.classList.add('active');
                 document.querySelector(`[data-content="${{targetTab}}"]`).classList.add('active');
+
+                if (targetTab === 'asis' || targetTab === 'tobe') {{
+                    setTimeout(() => _initBpmnViewer(targetTab), 50);
+                }}
             }});
         }});
 
@@ -1953,6 +2237,17 @@ def generate_html(
     </script>
 </body>
 </html>'''
+
+    # Inject bpmn-js CDN assets and BPMN data before </head>
+    _cdn = (
+        '<link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/diagram-js.css">\n'
+        '    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/bpmn-font/css/bpmn.css">\n'
+        '    <script src="https://unpkg.com/bpmn-js@17/dist/bpmn-navigated-viewer.production.min.js"></script>\n'
+        '    ' + _bpmn_data_script
+    )
+    _html = _html.replace('</head>', _cdn + '\n</head>', 1)
+
+    return _html
 
 
 def main() -> None:
@@ -1982,7 +2277,17 @@ def main() -> None:
         shutil.copy(html_path, backup_path)
         print(f"\nBackup created: {backup_path}")
 
-    html_content = generate_html(categories, final_scores, tco_values)
+    def _read_bpmn(name: str) -> str:
+        p = script_dir / name
+        if p.exists():
+            print(f"Loading BPMN: {p}")
+            return p.read_text(encoding='utf-8')
+        print(f"BPMN file not found (skipped): {p}")
+        return ''
+
+    asis_bpmn = _read_bpmn('asis.bpmn')
+    tobe_bpmn = _read_bpmn('tobe.bpmn')
+    html_content = generate_html(categories, final_scores, tco_values, asis_bpmn, tobe_bpmn)
 
     with open(html_path, 'w', encoding='utf-8') as f:
         f.write(html_content)
