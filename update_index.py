@@ -99,7 +99,7 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
     """Parse the CSV file and extract categories, criteria, and scores.
 
     CSV structure (after update):
-    - Column 0: MSCW (Must/Should/Could)
+    - Column 0: MSC (Must/Should/Could)
     - Column 1: Criterion Name (short name)
     - Column 2: Weight %
     - Column 3: Description (detailed)
@@ -116,7 +116,7 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
     # Find the header row with providers (has empty column 1 for criterion name)
     header_row_idx = next(
         (i for i, row in enumerate(rows)
-         if len(row) > 3 and row[0] == "MSCW" and row[2] == "Weight %"),
+         if len(row) > 3 and row[0] == "MSC" and row[2] == "Weight %"),
         None
     )
     if header_row_idx is None:
@@ -156,7 +156,7 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
                             tco_values[provider] = val
                 continue
 
-        # Subtotal row (has % in weight column, no MSCW)
+        # Subtotal row (has % in weight column, no MSC)
         if weight_str and '%' in weight_str and not mscw:
             if current_category:
                 for j, provider in enumerate(PROVIDERS):
@@ -708,7 +708,7 @@ def generate_recommendations_tab() -> str:
                     <div class="rec-eyebrow">Фінальний розділ</div>
                     <h3 class="rec-title">Ключові висновки аналізу</h3>
                     <p class="rec-lead">
-                        Аналіз 14 рішень за методологією MSCW для AI Copilot контакт-центру на 1 000 операторів.
+                        Аналіз 14 рішень за методологією MSC для AI Copilot контакт-центру на 1 000 операторів.
                         Оскільки ми вже маємо високорозвинену екосистему контакт-центру — готове робоче місце оператора,
                         дерево тематик, функціонуючу базу знань та власну систему аналітики — класичний підхід до
                         закупівлі монолітних рішень стає недоцільним.
@@ -1412,6 +1412,8 @@ def generate_html(
 
         .tabs {{
             display: flex;
+            justify-content: center; /* Centers horizontally */
+            align-items: center;     /* Centers vertically */
             gap: 12px;
             margin-bottom: 32px;
             background: rgba(255, 255, 255, 0.03);
@@ -2309,7 +2311,7 @@ def generate_html(
         <header>
             <div class="header-tag">НОВА ПОШТА • R&D • 2025</div>
             <h1>AI Copilot<br>Аналіз провайдерів</h1>
-            <p class="subtitle">Порівняльна оцінка 14 провайдерів за методологією MSCW. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
+            <p class="subtitle">Порівняльна оцінка 14 провайдерів за методологією MSC. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
 
             <div class="legend">
                 <div class="legend-item">
