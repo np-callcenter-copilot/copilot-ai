@@ -355,12 +355,17 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
     """Generate HTML for a category tab content."""
     rows = "\n".join(generate_criteria_row(c, providers) for c in category.criteria)
 
+    providers_sorted_by_cat = sorted(
+        providers,
+        key=lambda p: _parse_score_float(category.subtotals.get(p, "0")),
+        reverse=True,
+    )
     summary_cards = "\n".join(
         f'                    <div class="summary-card">\n'
         f'                        <h5>{p}</h5>\n'
         f'                        <div class="value">{category.subtotals.get(p, "0%")}</div>\n'
         f'                    </div>'
-        for p in providers
+        for p in providers_sorted_by_cat
     )
 
     header_cols = "\n".join(
@@ -1192,14 +1197,13 @@ def generate_tobe_tab() -> str:
     <rect x="2340.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2344.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2361.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2390.0" y="1188.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Доповнення</text><text x="2390.0" y="1199.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">картки клієнта</text>
     <rect x="2570.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2574.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2591.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2620.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Закриття картки</text>
     </svg></div>
+
       <div class="sl" style="padding-top:24px">Нові можливості TO-BE</div>
       <div class="pg">
-        <div class="pgc g"><div class="pgc-t">Pre-AI Assistant</div><div class="pgc-d">Cisco [немає оператора] → AI: RAG + ЕН. Відповідає сам або збирає контекст і передає оператору.</div></div>
-        <div class="pgc g"><div class="pgc-t">Real-time Copilot</div><div class="pgc-d">Двосторонній зв'язок: Оператор → AI → підказки + NBA в реальному часі. Без ручного пошуку.</div></div>
-        <div class="pgc g"><div class="pgc-t">Post-call AI &le;1 хвилини</div><div class="pgc-d">Запис → Транскрипція → Резюме → Теги → Робоче місце auto-fill. ACW з 5–7 хв до 30 сек.</div></div>
-        <div class="pgc g"><div class="pgc-t">Deep Analysis &le;10 хвилин</div><div class="pgc-d">Закриття картки → AI: чекліст оператора → маркування → BI. 100% дзвінків.</div></div>
-        <div class="pgc g"><div class="pgc-t">Context Handoff</div><div class="pgc-d">AI [Передає контекст] → Cisco → Оператор отримує дзвінок з повним контекстом.</div></div>
-        <div class="pgc g"><div class="pgc-t">BI Аналітика</div><div class="pgc-d">Deep Analysis → Інтеграція у BI. Топ-причини, тональність, compliance, CSAT в реальному часі.</div></div>
+        <div class="pgc g"><div class="pgc-t">Голосовий асистент, що надає прості консультації</div><div class="pgc-d">Зменшення навантежності на операторів, шляхом закриття звернень ШІ, чий голос не відрізнятиметься від людини</div></div>
+        <div class="pgc g"><div class="pgc-t">Зменшити частку ескалацій і повторних контактів</div><div class="pgc-d">Через кращу першу відповідь — клієнт отримує вирішення з першого дзвінка.</div></div>
+        <div class="pgc g"><div class="pgc-t">Прискорити онбординг нових операторів</div><div class="pgc-d">Через стандартизацію знань — новий оператор з підказками працює як досвідчений.</div></div>
+        <div class="pgc g"><div class="pgc-t">Покращити аналіз якості роботи КЦ</div><div class="pgc-d">100% дзвінків замість вибірки — системне розуміння якості, а не точкові перевірки</div></div>
       </div>
     </div>'''
 
@@ -1270,6 +1274,21 @@ def generate_html(
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Copilot - Аналіз провайдерів</title>
     <style>
+
+        :root {{
+            --bg: #080b12;
+            --bg2: #0d1320;
+            --text: #dde6f5;
+            --muted: #5a6e90;
+            --border: rgba(255,255,255,.08);
+            --border2: #1e2840;
+            --ai: #30d890;
+            --ai-bg: rgba(48,216,144,.06);
+            --ai-b: rgba(48,216,144,.2);
+            --warn: #ff7040;
+            --warn-bg: rgba(255,112,64,.06);
+            --warn-b: rgba(255,112,64,.2);
+        }}
 
         * {{
             margin: 0;
@@ -2428,6 +2447,85 @@ def generate_html(
         '    ' + _bpmn_data_script
     )
     _html = _html.replace('</head>', _cdn + '\n</head>', 1)
+
+    _svg_zoom_js = (
+        '<script>\n'
+        'document.addEventListener("DOMContentLoaded", function() {\n'
+        '  var btnBase = "width:28px;height:28px;background:rgba(10,15,28,.85);border:1px solid #2a3a5a;"'
+        '    + "border-radius:6px;color:#a0b4d0;font-size:15px;cursor:pointer;display:flex;"'
+        '    + "align-items:center;justify-content:center;backdrop-filter:blur(4px);";\n'
+        '  document.querySelectorAll(".diag-wrap").forEach(function(wrap) {\n'
+        '    var svg = wrap.querySelector("svg");\n'
+        '    if (!svg) return;\n'
+        '    wrap.style.overflow = "hidden";\n'
+        '    wrap.style.cursor = "grab";\n'
+        '    svg.style.transformOrigin = "0 0";\n'
+        '    svg.style.willChange = "transform";\n'
+        '    var sc = 1, tx = 0, ty = 0;\n'
+        '    var dragging = false, lx, ly;\n'
+        '    function clamp() {\n'
+        '      if (sc < 1) { sc = 1; tx = 0; ty = 0; }\n'
+        '    }\n'
+        '    function apply() {\n'
+        '      clamp();\n'
+        '      svg.style.transform = "translate("+tx+"px,"+ty+"px) scale("+sc+")";\n'
+        '    }\n'
+        '    wrap.addEventListener("wheel", function(e) {\n'
+        '      e.preventDefault();\n'
+        '      if (e.deltaY >= 0 && sc <= 1) return;\n'
+        '      var rect = wrap.getBoundingClientRect();\n'
+        '      var mx = e.clientX - rect.left;\n'
+        '      var my = e.clientY - rect.top;\n'
+        '      var f = e.deltaY < 0 ? 1.1 : 0.91;\n'
+        '      tx = mx - f * (mx - tx);\n'
+        '      ty = my - f * (my - ty);\n'
+        '      sc *= f;\n'
+        '      apply();\n'
+        '    }, {passive: false});\n'
+        '    wrap.addEventListener("mousedown", function(e) {\n'
+        '      dragging = true; lx = e.clientX; ly = e.clientY;\n'
+        '      wrap.style.cursor = "grabbing";\n'
+        '    });\n'
+        '    document.addEventListener("mousemove", function(e) {\n'
+        '      if (!dragging) return;\n'
+        '      tx += e.clientX - lx; ty += e.clientY - ly;\n'
+        '      lx = e.clientX; ly = e.clientY;\n'
+        '      apply();\n'
+        '    });\n'
+        '    document.addEventListener("mouseup", function() {\n'
+        '      dragging = false; wrap.style.cursor = "grab";\n'
+        '    });\n'
+        '    var outer = document.createElement("div");\n'
+        '    outer.style.cssText = "position:relative;";\n'
+        '    wrap.parentNode.insertBefore(outer, wrap);\n'
+        '    outer.appendChild(wrap);\n'
+        '    var ctrls = document.createElement("div");\n'
+        '    ctrls.style.cssText = "position:absolute;top:8px;right:8px;z-index:10;display:flex;flex-direction:column;gap:4px;";\n'
+        '    [["+", 1.3], ["\u229f", 0]].forEach(function(p) {\n'
+        '      var btn = document.createElement("button");\n'
+        '      btn.textContent = p[0];\n'
+        '      btn.title = p[1] === 0 ? "Reset" : "Zoom in";\n'
+        '      btn.style.cssText = btnBase;\n'
+        '      btn.addEventListener("click", function(e) {\n'
+        '        e.stopPropagation();\n'
+        '        if (p[1] === 0) { sc = 1; tx = 0; ty = 0; }\n'
+        '        else {\n'
+        '          var rect = wrap.getBoundingClientRect();\n'
+        '          var cx = rect.width / 2, cy = rect.height / 2;\n'
+        '          tx = cx - p[1] * (cx - tx);\n'
+        '          ty = cy - p[1] * (cy - ty);\n'
+        '          sc *= p[1];\n'
+        '        }\n'
+        '        apply();\n'
+        '      });\n'
+        '      ctrls.appendChild(btn);\n'
+        '    });\n'
+        '    outer.appendChild(ctrls);\n'
+        '  });\n'
+        '});\n'
+        '</script>\n'
+    )
+    _html = _html.replace('</body>', _svg_zoom_js + '</body>', 1)
 
     return _html
 
