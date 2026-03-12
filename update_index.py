@@ -324,7 +324,9 @@ def generate_provider_card(
 
 def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
     """Generate HTML for a criteria row."""
-    priority_class, priority_letter = get_priority_badge(criterion.priority)
+    priority_class, _ = get_priority_badge(criterion.priority)
+    w = criterion.weight
+    weight_label = f"{int(w)}%" if w == int(w) else f"{w}%"
     desc_full = criterion.description.replace('"', "'").replace('\n', '<br>')
 
     score_cells = []
@@ -340,7 +342,7 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
     n = len(providers)
     return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat({n}, 1fr);">
                         <div class="criteria-name">
-                            <span class="priority-badge {priority_class}">{priority_letter}</span>
+                            <span class="priority-badge {priority_class}">{weight_label}</span>
                             {criterion.name}
                         </div>
 {chr(10).join(score_cells)}
@@ -792,35 +794,8 @@ def generate_recommendations_tab() -> str:
                     </div>
                 </div>
 
-                <div class="components-grid">
-                    <div class="component-card">
-                        <div class="component-num">01</div>
-                        <div class="component-tag tag-logic">Логіка</div>
-                        <div class="component-name">Google CCAI / Cresta AI</div>
-                        <div class="component-desc">Компонент менеджменту логіки: RAG, NLU, маршрутизація, підказки оператору</div>
-                    </div>
-                    <div class="component-card">
-                        <div class="component-num">02</div>
-                        <div class="component-tag tag-voice">Голос / STT</div>
-                        <div class="component-name">ElevenLabs Scribe v2</div>
-                        <div class="component-desc">Компонент розпізнавання голосу: стрімінгова транскрибація суржику з затримкою &lt;500мс</div>
-                    </div>
-                    <div class="component-card">
-                        <div class="component-num">03</div>
-                        <div class="component-tag tag-voice">Аналітика</div>
-                        <div class="component-name">Ender Turing</div>
-                        <div class="component-desc">Власні аналітичні модулі, глибоке розпізнавання емоцій, чіткі метрики</div>
-                    </div>
-                    <div class="component-card">
-                        <div class="component-num">04</div>
-                        <div class="component-tag tag-api">Інтеграція</div>
-                        <div class="component-name">Власний інтерфейс + API</div>
-                        <div class="component-desc">Компонент інтеграції: вбудовування в наявне робоче місце оператора через API</div>
-                    </div>
-                </div>
-
                 <div class="rec-divider">
-                    <span class="rec-divider-label">Технічна Архітектура TO-BE</span>
+                    <span class="rec-divider-label">Приклад Технічної Архітектури TO-BE</span>
                     <div class="rec-divider-line"></div>
                 </div>
 
@@ -971,15 +946,6 @@ def generate_asis_tab() -> str:
           <div class="chip" style="border-color:var(--warn-b);color:var(--warn)">ACW вручну</div>
         </div>
       </div>
-      <div class="sl">Діаграма AS-IS — координати 1:1 з BPMN-файлу</div>
-      <div class="legend">
-        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s_l)"/><defs><marker id="ah_s_l" markerWidth="6" markerHeight="5" refX="5" refY="2.5" orient="auto"><path d="M0,0 L6,2.5 L0,5 Z" fill="#3a4a65"/></marker></defs></svg>Sequence flow</div>
-        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="5,3"/></svg>Message flow</div>
-        <div class="leg"><svg width="14" height="10"><rect x="0" y="0" width="14" height="10" rx="2" fill="#1a0800" stroke="#8a3000" stroke-width="1"/></svg>Ручна операція</div>
-        <div class="leg"><svg width="12" height="10"><polygon points="6,0 12,5 6,10 0,5" fill="#12100a" stroke="#6a5010" stroke-width="1.2"/></svg>Gateway</div>
-        <div class="leg"><svg width="10" height="10"><circle cx="5" cy="5" r="4" fill="#0b0e14" stroke="#3a4a65" stroke-width="1.2"/></svg>Event</div>
-      </div>
-      <div style="height:8px"></div>
       <div class="diag-wrap"><svg width="100%" style="min-width:900px;display:block" viewBox="-4.0 -4.0 2888.0 1298.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="ah_s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -1087,14 +1053,6 @@ def generate_tobe_tab() -> str:
           <div class="chip" style="border-color:#0d4028;color:#30d890">Deep Analysis &le;10хв</div>
         </div>
       </div>
-      <div class="sl">Діаграма TO-BE — координати 1:1 з BPMN-файлу</div>
-      <div class="legend">
-        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#3a4a65" stroke-width="1.3"/></svg>Sequence flow</div>
-        <div class="leg"><svg width="30" height="10"><line x1="0" y1="5" x2="28" y2="5" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="5,3"/></svg>Message flow</div>
-        <div class="leg"><svg width="14" height="10"><rect x="0" y="0" width="14" height="10" rx="2" fill="#041408" stroke="#0c3820" stroke-width="1"/></svg>Новий AI-блок</div>
-        <div class="leg"><svg width="28" height="10"><rect x="0" y="1" width="28" height="8" rx="2" fill="none" stroke="#184030" stroke-dasharray="4,2" stroke-width="1"/></svg>Транзакція AI</div>
-      </div>
-      <div style="height:8px"></div>
       <div class="diag-wrap"><svg width="100%" style="min-width:900px;display:block" viewBox="-4.0 -4.0 3148.0 1268.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
     <defs>
       <marker id="ah_s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
@@ -1199,7 +1157,7 @@ def generate_tobe_tab() -> str:
     </svg></div>
 
       <div class="sl" style="padding-top:24px">Нові можливості TO-BE</div>
-      <div class="pg">
+      <div class="pg pg4">
         <div class="pgc g"><div class="pgc-t">Голосовий асистент, що надає прості консультації</div><div class="pgc-d">Зменшення навантежності на операторів, шляхом закриття звернень ШІ, чий голос не відрізнятиметься від людини</div></div>
         <div class="pgc g"><div class="pgc-t">Зменшити частку ескалацій і повторних контактів</div><div class="pgc-d">Через кращу першу відповідь — клієнт отримує вирішення з першого дзвінка.</div></div>
         <div class="pgc g"><div class="pgc-t">Прискорити онбординг нових операторів</div><div class="pgc-d">Через стандартизацію знань — новий оператор з підказками працює як досвідчений.</div></div>
@@ -1543,10 +1501,11 @@ def generate_html(
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 20px;
-            height: 20px;
+            min-width: 34px;
+            height: 22px;
+            padding: 0 4px;
             border-radius: 4px;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
         }}
 
@@ -2282,8 +2241,9 @@ def generate_html(
         .sl::before{{content:'//';color:var(--ai);opacity:.6}}
         .sl::after{{content:'';flex:1;height:1px;background:var(--border)}}
 
-        .diag-wrap{{margin:0 32px;border:1px solid var(--border2);border-radius:8px;
-          overflow-x:auto;background:#0b0e14}}
+        .diag-wrap{{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
+          border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);border-radius:0;
+          overflow:hidden;background:#0b0e14}}
         .diag-wrap:active{{cursor:grabbing}}
         .diag-wrap svg{{display:block}}
 
@@ -2292,6 +2252,7 @@ def generate_html(
           font-family:'JetBrains Mono',monospace;font-size:8.5px;color:var(--muted)}}
 
         .pg{{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 32px}}
+        .pg.pg4{{grid-template-columns:repeat(4,1fr)}}
         .pgc{{border-radius:6px;padding:12px 14px;border:1px solid}}
         .pgc.w{{background:var(--warn-bg);border-color:var(--warn-b)}}
         .pgc.g{{background:var(--ai-bg);border-color:var(--ai-b)}}
@@ -2316,7 +2277,7 @@ def generate_html(
                 </div>
                 <div class="legend-item">
                     <div class="legend-dot needs-config"></div>
-                    <span>60-79% — Потребує налаштувань</span>
+                    <span>60-79% — Закриває частину вимог</span>
                 </div>
                 <div class="legend-item">
                     <div class="legend-dot incomplete"></div>
