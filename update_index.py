@@ -1174,11 +1174,25 @@ def generate_html(
     tobe_bpmn_xml: str = '',
 ) -> str:
     """Generate the complete HTML document."""
-    sorted_providers = sorted(
-        PROVIDERS,
-        key=lambda p: _parse_score_float(final_scores.get(p, "0")),
-        reverse=True,
-    )
+    _DISPLAY_ORDER = [
+        "Cresta",
+        "Google Cloud CCAI",
+        "Ender Turing",
+        "Microsoft Copilot",
+        "NICE",
+        "NICE Cognigy",
+        "Genesys Cloud CX",
+        "Live Person",
+        "Decagon",
+        "Ringostat",
+        "Poly AI",
+        "11 Labs",
+        "Uni Talk",
+        "Get Vocal",
+    ]
+    sorted_providers = [p for p in _DISPLAY_ORDER if p in PROVIDERS] + [
+        p for p in PROVIDERS if p not in _DISPLAY_ORDER
+    ]
 
     # Per-provider dict of category subtotal strings
     category_scores: Dict[str, Dict[str, str]] = {
@@ -1777,49 +1791,62 @@ def generate_html(
             }}
         }}
 
-        .methodology {{
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 32px;
-        }}
-
-        .methodology h3 {{
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: #60a5fa;
-        }}
-
-        .methodology-list {{
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }}
-
-        .methodology-item {{
-            display: flex;
-            gap: 16px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-        }}
-
-        .methodology-item .icon {{
-            font-size: 24px;
-        }}
-
-        .methodology-item .content h4 {{
-            font-size: 15px;
-            margin-bottom: 8px;
-        }}
-
-        .methodology-item .content p {{
-            font-size: 13px;
-            color: #9ca3af;
-            line-height: 1.5;
-        }}
+        .mth-card {{ background: #161e2e; border: 1px solid #1e2d42; border-radius: 16px; padding: 32px; margin-top: 32px; }}
+        .mth-card-title {{ font-size: 20px; font-weight: 700; color: #38bdf8; margin-bottom: 24px; }}
+        .mth-inner-divider {{ height: 1px; background: #1e2d42; margin: 24px 0; }}
+        .mth-sub-label {{ font-size: 11px; font-weight: 600; color: #4a6080; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; }}
+        .msc-row {{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }}
+        .msc-item {{ background: #1a2438; border: 1px solid #243044; border-radius: 10px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }}
+        .msc-icon {{ width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }}
+        .msc-item.must .msc-icon   {{ background: rgba(239,68,68,0.15);  color: #ef4444; }}
+        .msc-item.should .msc-icon {{ background: rgba(251,146,60,0.15); color: #fb923c; }}
+        .msc-item.could .msc-icon  {{ background: rgba(56,189,248,0.15); color: #38bdf8; }}
+        .msc-top {{ display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }}
+        .msc-name {{ font-size: 13px; font-weight: 700; }}
+        .msc-item.must .msc-name   {{ color: #ef4444; }}
+        .msc-item.should .msc-name {{ color: #fb923c; }}
+        .msc-item.could .msc-name  {{ color: #38bdf8; }}
+        .msc-badge {{ font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; }}
+        .msc-item.must .msc-badge   {{ background: rgba(239,68,68,0.12);  color: #ef4444; }}
+        .msc-item.should .msc-badge {{ background: rgba(251,146,60,0.12); color: #fb923c; }}
+        .msc-item.could .msc-badge  {{ background: rgba(56,189,248,0.12); color: #38bdf8; }}
+        .msc-desc {{ font-size: 12px; color: #6a7f9a; line-height: 1.55; }}
+        .wf-row {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }}
+        .pb-list {{ display: flex; flex-direction: column; gap: 10px; justify-content: center; height: 100%; }}
+        .pb-row  {{ display: grid; grid-template-columns: 90px 1fr 52px; align-items: center; gap: 10px; }}
+        .pb-name {{ font-size: 12px; color: #6a7f9a; white-space: nowrap; }}
+        .pb-track {{ height: 5px; background: #243044; border-radius: 99px; overflow: hidden; }}
+        .pb-fill  {{ height: 100%; border-radius: 99px; }}
+        .pb-val   {{ font-size: 12px; font-weight: 700; text-align: right; white-space: nowrap; }}
+        .c-must   {{ color: #ef4444; }} .c-should {{ color: #fb923c; }}
+        .c-could  {{ color: #38bdf8; }} .c-total  {{ color: #7a8fa8; }}
+        .fill-must   {{ background: #ef4444; }}
+        .fill-should {{ background: #fb923c; }}
+        .fill-could  {{ background: #38bdf8; }}
+        .fill-total  {{ background: linear-gradient(90deg,#ef4444 0%,#fb923c 50%,#38bdf8 100%); }}
+        .formula-box {{ background: #1a2438; border: 1px solid #243044; border-radius: 10px; padding: 16px; display: flex; align-items: center; justify-content: center; height: 100%; }}
+        .formula-math {{ display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }}
+        .fm-lhs   {{ font-size: 13px; font-weight: 500; color: #8a9bb5; white-space: nowrap; }}
+        .fm-eq    {{ font-size: 16px; color: #3a526e; }}
+        .fm-sigma {{ font-size: 26px; color: #8a9bb5; font-weight: 300; line-height: 1; }}
+        .fm-paren {{ font-size: 34px; color: #3a526e; font-weight: 200; line-height: 1; }}
+        .fm-frac  {{ display: inline-flex; flex-direction: column; align-items: center; margin: 0 2px; }}
+        .fm-num   {{ font-size: 11px; color: #6a7f9a; white-space: nowrap; padding-bottom: 3px; }}
+        .fm-line  {{ width: 100%; height: 1px; background: #364d66; }}
+        .fm-den   {{ font-size: 18px; font-weight: 700; color: #e2e8f0; padding-top: 3px; }}
+        .fm-op    {{ font-size: 14px; color: #3a526e; }}
+        .fm-param {{ font-size: 13px; font-weight: 500; color: #8a9bb5; white-space: nowrap; }}
+        .fm-x100  {{ font-size: 18px; font-weight: 700; color: #e2e8f0; }}
+        .scale-row {{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }}
+        .sg {{ --sc: #22c55e; }} .sl2 {{ --sc: #84cc16; }} .sy {{ --sc: #eab308; }}
+        .so {{ --sc: #f97316; }} .srd {{ --sc: #ef4444; }}
+        .scale-item {{ background: #1a2438; border: 1px solid #243044; border-left: 3px solid var(--sc); border-radius: 8px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; }}
+        .scale-score {{ font-size: 26px; font-weight: 800; color: var(--sc); line-height: 1; flex-shrink: 0; }}
+        .scale-name {{ font-size: 11px; font-weight: 700; color: var(--sc); margin-bottom: 4px; }}
+        .scale-track {{ height: 3px; background: #243044; border-radius: 99px; margin-bottom: 6px; overflow: hidden; }}
+        .scale-fill  {{ height: 100%; border-radius: 99px; background: var(--sc); }}
+        .scale-desc  {{ font-size: 11px; color: #6a7f9a; line-height: 1.45; }}
+        @media (max-width: 960px) {{ .msc-row, .wf-row {{ grid-template-columns: 1fr; }} .scale-row {{ grid-template-columns: repeat(2,1fr); }} }}
 
         @media (max-width: 1200px) {{
             .final-scores {{
@@ -2243,7 +2270,7 @@ def generate_html(
 
         .diag-wrap{{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
           border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);border-radius:0;
-          overflow:hidden;background:#0b0e14}}
+          overflow-x:auto;background:#0b0e14}}
         .diag-wrap:active{{cursor:grabbing}}
         .diag-wrap svg{{display:block}}
 
@@ -2321,38 +2348,126 @@ def generate_html(
                 </div>
             </div>
 
-            <div class="methodology">
-                <h3>Методологія аналізу</h3>
-                <div class="methodology-list">
-                    <div class="methodology-item">
-                        <div class="icon">📊</div>
-                        <div class="content">
-                            <h4>Пріоритезація за MSCW</h4>
-                            <p>Must — обов'язкові для запуску, Should — необхідні для розвитку, Could — чудово було б мати</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">⚖️</div>
-                        <div class="content">
-                            <h4>Розподіл пріоритетів (Weight%)</h4>
-                            <p>Кожній характеристиці присвоєно вагу згідно методології MSCW залежно від її критичності</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">🎯</div>
-                        <div class="content">
-                            <h4>Підсумковий відсоток</h4>
-                            <p>Сума виконання кожної окремої вимоги відносно її ідеального втілення</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">📈</div>
-                        <div class="content">
-                            <h4>Легенда значення оцінки</h4>
-                            <p>5 — готове найкраще рішення | 4/4.5 — хороше рішення | 3/3.5 — потребує налаштувань | 1/2/2.5 — не відповідає</p>
-                        </div>
-                    </div>
+            <div class="mth-card">
+              <div class="mth-card-title">Система оцінювання</div>
+
+              <div class="mth-sub-label">Пріоритизація за MSC</div>
+              <div class="msc-row">
+                <div class="msc-item must">
+                  <div class="msc-icon">M</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Must Have</span><span class="msc-badge">Критичний</span></div>
+                    <p class="msc-desc">Вимоги без яких система не може бути запущена або не відповідає бізнес-меті. Блокер для релізу, найвища вага в оцінці.</p>
+                  </div>
                 </div>
+                <div class="msc-item should">
+                  <div class="msc-icon">S</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Should Have</span><span class="msc-badge">Важливий</span></div>
+                    <p class="msc-desc">Вимоги з високою цінністю, не абсолютні блокери. Без них конкурентна перевага та ефективність суттєво нижчі.</p>
+                  </div>
+                </div>
+                <div class="msc-item could">
+                  <div class="msc-icon">C</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Could Have</span><span class="msc-badge">Бажаний</span></div>
+                    <p class="msc-desc">Nice-to-have функції, що покращують досвід але не впливають на core-функціональність. Реалізуються за наявності ресурсів.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mth-inner-divider"></div>
+
+              <div class="mth-sub-label">Ваговий аналіз та формула Coverage%</div>
+              <div class="wf-row">
+                <div class="pb-list">
+                  <div class="pb-row">
+                    <span class="pb-name">Must Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-must" style="width:60%"></div></div>
+                    <span class="pb-val c-must">40–60%</span>
+                  </div>
+                  <div class="pb-row">
+                    <span class="pb-name">Should Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-should" style="width:39%"></div></div>
+                    <span class="pb-val c-should">25–39%</span>
+                  </div>
+                  <div class="pb-row">
+                    <span class="pb-name">Could Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-could" style="width:24%"></div></div>
+                    <span class="pb-val c-could">5–24%</span>
+                  </div>
+                  <div style="height:1px;background:#1e2d42;"></div>
+                  <div class="pb-row">
+                    <span class="pb-name">Разом</span>
+                    <div class="pb-track"><div class="pb-fill fill-total" style="width:100%"></div></div>
+                    <span class="pb-val c-total">= 100%</span>
+                  </div>
+                </div>
+                <div class="formula-box">
+                  <div class="formula-math">
+                    <span class="fm-lhs">Підсумковий бал</span>
+                    <span class="fm-eq">=</span>
+                    <span class="fm-sigma">Σ</span>
+                    <span class="fm-paren">(</span>
+                    <span class="fm-frac">
+                      <span class="fm-num">Оцінка провайдера</span>
+                      <span class="fm-line"></span>
+                      <span class="fm-den">5</span>
+                    </span>
+                    <span class="fm-op">×</span>
+                    <span class="fm-param">Вага параметра</span>
+                    <span class="fm-paren">)</span>
+                    <span class="fm-op">×</span>
+                    <span class="fm-x100">100</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mth-inner-divider"></div>
+
+              <div class="mth-sub-label">Шкала оцінок</div>
+              <div class="scale-row">
+                <div class="scale-item sg">
+                  <div class="scale-score">5</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Ідеально · 100%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:100%"></div></div>
+                    <p class="scale-desc">Готове рішення без кастомізації, одразу в продакшн.</p>
+                  </div>
+                </div>
+                <div class="scale-item sl2">
+                  <div class="scale-score">4</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Добре · 80%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:80%"></div></div>
+                    <p class="scale-desc">Відповідає більшості вимог. Мінімальна конфігурація.</p>
+                  </div>
+                </div>
+                <div class="scale-item sy">
+                  <div class="scale-score">3</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Задовільно · 60%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:60%"></div></div>
+                    <p class="scale-desc">Часткова відповідність. Потребує доопрацювання.</p>
+                  </div>
+                </div>
+                <div class="scale-item so">
+                  <div class="scale-score">2</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Слабко · 40%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:40%"></div></div>
+                    <p class="scale-desc">Покриває менше половини. Потребує значної розробки.</p>
+                  </div>
+                </div>
+                <div class="scale-item srd">
+                  <div class="scale-score">1</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Не відповідає · 20%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:20%"></div></div>
+                    <p class="scale-desc">Функція відсутня. Roadmap не передбачає вирішення.</p>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
 
@@ -2408,85 +2523,6 @@ def generate_html(
         '    ' + _bpmn_data_script
     )
     _html = _html.replace('</head>', _cdn + '\n</head>', 1)
-
-    _svg_zoom_js = (
-        '<script>\n'
-        'document.addEventListener("DOMContentLoaded", function() {\n'
-        '  var btnBase = "width:28px;height:28px;background:rgba(10,15,28,.85);border:1px solid #2a3a5a;"'
-        '    + "border-radius:6px;color:#a0b4d0;font-size:15px;cursor:pointer;display:flex;"'
-        '    + "align-items:center;justify-content:center;backdrop-filter:blur(4px);";\n'
-        '  document.querySelectorAll(".diag-wrap").forEach(function(wrap) {\n'
-        '    var svg = wrap.querySelector("svg");\n'
-        '    if (!svg) return;\n'
-        '    wrap.style.overflow = "hidden";\n'
-        '    wrap.style.cursor = "grab";\n'
-        '    svg.style.transformOrigin = "0 0";\n'
-        '    svg.style.willChange = "transform";\n'
-        '    var sc = 1, tx = 0, ty = 0;\n'
-        '    var dragging = false, lx, ly;\n'
-        '    function clamp() {\n'
-        '      if (sc < 1) { sc = 1; tx = 0; ty = 0; }\n'
-        '    }\n'
-        '    function apply() {\n'
-        '      clamp();\n'
-        '      svg.style.transform = "translate("+tx+"px,"+ty+"px) scale("+sc+")";\n'
-        '    }\n'
-        '    wrap.addEventListener("wheel", function(e) {\n'
-        '      e.preventDefault();\n'
-        '      if (e.deltaY >= 0 && sc <= 1) return;\n'
-        '      var rect = wrap.getBoundingClientRect();\n'
-        '      var mx = e.clientX - rect.left;\n'
-        '      var my = e.clientY - rect.top;\n'
-        '      var f = e.deltaY < 0 ? 1.1 : 0.91;\n'
-        '      tx = mx - f * (mx - tx);\n'
-        '      ty = my - f * (my - ty);\n'
-        '      sc *= f;\n'
-        '      apply();\n'
-        '    }, {passive: false});\n'
-        '    wrap.addEventListener("mousedown", function(e) {\n'
-        '      dragging = true; lx = e.clientX; ly = e.clientY;\n'
-        '      wrap.style.cursor = "grabbing";\n'
-        '    });\n'
-        '    document.addEventListener("mousemove", function(e) {\n'
-        '      if (!dragging) return;\n'
-        '      tx += e.clientX - lx; ty += e.clientY - ly;\n'
-        '      lx = e.clientX; ly = e.clientY;\n'
-        '      apply();\n'
-        '    });\n'
-        '    document.addEventListener("mouseup", function() {\n'
-        '      dragging = false; wrap.style.cursor = "grab";\n'
-        '    });\n'
-        '    var outer = document.createElement("div");\n'
-        '    outer.style.cssText = "position:relative;";\n'
-        '    wrap.parentNode.insertBefore(outer, wrap);\n'
-        '    outer.appendChild(wrap);\n'
-        '    var ctrls = document.createElement("div");\n'
-        '    ctrls.style.cssText = "position:absolute;top:8px;right:8px;z-index:10;display:flex;flex-direction:column;gap:4px;";\n'
-        '    [["+", 1.3], ["\u229f", 0]].forEach(function(p) {\n'
-        '      var btn = document.createElement("button");\n'
-        '      btn.textContent = p[0];\n'
-        '      btn.title = p[1] === 0 ? "Reset" : "Zoom in";\n'
-        '      btn.style.cssText = btnBase;\n'
-        '      btn.addEventListener("click", function(e) {\n'
-        '        e.stopPropagation();\n'
-        '        if (p[1] === 0) { sc = 1; tx = 0; ty = 0; }\n'
-        '        else {\n'
-        '          var rect = wrap.getBoundingClientRect();\n'
-        '          var cx = rect.width / 2, cy = rect.height / 2;\n'
-        '          tx = cx - p[1] * (cx - tx);\n'
-        '          ty = cy - p[1] * (cy - ty);\n'
-        '          sc *= p[1];\n'
-        '        }\n'
-        '        apply();\n'
-        '      });\n'
-        '      ctrls.appendChild(btn);\n'
-        '    });\n'
-        '    outer.appendChild(ctrls);\n'
-        '  });\n'
-        '});\n'
-        '</script>\n'
-    )
-    _html = _html.replace('</body>', _svg_zoom_js + '</body>', 1)
 
     return _html
 

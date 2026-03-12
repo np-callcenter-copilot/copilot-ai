@@ -550,49 +550,62 @@
             }
         }
 
-        .methodology {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 32px;
-            margin-top: 32px;
-        }
-
-        .methodology h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 24px;
-            color: #60a5fa;
-        }
-
-        .methodology-list {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-        }
-
-        .methodology-item {
-            display: flex;
-            gap: 16px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 12px;
-        }
-
-        .methodology-item .icon {
-            font-size: 24px;
-        }
-
-        .methodology-item .content h4 {
-            font-size: 15px;
-            margin-bottom: 8px;
-        }
-
-        .methodology-item .content p {
-            font-size: 13px;
-            color: #9ca3af;
-            line-height: 1.5;
-        }
+        .mth-card { background: #161e2e; border: 1px solid #1e2d42; border-radius: 16px; padding: 32px; margin-top: 32px; }
+        .mth-card-title { font-size: 20px; font-weight: 700; color: #38bdf8; margin-bottom: 24px; }
+        .mth-inner-divider { height: 1px; background: #1e2d42; margin: 24px 0; }
+        .mth-sub-label { font-size: 11px; font-weight: 600; color: #4a6080; letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 14px; }
+        .msc-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .msc-item { background: #1a2438; border: 1px solid #243044; border-radius: 10px; padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; }
+        .msc-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; flex-shrink: 0; }
+        .msc-item.must .msc-icon   { background: rgba(239,68,68,0.15);  color: #ef4444; }
+        .msc-item.should .msc-icon { background: rgba(251,146,60,0.15); color: #fb923c; }
+        .msc-item.could .msc-icon  { background: rgba(56,189,248,0.15); color: #38bdf8; }
+        .msc-top { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+        .msc-name { font-size: 13px; font-weight: 700; }
+        .msc-item.must .msc-name   { color: #ef4444; }
+        .msc-item.should .msc-name { color: #fb923c; }
+        .msc-item.could .msc-name  { color: #38bdf8; }
+        .msc-badge { font-size: 9px; font-weight: 600; letter-spacing: 0.8px; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; }
+        .msc-item.must .msc-badge   { background: rgba(239,68,68,0.12);  color: #ef4444; }
+        .msc-item.should .msc-badge { background: rgba(251,146,60,0.12); color: #fb923c; }
+        .msc-item.could .msc-badge  { background: rgba(56,189,248,0.12); color: #38bdf8; }
+        .msc-desc { font-size: 12px; color: #6a7f9a; line-height: 1.55; }
+        .wf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .pb-list { display: flex; flex-direction: column; gap: 10px; justify-content: center; height: 100%; }
+        .pb-row  { display: grid; grid-template-columns: 90px 1fr 52px; align-items: center; gap: 10px; }
+        .pb-name { font-size: 12px; color: #6a7f9a; white-space: nowrap; }
+        .pb-track { height: 5px; background: #243044; border-radius: 99px; overflow: hidden; }
+        .pb-fill  { height: 100%; border-radius: 99px; }
+        .pb-val   { font-size: 12px; font-weight: 700; text-align: right; white-space: nowrap; }
+        .c-must   { color: #ef4444; } .c-should { color: #fb923c; }
+        .c-could  { color: #38bdf8; } .c-total  { color: #7a8fa8; }
+        .fill-must   { background: #ef4444; }
+        .fill-should { background: #fb923c; }
+        .fill-could  { background: #38bdf8; }
+        .fill-total  { background: linear-gradient(90deg,#ef4444 0%,#fb923c 50%,#38bdf8 100%); }
+        .formula-box { background: #1a2438; border: 1px solid #243044; border-radius: 10px; padding: 16px; display: flex; align-items: center; justify-content: center; height: 100%; }
+        .formula-math { display: inline-flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; }
+        .fm-lhs   { font-size: 13px; font-weight: 500; color: #8a9bb5; white-space: nowrap; }
+        .fm-eq    { font-size: 16px; color: #3a526e; }
+        .fm-sigma { font-size: 26px; color: #8a9bb5; font-weight: 300; line-height: 1; }
+        .fm-paren { font-size: 34px; color: #3a526e; font-weight: 200; line-height: 1; }
+        .fm-frac  { display: inline-flex; flex-direction: column; align-items: center; margin: 0 2px; }
+        .fm-num   { font-size: 11px; color: #6a7f9a; white-space: nowrap; padding-bottom: 3px; }
+        .fm-line  { width: 100%; height: 1px; background: #364d66; }
+        .fm-den   { font-size: 18px; font-weight: 700; color: #e2e8f0; padding-top: 3px; }
+        .fm-op    { font-size: 14px; color: #3a526e; }
+        .fm-param { font-size: 13px; font-weight: 500; color: #8a9bb5; white-space: nowrap; }
+        .fm-x100  { font-size: 18px; font-weight: 700; color: #e2e8f0; }
+        .scale-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .sg { --sc: #22c55e; } .sl2 { --sc: #84cc16; } .sy { --sc: #eab308; }
+        .so { --sc: #f97316; } .srd { --sc: #ef4444; }
+        .scale-item { background: #1a2438; border: 1px solid #243044; border-left: 3px solid var(--sc); border-radius: 8px; padding: 12px; display: flex; gap: 10px; align-items: flex-start; }
+        .scale-score { font-size: 26px; font-weight: 800; color: var(--sc); line-height: 1; flex-shrink: 0; }
+        .scale-name { font-size: 11px; font-weight: 700; color: var(--sc); margin-bottom: 4px; }
+        .scale-track { height: 3px; background: #243044; border-radius: 99px; margin-bottom: 6px; overflow: hidden; }
+        .scale-fill  { height: 100%; border-radius: 99px; background: var(--sc); }
+        .scale-desc  { font-size: 11px; color: #6a7f9a; line-height: 1.45; }
+        @media (max-width: 960px) { .msc-row, .wf-row { grid-template-columns: 1fr; } .scale-row { grid-template-columns: repeat(2,1fr); } }
 
         @media (max-width: 1200px) {
             .final-scores {
@@ -1016,7 +1029,7 @@
 
         .diag-wrap{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
           border-top:1px solid var(--border2);border-bottom:1px solid var(--border2);border-radius:0;
-          overflow:hidden;background:#0b0e14}
+          overflow-x:auto;background:#0b0e14}
         .diag-wrap:active{cursor:grabbing}
         .diag-wrap svg{display:block}
 
@@ -1178,6 +1191,45 @@ window.__bpmnData = {
                     </div>
                     <div class="provider-score-card top top-3">
                         <div class="rank-badge">🥉 #3</div>
+                        <h4>Ender Turing</h4>
+                        <div class="tco">~$30 - 60 000</div>
+                        <div class="score-value">67.6<span style="font-size: 24px;">%</span></div>
+                        <div class="score-label">Підсумковий бал</div>
+                        <div class="breakdown">
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Copilot</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill copilot" style="width: 50.0%;"></div></div>
+                                <span class="breakdown-value">7.5%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">ACW</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill acw" style="width: 79.6%;"></div></div>
+                                <span class="breakdown-value">19.9%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Analytics</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill analytics" style="width: 93.3%;"></div></div>
+                                <span class="breakdown-value">14%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">PreCall</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill precall" style="width: 20.0%;"></div></div>
+                                <span class="breakdown-value">1%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">IT/Sec</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill it" style="width: 55.3%;"></div></div>
+                                <span class="breakdown-value">16.6%</span>
+                            </div>
+                            <div class="breakdown-item">
+                                <span class="breakdown-label">Бізнес</span>
+                                <div class="breakdown-bar"><div class="breakdown-fill business" style="width: 87.0%;"></div></div>
+                                <span class="breakdown-value">8.7%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="provider-score-card">
+                        <div class="rank-badge" style="opacity: 0.5;">#4</div>
                         <h4>Microsoft Copilot</h4>
                         <div class="tco">~$170 - 240 000</div>
                         <div class="score-value">76.6<span style="font-size: 24px;">%</span></div>
@@ -1216,7 +1268,7 @@ window.__bpmnData = {
                         </div>
                     </div>
                     <div class="provider-score-card">
-                        <div class="rank-badge" style="opacity: 0.5;">#4</div>
+                        <div class="rank-badge" style="opacity: 0.5;">#5</div>
                         <h4>NICE</h4>
                         <div class="tco">~$200 - 260 000</div>
                         <div class="score-value">75<span style="font-size: 24px;">%</span></div>
@@ -1255,7 +1307,7 @@ window.__bpmnData = {
                         </div>
                     </div>
                     <div class="provider-score-card">
-                        <div class="rank-badge" style="opacity: 0.5;">#5</div>
+                        <div class="rank-badge" style="opacity: 0.5;">#6</div>
                         <h4>NICE Cognigy</h4>
                         <div class="tco">~$180 - 300 000</div>
                         <div class="score-value">73.3<span style="font-size: 24px;">%</span></div>
@@ -1294,7 +1346,7 @@ window.__bpmnData = {
                         </div>
                     </div>
                     <div class="provider-score-card">
-                        <div class="rank-badge" style="opacity: 0.5;">#6</div>
+                        <div class="rank-badge" style="opacity: 0.5;">#7</div>
                         <h4>Genesys Cloud CX</h4>
                         <div class="tco">~$160 - 210 000</div>
                         <div class="score-value">70.2<span style="font-size: 24px;">%</span></div>
@@ -1329,45 +1381,6 @@ window.__bpmnData = {
                                 <span class="breakdown-label">Бізнес</span>
                                 <div class="breakdown-bar"><div class="breakdown-fill business" style="width: 65.0%;"></div></div>
                                 <span class="breakdown-value">6.5%</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="provider-score-card">
-                        <div class="rank-badge" style="opacity: 0.5;">#7</div>
-                        <h4>Ender Turing</h4>
-                        <div class="tco">~$30 - 60 000</div>
-                        <div class="score-value">67.6<span style="font-size: 24px;">%</span></div>
-                        <div class="score-label">Підсумковий бал</div>
-                        <div class="breakdown">
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Copilot</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill copilot" style="width: 50.0%;"></div></div>
-                                <span class="breakdown-value">7.5%</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">ACW</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill acw" style="width: 79.6%;"></div></div>
-                                <span class="breakdown-value">19.9%</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Analytics</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill analytics" style="width: 93.3%;"></div></div>
-                                <span class="breakdown-value">14%</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">PreCall</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill precall" style="width: 20.0%;"></div></div>
-                                <span class="breakdown-value">1%</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">IT/Sec</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill it" style="width: 55.3%;"></div></div>
-                                <span class="breakdown-value">16.6%</span>
-                            </div>
-                            <div class="breakdown-item">
-                                <span class="breakdown-label">Бізнес</span>
-                                <div class="breakdown-bar"><div class="breakdown-fill business" style="width: 87.0%;"></div></div>
-                                <span class="breakdown-value">8.7%</span>
                             </div>
                         </div>
                     </div>
@@ -1648,38 +1661,126 @@ window.__bpmnData = {
                 </div>
             </div>
 
-            <div class="methodology">
-                <h3>Методологія аналізу</h3>
-                <div class="methodology-list">
-                    <div class="methodology-item">
-                        <div class="icon">📊</div>
-                        <div class="content">
-                            <h4>Пріоритезація за MSCW</h4>
-                            <p>Must — обов'язкові для запуску, Should — необхідні для розвитку, Could — чудово було б мати</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">⚖️</div>
-                        <div class="content">
-                            <h4>Розподіл пріоритетів (Weight%)</h4>
-                            <p>Кожній характеристиці присвоєно вагу згідно методології MSCW залежно від її критичності</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">🎯</div>
-                        <div class="content">
-                            <h4>Підсумковий відсоток</h4>
-                            <p>Сума виконання кожної окремої вимоги відносно її ідеального втілення</p>
-                        </div>
-                    </div>
-                    <div class="methodology-item">
-                        <div class="icon">📈</div>
-                        <div class="content">
-                            <h4>Легенда значення оцінки</h4>
-                            <p>5 — готове найкраще рішення | 4/4.5 — хороше рішення | 3/3.5 — потребує налаштувань | 1/2/2.5 — не відповідає</p>
-                        </div>
-                    </div>
+            <div class="mth-card">
+              <div class="mth-card-title">Система оцінювання</div>
+
+              <div class="mth-sub-label">Пріоритизація за MSC</div>
+              <div class="msc-row">
+                <div class="msc-item must">
+                  <div class="msc-icon">M</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Must Have</span><span class="msc-badge">Критичний</span></div>
+                    <p class="msc-desc">Вимоги без яких система не може бути запущена або не відповідає бізнес-меті. Блокер для релізу, найвища вага в оцінці.</p>
+                  </div>
                 </div>
+                <div class="msc-item should">
+                  <div class="msc-icon">S</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Should Have</span><span class="msc-badge">Важливий</span></div>
+                    <p class="msc-desc">Вимоги з високою цінністю, не абсолютні блокери. Без них конкурентна перевага та ефективність суттєво нижчі.</p>
+                  </div>
+                </div>
+                <div class="msc-item could">
+                  <div class="msc-icon">C</div>
+                  <div class="msc-body">
+                    <div class="msc-top"><span class="msc-name">Could Have</span><span class="msc-badge">Бажаний</span></div>
+                    <p class="msc-desc">Nice-to-have функції, що покращують досвід але не впливають на core-функціональність. Реалізуються за наявності ресурсів.</p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mth-inner-divider"></div>
+
+              <div class="mth-sub-label">Ваговий аналіз та формула Coverage%</div>
+              <div class="wf-row">
+                <div class="pb-list">
+                  <div class="pb-row">
+                    <span class="pb-name">Must Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-must" style="width:60%"></div></div>
+                    <span class="pb-val c-must">40–60%</span>
+                  </div>
+                  <div class="pb-row">
+                    <span class="pb-name">Should Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-should" style="width:39%"></div></div>
+                    <span class="pb-val c-should">25–39%</span>
+                  </div>
+                  <div class="pb-row">
+                    <span class="pb-name">Could Have</span>
+                    <div class="pb-track"><div class="pb-fill fill-could" style="width:24%"></div></div>
+                    <span class="pb-val c-could">5–24%</span>
+                  </div>
+                  <div style="height:1px;background:#1e2d42;"></div>
+                  <div class="pb-row">
+                    <span class="pb-name">Разом</span>
+                    <div class="pb-track"><div class="pb-fill fill-total" style="width:100%"></div></div>
+                    <span class="pb-val c-total">= 100%</span>
+                  </div>
+                </div>
+                <div class="formula-box">
+                  <div class="formula-math">
+                    <span class="fm-lhs">Підсумковий бал</span>
+                    <span class="fm-eq">=</span>
+                    <span class="fm-sigma">Σ</span>
+                    <span class="fm-paren">(</span>
+                    <span class="fm-frac">
+                      <span class="fm-num">Оцінка провайдера</span>
+                      <span class="fm-line"></span>
+                      <span class="fm-den">5</span>
+                    </span>
+                    <span class="fm-op">×</span>
+                    <span class="fm-param">Вага параметра</span>
+                    <span class="fm-paren">)</span>
+                    <span class="fm-op">×</span>
+                    <span class="fm-x100">100</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mth-inner-divider"></div>
+
+              <div class="mth-sub-label">Шкала оцінок</div>
+              <div class="scale-row">
+                <div class="scale-item sg">
+                  <div class="scale-score">5</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Ідеально · 100%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:100%"></div></div>
+                    <p class="scale-desc">Готове рішення без кастомізації, одразу в продакшн.</p>
+                  </div>
+                </div>
+                <div class="scale-item sl2">
+                  <div class="scale-score">4</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Добре · 80%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:80%"></div></div>
+                    <p class="scale-desc">Відповідає більшості вимог. Мінімальна конфігурація.</p>
+                  </div>
+                </div>
+                <div class="scale-item sy">
+                  <div class="scale-score">3</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Задовільно · 60%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:60%"></div></div>
+                    <p class="scale-desc">Часткова відповідність. Потребує доопрацювання.</p>
+                  </div>
+                </div>
+                <div class="scale-item so">
+                  <div class="scale-score">2</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Слабко · 40%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:40%"></div></div>
+                    <p class="scale-desc">Покриває менше половини. Потребує значної розробки.</p>
+                  </div>
+                </div>
+                <div class="scale-item srd">
+                  <div class="scale-score">1</div>
+                  <div class="scale-body">
+                    <div class="scale-name">Не відповідає · 20%</div>
+                    <div class="scale-track"><div class="scale-fill" style="width:20%"></div></div>
+                    <p class="scale-desc">Функція відсутня. Roadmap не передбачає вирішення.</p>
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
 
@@ -3983,78 +4084,5 @@ window.__bpmnData = {
                 }
             }
         </script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var btnBase = "width:28px;height:28px;background:rgba(10,15,28,.85);border:1px solid #2a3a5a;"    + "border-radius:6px;color:#a0b4d0;font-size:15px;cursor:pointer;display:flex;"    + "align-items:center;justify-content:center;backdrop-filter:blur(4px);";
-  document.querySelectorAll(".diag-wrap").forEach(function(wrap) {
-    var svg = wrap.querySelector("svg");
-    if (!svg) return;
-    wrap.style.overflow = "hidden";
-    wrap.style.cursor = "grab";
-    svg.style.transformOrigin = "0 0";
-    svg.style.willChange = "transform";
-    var sc = 1, tx = 0, ty = 0;
-    var dragging = false, lx, ly;
-    function clamp() {
-      if (sc < 1) { sc = 1; tx = 0; ty = 0; }
-    }
-    function apply() {
-      clamp();
-      svg.style.transform = "translate("+tx+"px,"+ty+"px) scale("+sc+")";
-    }
-    wrap.addEventListener("wheel", function(e) {
-      e.preventDefault();
-      if (e.deltaY >= 0 && sc <= 1) return;
-      var rect = wrap.getBoundingClientRect();
-      var mx = e.clientX - rect.left;
-      var my = e.clientY - rect.top;
-      var f = e.deltaY < 0 ? 1.1 : 0.91;
-      tx = mx - f * (mx - tx);
-      ty = my - f * (my - ty);
-      sc *= f;
-      apply();
-    }, {passive: false});
-    wrap.addEventListener("mousedown", function(e) {
-      dragging = true; lx = e.clientX; ly = e.clientY;
-      wrap.style.cursor = "grabbing";
-    });
-    document.addEventListener("mousemove", function(e) {
-      if (!dragging) return;
-      tx += e.clientX - lx; ty += e.clientY - ly;
-      lx = e.clientX; ly = e.clientY;
-      apply();
-    });
-    document.addEventListener("mouseup", function() {
-      dragging = false; wrap.style.cursor = "grab";
-    });
-    var outer = document.createElement("div");
-    outer.style.cssText = "position:relative;";
-    wrap.parentNode.insertBefore(outer, wrap);
-    outer.appendChild(wrap);
-    var ctrls = document.createElement("div");
-    ctrls.style.cssText = "position:absolute;top:8px;right:8px;z-index:10;display:flex;flex-direction:column;gap:4px;";
-    [["+", 1.3], ["⊟", 0]].forEach(function(p) {
-      var btn = document.createElement("button");
-      btn.textContent = p[0];
-      btn.title = p[1] === 0 ? "Reset" : "Zoom in";
-      btn.style.cssText = btnBase;
-      btn.addEventListener("click", function(e) {
-        e.stopPropagation();
-        if (p[1] === 0) { sc = 1; tx = 0; ty = 0; }
-        else {
-          var rect = wrap.getBoundingClientRect();
-          var cx = rect.width / 2, cy = rect.height / 2;
-          tx = cx - p[1] * (cx - tx);
-          ty = cy - p[1] * (cy - ty);
-          sc *= p[1];
-        }
-        apply();
-      });
-      ctrls.appendChild(btn);
-    });
-    outer.appendChild(ctrls);
-  });
-});
-</script>
 </body>
 </html>
