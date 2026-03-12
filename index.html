@@ -406,11 +406,17 @@
         }
 
         .final-scores {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-bottom: 32px;
         }
+        .fs-row {
+            display: grid;
+            gap: 20px;
+        }
+        .fs-row-3 { grid-template-columns: repeat(3, 1fr); }
+        .fs-row-4 { grid-template-columns: repeat(4, 1fr); }
 
         .provider-score-card {
             background: rgba(255, 255, 255, 0.03);
@@ -538,16 +544,13 @@
             text-align: right;
         }
 
-        @media (max-width: 1400px) {
-            .final-scores {
-                grid-template-columns: repeat(4, 1fr);
-            }
+        @media (max-width: 1024px) {
+            .fs-row-4 { grid-template-columns: repeat(2, 1fr); }
+            .fs-row-3 { grid-template-columns: repeat(3, 1fr); }
         }
 
-        @media (max-width: 1024px) {
-            .final-scores {
-                grid-template-columns: repeat(3, 1fr);
-            }
+        @media (max-width: 700px) {
+            .fs-row-3, .fs-row-4 { grid-template-columns: repeat(2, 1fr); }
         }
 
         .mth-card { background: #161e2e; border: 1px solid #1e2d42; border-radius: 16px; padding: 32px; margin-top: 32px; }
@@ -1111,6 +1114,7 @@ window.__bpmnData = {
                 <h3 class="summary-title">Підсумкові оцінки</h3>
                 <div class="final-scores">
 
+<div class="fs-row fs-row-3">
                     <div class="provider-score-card top top-1">
                         <div class="rank-badge">🥇 #1</div>
                         <h4>Cresta</h4>
@@ -1228,6 +1232,8 @@ window.__bpmnData = {
                             </div>
                         </div>
                     </div>
+</div>
+<div class="fs-row fs-row-4">
                     <div class="provider-score-card">
                         <div class="rank-badge" style="opacity: 0.5;">#4</div>
                         <h4>Microsoft Copilot</h4>
@@ -1384,6 +1390,8 @@ window.__bpmnData = {
                             </div>
                         </div>
                     </div>
+</div>
+<div class="fs-row fs-row-4">
                     <div class="provider-score-card">
                         <div class="rank-badge" style="opacity: 0.5;">#8</div>
                         <h4>Live Person</h4>
@@ -1540,6 +1548,8 @@ window.__bpmnData = {
                             </div>
                         </div>
                     </div>
+</div>
+<div class="fs-row fs-row-3">
                     <div class="provider-score-card">
                         <div class="rank-badge" style="opacity: 0.5;">#12</div>
                         <h4>11 Labs</h4>
@@ -1657,6 +1667,7 @@ window.__bpmnData = {
                             </div>
                         </div>
                     </div>
+</div>
 
                 </div>
             </div>

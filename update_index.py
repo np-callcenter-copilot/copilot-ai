@@ -1205,7 +1205,7 @@ def generate_html(
 
     max_weights = {cat_id: cat.weight_percent for cat_id, cat in categories.items()}
 
-    provider_cards = "\n".join(
+    _all_cards = [
         generate_provider_card(
             provider,
             rank,
@@ -1215,7 +1215,18 @@ def generate_html(
             max_weights,
         )
         for rank, provider in enumerate(sorted_providers, 1)
-    )
+    ]
+    _row_sizes = [3, 4, 4, 3]
+    _rows = []
+    _idx = 0
+    for _size in _row_sizes:
+        _chunk = _all_cards[_idx:_idx + _size]
+        if _chunk:
+            _rows.append(f'<div class="fs-row fs-row-{_size}">\n' + "\n".join(_chunk) + '\n</div>')
+        _idx += _size
+    if _idx < len(_all_cards):
+        _rows.append('<div class="fs-row fs-row-4">\n' + "\n".join(_all_cards[_idx:]) + '\n</div>')
+    provider_cards = "\n".join(_rows)
 
     category_order = ["copilot", "acw", "analytics", "precall", "it", "business"]
     category_tabs = "\n".join(
@@ -1647,11 +1658,17 @@ def generate_html(
         }}
 
         .final-scores {{
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            display: flex;
+            flex-direction: column;
             gap: 20px;
             margin-bottom: 32px;
         }}
+        .fs-row {{
+            display: grid;
+            gap: 20px;
+        }}
+        .fs-row-3 {{ grid-template-columns: repeat(3, 1fr); }}
+        .fs-row-4 {{ grid-template-columns: repeat(4, 1fr); }}
 
         .provider-score-card {{
             background: rgba(255, 255, 255, 0.03);
@@ -1779,16 +1796,13 @@ def generate_html(
             text-align: right;
         }}
 
-        @media (max-width: 1400px) {{
-            .final-scores {{
-                grid-template-columns: repeat(4, 1fr);
-            }}
+        @media (max-width: 1024px) {{
+            .fs-row-4 {{ grid-template-columns: repeat(2, 1fr); }}
+            .fs-row-3 {{ grid-template-columns: repeat(3, 1fr); }}
         }}
 
-        @media (max-width: 1024px) {{
-            .final-scores {{
-                grid-template-columns: repeat(3, 1fr);
-            }}
+        @media (max-width: 700px) {{
+            .fs-row-3, .fs-row-4 {{ grid-template-columns: repeat(2, 1fr); }}
         }}
 
         .mth-card {{ background: #161e2e; border: 1px solid #1e2d42; border-radius: 16px; padding: 32px; margin-top: 32px; }}
