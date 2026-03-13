@@ -1175,9 +1175,9 @@ def generate_html(
 ) -> str:
     """Generate the complete HTML document."""
     _DISPLAY_ORDER = [
-        "Cresta",
         "Google Cloud CCAI",
         "Ender Turing",
+        "Cresta",
         "Microsoft Copilot",
         "NICE",
         "NICE Cognigy",
