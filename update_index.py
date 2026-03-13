@@ -1216,7 +1216,7 @@ def generate_html(
         )
         for rank, provider in enumerate(sorted_providers, 1)
     ]
-    _row_sizes = [3, 4, 4, 3]
+    _row_sizes = [2, 4, 4, 4]
     _rows = []
     _idx = 0
     for _size in _row_sizes:
@@ -1669,6 +1669,7 @@ def generate_html(
             display: grid;
             gap: 20px;
         }}
+        .fs-row-2 {{ grid-template-columns: repeat(2, 1fr); }}
         .fs-row-3 {{ grid-template-columns: repeat(3, 1fr); }}
         .fs-row-4 {{ grid-template-columns: repeat(4, 1fr); }}
 
