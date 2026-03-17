@@ -827,7 +827,7 @@ def generate_recommendations_tab() -> str:
                     <svg viewBox="640 2882 1830 440"
                          xmlns="http://www.w3.org/2000/svg"
                          preserveAspectRatio="xMidYMid meet"
-                         style="background:#0f1117;">
+                         style="display:block;width:100%;height:auto;background:#0f1117;">
 
                     <defs>
                       <pattern id="g2" width="10" height="10" patternUnits="userSpaceOnUse">
@@ -2797,20 +2797,20 @@ def generate_html(
         .prob-card{{background:#130e08;padding:20px 22px;border:1px solid rgba(232,131,74,.25);border-radius:6px}}
         .prob-title{{font-size:13px;font-weight:600;color:#e8834a;margin-bottom:8px}}
         .prob-text{{font-size:12px;color:#5a5060;line-height:1.6}}
-        .sys-table{{border:1px solid #1a1d2a;border-radius:3px;overflow:hidden}}
-        .sys-head{{display:grid;grid-template-columns:180px 1fr 1fr;background:#0d0f18;border-bottom:1px solid #1a1d2a}}
-        .sh{{padding:12px 18px;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;border-right:1px solid #1a1d2a}}
+        .sys-table{{border:1px solid #2e3450;border-radius:3px;overflow:hidden;background:#0d0f18}}
+        .sys-head{{display:grid;grid-template-columns:180px 1fr 1fr;background:#0d0f18;border-bottom:2px solid #2e3450}}
+        .sh{{padding:12px 18px;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;border-right:1px solid #2e3450}}
         .sh:last-child{{border-right:none}}
-        .sh.cat{{color:#3a3f55}}
+        .sh.cat{{color:#5a607a}}
         .sh.ua{{color:#6bb3e8}}
         .sh.eu{{color:#e8a84a}}
-        .sys-row{{display:grid;grid-template-columns:180px 1fr 1fr;border-bottom:1px solid #1a1d2a}}
+        .sys-row{{display:grid;grid-template-columns:180px 1fr 1fr;border-bottom:1px solid #2e3450}}
         .sys-row:last-child{{border-bottom:none}}
-        .sc{{padding:16px 18px;border-right:1px solid #1a1d2a;font-size:12px;color:#4a4f66;line-height:1.6}}
+        .sc{{padding:16px 18px;border-right:1px solid #2e3450;font-size:12px;color:#7a8099;line-height:1.6}}
         .sc:last-child{{border-right:none}}
-        .sc.cat{{font-size:11px;font-weight:600;color:#6a7090;background:#0d0f18}}
-        .sc.ua{{border-left:2px solid rgba(107,179,232,.2)}}
-        .sc.eu{{border-left:2px solid rgba(232,168,74,.2)}}
+        .sc.cat{{font-size:11px;font-weight:600;color:#8a91ad;background:#0d0f18}}
+        .sc.ua{{border-left:2px solid rgba(107,179,232,.5)}}
+        .sc.eu{{border-left:2px solid rgba(232,168,74,.5)}}
         .badge{{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-bottom:8px}}
         .b-ok{{background:rgba(74,232,160,.08);color:#4ae8a0;border:1px solid rgba(74,232,160,.2)}}
         .b-warn{{background:rgba(232,131,74,.08);color:#e8834a;border:1px solid rgba(232,131,74,.2)}}
