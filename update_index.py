@@ -9,13 +9,14 @@ import json
 import re
 import shutil
 from dataclasses import dataclass, field
-from typing import Dict, List
 from pathlib import Path
+from typing import Dict, List
 
 
 @dataclass
 class Criterion:
     """Represents a single evaluation criterion."""
+
     priority: str  # Must, Should, Could
     weight: float
     name: str  # Short criterion name from CSV column 1
@@ -26,6 +27,7 @@ class Criterion:
 @dataclass
 class Category:
     """Represents a category of criteria (e.g., Copilot, ACW, etc.)."""
+
     name: str
     weight_percent: float
     criteria: List[Criterion] = field(default_factory=list)
@@ -46,7 +48,7 @@ PROVIDERS = [
     "Decagon",
     "11 Labs",
     "Poly AI",
-    "Get Vocal"
+    "Get Vocal",
 ]
 
 PROVIDER_DISPLAY_NAMES = {
@@ -63,7 +65,7 @@ PROVIDER_DISPLAY_NAMES = {
     "Decagon": "Decagon",
     "11 Labs": "11 Labs",
     "Poly AI": "Poly AI",
-    "Get Vocal": "Get Vocal"
+    "Get Vocal": "Get Vocal",
 }
 
 CATEGORY_MAP = {
@@ -90,12 +92,12 @@ _CATEGORY_BREAKDOWN_LABELS: Dict[str, str] = {
 def _parse_score_float(score_str: str) -> float:
     """Convert a score string like '84.1%' or '84,1' to a float."""
     try:
-        return float(str(score_str).replace('%', '').replace(',', '.'))
+        return float(str(score_str).replace("%", "").replace(",", "."))
     except (ValueError, AttributeError):
         return 0.0
 
 
-def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
+def parse_csv(filepath: str, delimiter: str = ";") -> tuple:
     """Parse the CSV file and extract categories, criteria, and scores.
 
     CSV structure (after update):
@@ -110,19 +112,22 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
     tco_values: Dict[str, str] = {}
     current_category: Category | None = None
 
-    with open(filepath, 'r', encoding='utf-8') as f:
+    with open(filepath, "r", encoding="utf-8") as f:
         rows = list(csv.reader(f, delimiter=delimiter))
 
     # Find the header row with providers (has empty column 1 for criterion name)
     header_row_idx = next(
-        (i for i, row in enumerate(rows)
-         if len(row) > 3 and row[0] == "MSC" and row[2] == "Weight %"),
-        None
+        (
+            i
+            for i, row in enumerate(rows)
+            if len(row) > 3 and row[0] == "MSC" and row[2] == "Weight %"
+        ),
+        None,
     )
     if header_row_idx is None:
         raise ValueError("Could not find header row")
 
-    for row in rows[header_row_idx + 1:]:
+    for row in rows[header_row_idx + 1 :]:
         if len(row) < 4:
             continue
 
@@ -147,7 +152,7 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
 
         # TCO row (values match pattern like "150 - 200 000")
         if len(row) > 4:
-            tco_pattern = r'^\d+\s*-\s*\d+\s*000$'
+            tco_pattern = r"^\d+\s*-\s*\d+\s*000$"
             if any(re.match(tco_pattern, str(cell).strip()) for cell in row[4:16]):
                 for j, provider in enumerate(PROVIDERS):
                     if len(row) > j + 4:
@@ -157,7 +162,7 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
                 continue
 
         # Subtotal row (has % in weight column, no MSC)
-        if weight_str and '%' in weight_str and not mscw:
+        if weight_str and "%" in weight_str and not mscw:
             if current_category:
                 for j, provider in enumerate(PROVIDERS):
                     if len(row) > j + 4:
@@ -165,20 +170,22 @@ def parse_csv(filepath: str, delimiter: str = ';') -> tuple:
             continue
 
         # Criterion row
-        if mscw in ('Must', 'Should', 'Could') and current_category:
+        if mscw in ("Must", "Should", "Could") and current_category:
             try:
-                weight = float(weight_str.replace(',', '.')) if weight_str else 0.0
+                weight = float(weight_str.replace(",", ".")) if weight_str else 0.0
             except ValueError:
                 weight = 0.0
 
             name = criterion_name if criterion_name else truncate_text(description, 40)
-            criterion = Criterion(priority=mscw, weight=weight, name=name, description=description)
+            criterion = Criterion(
+                priority=mscw, weight=weight, name=name, description=description
+            )
 
             for j, provider in enumerate(PROVIDERS):
                 if len(row) > j + 4:
                     score_str = row[j + 4].strip()
                     try:
-                        criterion.scores[provider] = float(score_str.replace(',', '.'))
+                        criterion.scores[provider] = float(score_str.replace(",", "."))
                     except (ValueError, AttributeError):
                         criterion.scores[provider] = 0.0
 
@@ -217,8 +224,10 @@ def truncate_text(text: str, max_len: int = 50) -> str:
 # HTML fragment builders
 # ---------------------------------------------------------------------------
 
+
 def _render_pros_cons(pros: List[str], cons: List[str]) -> str:
     """Render the two-column pros/cons grid shared by all strategy cards."""
+
     def _items(points: List[str], color: str, symbol: str) -> str:
         lines = "\n".join(
             f'                                <div style="display:flex;gap:10px;font-size:13px;color:#9ca3af;align-items:flex-start;">'
@@ -227,7 +236,7 @@ def _render_pros_cons(pros: List[str], cons: List[str]) -> str:
         )
         return lines
 
-    return f'''                        <div>
+    return f"""                        <div>
                             <div style="font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:#6b7280;margin-bottom:10px;">Переваги</div>
                             <div style="display:flex;flex-direction:column;gap:8px;">
 {_items(pros, "#10b981", "✓")}
@@ -238,7 +247,7 @@ def _render_pros_cons(pros: List[str], cons: List[str]) -> str:
                             <div style="display:flex;flex-direction:column;gap:8px;">
 {_items(cons, "#ef4444", "✗")}
                             </div>
-                        </div>'''
+                        </div>"""
 
 
 def _render_strategy_card(
@@ -261,7 +270,7 @@ def _render_strategy_card(
     """
     pros_cons = _render_pros_cons(pros, cons)
     wrapper_open = f'{indent}<div class="strategy-card" style="border-color: {border_rgba};{wrapper_style}">'
-    return f'''{wrapper_open}
+    return f"""{wrapper_open}
                     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
                         <div class="strategy-label" style="color: {label_color}; margin-bottom: 0;">{label_text}</div>
                         <div style="font-family:monospace;font-size:20px;font-weight:600;color:{label_color};">{score_text}</div>
@@ -271,7 +280,7 @@ def _render_strategy_card(
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">
 {pros_cons}
                     </div>
-                </div>'''
+                </div>"""
 
 
 def generate_provider_card(
@@ -288,7 +297,7 @@ def generate_provider_card(
 
     rank_badge = RANK_BADGES.get(rank, f"#{rank}")
     extra_classes = RANK_CLASSES.get(rank, "")
-    rank_style = ' style="opacity: 0.5;"' if rank > 3 else ''
+    rank_style = ' style="opacity: 0.5;"' if rank > 3 else ""
 
     # Build breakdown bars using CATEGORY_MAP as the single source of truth
     # for cat_id ordering and max_weight; _CATEGORY_BREAKDOWN_LABELS for display names.
@@ -296,7 +305,7 @@ def generate_provider_card(
     for csv_key, (cat_id, _cat_name, cat_max_weight) in CATEGORY_MAP.items():
         label = _CATEGORY_BREAKDOWN_LABELS[cat_id]
         cat_score = category_scores.get(cat_id, "0%")
-        score_part = cat_score.split(' / ')[0]
+        score_part = cat_score.split(" / ")[0]
         score_val = _parse_score_float(score_part)
         fill_pct = (score_val / cat_max_weight * 100) if cat_max_weight > 0 else 0.0
         breakdowns.append(
@@ -305,10 +314,10 @@ def generate_provider_card(
             f'                                <div class="breakdown-bar">'
             f'<div class="breakdown-fill {cat_id}" style="width: {fill_pct:.1f}%;"></div></div>\n'
             f'                                <span class="breakdown-value">{cat_score}</span>\n'
-            f'                            </div>'
+            f"                            </div>"
         )
 
-    score_display = score.replace('%', '')
+    score_display = score.replace("%", "")
 
     return f'''                    <div class="provider-score-card{extra_classes}">
                         <div class="rank-badge"{rank_style}>{rank_badge}</div>
@@ -327,7 +336,7 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
     priority_class, _ = get_priority_badge(criterion.priority)
     w = criterion.weight
     weight_label = f"{int(w)}%" if w == int(w) else f"{w}%"
-    desc_full = criterion.description.replace('"', "'").replace('\n', '<br>')
+    desc_full = criterion.description.replace('"', "'").replace("\n", "<br>")
 
     score_cells = []
     for provider in providers:
@@ -340,7 +349,7 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
         )
 
     n = len(providers)
-    return f'''                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat({n}, 1fr);">
+    return f"""                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat({n}, 1fr);">
                         <div class="criteria-name">
                             <span class="priority-badge {priority_class}">{weight_label}</span>
                             {criterion.name}
@@ -350,7 +359,7 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
                             <h4>Деталі оцінки</h4>
                             <p>{desc_full}</p>
                         </div>
-                    </div>'''
+                    </div>"""
 
 
 def generate_category_tab(cat_id: str, category: Category, providers: List[str]) -> str:
@@ -364,9 +373,9 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
     )
     summary_cards = "\n".join(
         f'                    <div class="summary-card">\n'
-        f'                        <h5>{p}</h5>\n'
+        f"                        <h5>{p}</h5>\n"
         f'                        <div class="value">{category.subtotals.get(p, "0%")}</div>\n'
-        f'                    </div>'
+        f"                    </div>"
         for p in providers_sorted_by_cat
     )
 
@@ -486,7 +495,7 @@ def generate_recommendations_tab() -> str:
             "Немає авторезюме дзвінка, лише транскрибація і таймлайни",
             "Відсутня автоматична оцінка якості та аналітика",
             "Слабке тегування та маркування розмов",
-            "Моноліт. Рішення передбачає свою телефонію"
+            "Моноліт. Рішення передбачає свою телефонію",
         ],
     )
 
@@ -512,7 +521,7 @@ def generate_recommendations_tab() -> str:
             "Слабше автоматичне перенесення даних саме з україномовних розмов",
             "Фокус інструментарію платформи зроблено на текстові канали зв'язку",
             "Висока вартість ліцензій та складність налаштування",
-            "Обмежена автоматизація процесу у кейсах: з 7 до 4хв"
+            "Обмежена автоматизація процесу у кейсах: з 7 до 4хв",
         ],
     )
 
@@ -632,7 +641,7 @@ def generate_recommendations_tab() -> str:
             "Сильні інструменти для текстових скриптів та пошуку по документації",
             "Інтерфейс налаштувань інтуїтивно зрозумілий",
             "Швидкий старт пілотного проєкту на реальних даних",
-            "Розгортають співпрацю із 11labs"
+            "Розгортають співпрацю із 11labs",
         ],
         cons=[
             "Відсутність української голосової моделі для транскрибації",
@@ -676,7 +685,7 @@ def generate_recommendations_tab() -> str:
             "Функціональне відставання швидкості роботи ШІ та поверхневе розуміння української",
             "Відсутність функціоналу пошуку Copilot, модуля ACW та аналітики",
             "Слабке розпізнавання суржику та недостатній аналіз емоцій",
-            "Не вказано у документації функціонал українською та аналіз емоцій"
+            "Не вказано у документації функціонал українською та аналіз емоцій",
         ],
     )
 
@@ -702,7 +711,7 @@ def generate_recommendations_tab() -> str:
         ],
     )
 
-    return f'''        <div class="tab-content" data-content="recommendations">
+    return f"""        <div class="tab-content" data-content="recommendations">
             <div class="recommendations-section">
                 <div class="rec-header">
                     <div class="rec-eyebrow">Фінальний розділ</div>
@@ -798,7 +807,7 @@ def generate_recommendations_tab() -> str:
                     <div class="strategy-label" style="color: #9ca3af;">Блокери</div>
                     <div class="strategy-title">Провайдери, що не мають необхідного функціоналу українською</div>
                     <div class="strategy-text">
-                        <b>Cresta AI \ Genesys Cloud CX \ Live Person  \ Get Vocal</b>
+                        <b>Cresta AI / Genesys Cloud CX / Live Person / Get Vocal</b>
                     </div>
                 </div>
 
@@ -1030,12 +1039,12 @@ def generate_recommendations_tab() -> str:
                     </svg>
                 </div>
             </div>
-        </div>'''
+        </div>"""
 
 
 def generate_asis_tab() -> str:
     """Generate HTML for the AS-IS BPMN tab."""
-    return '''        <!-- ═══ AS-IS ═══ -->
+    return """        <!-- ═══ AS-IS ═══ -->
     <div id="p-as" class="panel tab-content" data-content="asis">
 <div class="page-header">
   <div class="page-title">AS-IS — Поточний процес</div>
@@ -1490,12 +1499,12 @@ def generate_asis_tab() -> str:
 
         </div>
       </div>
-    </div>'''
+    </div>"""
 
 
 def generate_tobe_tab() -> str:
     """Generate HTML for the TO-BE BPMN tab."""
-    return '''        <!-- ═══ TO-BE ═══ -->
+    return """        <!-- ═══ TO-BE ═══ -->
     <div id="p-to" class="panel tab-content" data-content="tobe">
       <div class="hero">
         <div>
@@ -1619,15 +1628,15 @@ def generate_tobe_tab() -> str:
         <div class="pgc g"><div class="pgc-t">Прискорити онбординг нових операторів</div><div class="pgc-d">Через стандартизацію знань — новий оператор з підказками працює як досвідчений.</div></div>
         <div class="pgc g"><div class="pgc-t">Покращити аналіз якості роботи КЦ</div><div class="pgc-d">100% дзвінків замість вибірки — системне розуміння якості, а не точкові перевірки</div></div>
       </div>
-    </div>'''
+    </div>"""
 
 
 def generate_html(
     categories: Dict[str, Category],
     final_scores: Dict[str, str],
     tco_values: Dict[str, str],
-    asis_bpmn_xml: str = '',
-    tobe_bpmn_xml: str = '',
+    asis_bpmn_xml: str = "",
+    tobe_bpmn_xml: str = "",
 ) -> str:
     """Generate the complete HTML document."""
     _DISPLAY_ORDER = [
@@ -1676,12 +1685,20 @@ def generate_html(
     _rows = []
     _idx = 0
     for _size in _row_sizes:
-        _chunk = _all_cards[_idx:_idx + _size]
+        _chunk = _all_cards[_idx : _idx + _size]
         if _chunk:
-            _rows.append(f'<div class="fs-row fs-row-{_size}">\n' + "\n".join(_chunk) + '\n</div>')
+            _rows.append(
+                f'<div class="fs-row fs-row-{_size}">\n'
+                + "\n".join(_chunk)
+                + "\n</div>"
+            )
         _idx += _size
     if _idx < len(_all_cards):
-        _rows.append('<div class="fs-row fs-row-4">\n' + "\n".join(_all_cards[_idx:]) + '\n</div>')
+        _rows.append(
+            '<div class="fs-row fs-row-4">\n'
+            + "\n".join(_all_cards[_idx:])
+            + "\n</div>"
+        )
     provider_cards = "\n".join(_rows)
 
     category_order = ["copilot", "acw", "analytics", "precall", "it", "business"]
@@ -1698,15 +1715,15 @@ def generate_html(
     _asis_js = json.dumps(asis_bpmn_xml)
     _tobe_js = json.dumps(tobe_bpmn_xml)
     _bpmn_data_script = (
-        '<script>\n'
-        'window.__bpmnData = {\n'
-        '  asis: ' + _asis_js + ',\n'
-        '  tobe: ' + _tobe_js + '\n'
-        '};\n'
-        '</script>'
+        "<script>\n"
+        "window.__bpmnData = {\n"
+        "  asis: " + _asis_js + ",\n"
+        "  tobe: " + _tobe_js + "\n"
+        "};\n"
+        "</script>"
     )
 
-    _html = f'''<!DOCTYPE html>
+    _html = f"""<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -3036,16 +3053,16 @@ def generate_html(
             }}
         </script>
 </body>
-</html>'''
+</html>"""
 
     # Inject bpmn-js CDN assets and BPMN data before </head>
     _cdn = (
         '<link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/diagram-js.css">\n'
         '    <link rel="stylesheet" href="https://unpkg.com/bpmn-js@17/dist/assets/bpmn-font/css/bpmn.css">\n'
         '    <script src="https://unpkg.com/bpmn-js@17/dist/bpmn-navigated-viewer.production.min.js"></script>\n'
-        '    ' + _bpmn_data_script
+        "    " + _bpmn_data_script
     )
-    _html = _html.replace('</head>', _cdn + '\n</head>', 1)
+    _html = _html.replace("</head>", _cdn + "\n</head>", 1)
 
     return _html
 
@@ -3059,7 +3076,7 @@ def main() -> None:
 
     print(f"Reading CSV from: {csv_path}")
 
-    categories, final_scores, tco_values = parse_csv(str(csv_path), delimiter=',')
+    categories, final_scores, tco_values = parse_csv(str(csv_path), delimiter=";")
 
     print(f"Parsed {len(categories)} categories:")
     for cat_id, cat in categories.items():
@@ -3081,15 +3098,17 @@ def main() -> None:
         p = script_dir / name
         if p.exists():
             print(f"Loading BPMN: {p}")
-            return p.read_text(encoding='utf-8')
+            return p.read_text(encoding="utf-8")
         print(f"BPMN file not found (skipped): {p}")
-        return ''
+        return ""
 
-    asis_bpmn = _read_bpmn('asis.bpmn')
-    tobe_bpmn = _read_bpmn('tobe.bpmn')
-    html_content = generate_html(categories, final_scores, tco_values, asis_bpmn, tobe_bpmn)
+    asis_bpmn = _read_bpmn("asis.bpmn")
+    tobe_bpmn = _read_bpmn("tobe.bpmn")
+    html_content = generate_html(
+        categories, final_scores, tco_values, asis_bpmn, tobe_bpmn
+    )
 
-    with open(html_path, 'w', encoding='utf-8') as f:
+    with open(html_path, "w", encoding="utf-8") as f:
         f.write(html_content)
 
     print(f"\nGenerated HTML: {html_path}")
