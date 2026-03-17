@@ -794,137 +794,240 @@ def generate_recommendations_tab() -> str:
                     </div>
                 </div>
 
+                <div class="strategy-alert-card" style="border-color: rgba(255,255,255,0.15);">
+                    <div class="strategy-label" style="color: #9ca3af;">Блокери</div>
+                    <div class="strategy-title">Провайдери, що не мають необхідного функціоналу українською</div>
+                    <div class="strategy-text">
+                        <b>Cresta AI \ Genesys Cloud CX \ Live Person  \ Get Vocal</b>
+                    </div>
+                </div>
+
                 <div class="rec-divider">
                     <span class="rec-divider-label">Приклад Технічної Архітектури TO-BE</span>
                     <div class="rec-divider-line"></div>
                 </div>
 
+                <div class="legend">
+                  <div class="leg"><div class="leg-dot" style="background:#0d4372"></div>Google / AI сервіси</div>
+                  <div class="leg"><div class="leg-dot" style="background:#2a5a80"></div>Cisco — телефонія</div>
+                  <div class="leg"><div class="leg-dot" style="background:#3a4060"></div>Дії оператора</div>
+                  <div class="leg"><div class="leg-dot" style="background:#2a2f45"></div>Message flow</div>
+                </div>
+
                 <div style="border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:#080b12">
-                  <svg viewBox="0 0 1360 400" width="100%" xmlns="http://www.w3.org/2000/svg" font-family="Mulish,sans-serif">
+                    <svg viewBox="640 2882 1830 440"
+                         xmlns="http://www.w3.org/2000/svg"
+                         preserveAspectRatio="xMidYMid meet"
+                         style="background:#0f1117;">
+
                     <defs>
-                      <marker id="a1" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#5a6e90"/></marker>
-                      <marker id="a2" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#4a8cff"/></marker>
-                      <marker id="a3" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#30d890"/></marker>
-                      <marker id="a5" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 Z" fill="#3a4a65"/></marker>
+                      <pattern id="g2" width="10" height="10" patternUnits="userSpaceOnUse">
+                        <circle cx="0.5" cy="0.5" r="0.5" fill="#1a1d2a"/>
+                      </pattern>
+                      <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M0,1 L9,5 L0,9 Z" fill="#3a4060"/>
+                      </marker>
+                      <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+                        <path d="M0,1 L9,5 L0,9 Z" fill="#0d4372"/>
+                      </marker>
+                      <marker id="aM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+                        <path d="M0,1 L9,5 L0,9 Z" fill="#2a2f45"/>
+                      </marker>
                     </defs>
-                    <rect x="0" y="0" width="1360" height="400" fill="#080b12"/>
-                    <!-- Lane backgrounds -->
-                    <rect x="0"    y="0" width="185"  height="370" fill="#0a0e16"/>
-                    <rect x="185"  y="0" width="185"  height="370" fill="#0c1020"/>
-                    <rect x="370"  y="0" width="185"  height="370" fill="#0a0e16"/>
-                    <rect x="555"  y="0" width="260"  height="370" fill="#0c1020"/>
-                    <rect x="815"  y="0" width="260"  height="370" fill="#0a0e16"/>
-                    <rect x="1075" y="0" width="285"  height="370" fill="#0c1020"/>
-                    <!-- Lane headers -->
-                    <rect x="0"    y="0" width="185"  height="28" fill="#111826"/>
-                    <rect x="185"  y="0" width="185"  height="28" fill="#131a2e"/>
-                    <rect x="370"  y="0" width="185"  height="28" fill="#111826"/>
-                    <rect x="555"  y="0" width="260"  height="28" fill="#131a2e"/>
-                    <rect x="815"  y="0" width="260"  height="28" fill="#111826"/>
-                    <rect x="1075" y="0" width="285"  height="28" fill="#131a2e"/>
-                    <!-- Dividers -->
-                    <line x1="185"  y1="0" x2="185"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
-                    <line x1="370"  y1="0" x2="370"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
-                    <line x1="555"  y1="0" x2="555"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
-                    <line x1="815"  y1="0" x2="815"  y2="370" stroke="#1e2a40" stroke-width="1.2"/>
-                    <line x1="1075" y1="0" x2="1075" y2="370" stroke="#1e2a40" stroke-width="1.2"/>
-                    <line x1="0" y1="28" x2="1360" y2="28" stroke="#1e2a40" stroke-width="1"/>
-                    <line x1="0" y1="370" x2="1360" y2="370" stroke="#1e2a40" stroke-width="1"/>
-                    <!-- Lane labels -->
-                    <text x="93"   y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">TELEPHONY</text>
-                    <text x="278"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">PRE AI / IVR</text>
-                    <text x="463"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">DATA PIPELINE</text>
-                    <text x="685"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">IN-CALL AI / COPILOT</text>
-                    <text x="945"  y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">ACW</text>
-                    <text x="1218" y="18" text-anchor="middle" font-size="8.5" fill="#4a5e80" font-family="JetBrains Mono,monospace" font-weight="700" letter-spacing="0.1em">DEEP ANALYSIS</text>
 
-                    <!-- ===== TELEPHONY ===== -->
-                    <circle cx="93" cy="72" r="16" fill="#0a0e16" stroke="#5a6e90" stroke-width="2.2"/>
-                    <line x1="93" y1="88" x2="93" y2="112" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
-                    <rect x="22" y="114" width="142" height="62" rx="8" fill="#060f1e" stroke="#1a3060" stroke-width="1.8"/>
-                    <text x="93" y="140" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Cisco &#x2192;</text>
-                    <text x="93" y="155" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">real-time streaming</text>
-                    <line x1="93" y1="176" x2="93" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
-                    <line x1="93" y1="300" x2="278" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <rect x="640" y="2870" width="1830" height="420" fill="url(#g2)"/>
 
-                    <!-- ===== PRE AI / IVR ===== -->
-                    <line x1="278" y1="300" x2="278" y2="208" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
-                    <polygon points="278,200 289,214 267,214" fill="#080b12" stroke="#3a4a65" stroke-width="1.5"/>
-                    <rect x="206" y="114" width="144" height="82" rx="8" fill="#0d1f45" stroke="#4a8cff" stroke-width="2.2"/>
-                    <text x="278" y="144" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">11labs / Google</text>
-                    <text x="278" y="159" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">DialogflowCX</text>
-                    <text x="278" y="178" text-anchor="middle" font-size="10" fill="#a0c0ff" font-weight="600">&#x2192; Intent</text>
-                    <line x1="350" y1="148" x2="392" y2="148" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <!-- ═══════════════════════════════════
+                         SWIMLANE BACKGROUNDS
+                         (exact from BPMN: x=670 y=2890 each w=300 h=390)
+                         ═══════════════════════════════════ -->
 
-                    <!-- ===== DATA PIPELINE ===== -->
-                    <rect x="393" y="114" width="148" height="68" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
-                    <text x="467" y="144" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
-                    <text x="467" y="159" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">transcribes</text>
-                    <text x="467" y="174" text-anchor="middle" font-size="10" fill="#30d890" font-weight="600">&#x2192; context</text>
-                    <line x1="467" y1="182" x2="467" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
-                    <line x1="467" y1="300" x2="625" y2="300" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <!-- Telephony\IVR  x=670 y=2890 w=300 h=390 -->
+                    <rect x="670" y="2890" width="300" height="390" fill="#090f18" stroke="#1e2333" stroke-width="1.5"/>
+                    <!-- header row -->
+                    <rect x="670" y="2890" width="300" height="32" fill="#08101a"/>
+                    <line x1="670" y1="2922" x2="970" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="820" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#2a5a80">TELEPHONY \ IVR</text>
 
-                    <!-- ===== IN-CALL AI / COPILOT ===== -->
-                    <!-- Ender Turing: top-right. Mapped from SVG: x=702,y=69,w=87,h=66 -->
-                    <rect x="702" y="60" width="100" height="70" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
-                    <text x="752" y="88" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
-                    <text x="752" y="103" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">transcribes</text>
+                    <!-- Pre AI  x=970 y=2890 w=300 h=390 -->
+                    <rect x="970" y="2890" width="300" height="390" fill="#090e18" stroke="#1e2333" stroke-width="1.5"/>
+                    <rect x="970" y="2890" width="300" height="32" fill="#08101a"/>
+                    <line x1="970" y1="2922" x2="1270" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="1120" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#4a5a80">PRE AI</text>
 
-                    <!-- Google Agent: left-center. Mapped from SVG: x=616,y=144,w=87,h=66 -->
-                    <rect x="570" y="155" width="110" height="74" rx="8" fill="#0d1f45" stroke="#4a8cff" stroke-width="2.2"/>
-                    <text x="625" y="180" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Google Agent</text>
-                    <text x="625" y="195" text-anchor="middle" font-size="11" fill="#7aaeff" font-weight="700">Assist &#x2192;</text>
-                    <text x="625" y="210" text-anchor="middle" font-size="10" fill="#a0c0ff">NBA\RAG</text>
+                    <!-- Data Pipeline  x=1270 y=2890 w=300 h=390 -->
+                    <rect x="1270" y="2890" width="300" height="390" fill="#0a0f18" stroke="#1e2333" stroke-width="1.5"/>
+                    <rect x="1270" y="2890" width="300" height="32" fill="#08101a"/>
+                    <line x1="1270" y1="2922" x2="1570" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="1420" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#4a5a80">DATA PIPELINE</text>
 
-                    <!-- Consultation: bottom-left. Mapped from SVG: x=616,y=251,w=87,h=66 -->
-                    <rect x="570" y="262" width="110" height="68" rx="8" fill="#0a0e18" stroke="#2a3a58" stroke-width="1.8"/>
-                    <circle cx="596" cy="278" r="7" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
-                    <path d="M587,292 Q596,286 605,292" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
-                    <text x="648" y="282" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">Consultation</text>
+                    <!-- In-Call AI / Copilot  x=1570 y=2890 w=300 h=390 -->
+                    <rect x="1570" y="2890" width="300" height="390" fill="#091018" stroke="#1e2333" stroke-width="1.5"/>
+                    <rect x="1570" y="2890" width="300" height="32" fill="#08101a"/>
+                    <line x1="1570" y1="2922" x2="1870" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="1720" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#1a50a0">IN-CALL AI / COPILOT</text>
 
-                    <!-- Flow_01k7vdu: ET left → left → down → GA top (M1230,3310 L1180,3310 L1180,3360) -->
-                    <path d="M702,95 L670,95 L670,155" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <!-- ACW  x=1870 y=2890 w=300 h=390 -->
+                    <rect x="1870" y="2890" width="300" height="390" fill="#0d0f18" stroke="#1e2333" stroke-width="1.5"/>
+                    <rect x="1870" y="2890" width="300" height="32" fill="#0a0c14"/>
+                    <line x1="1870" y1="2922" x2="2170" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="2020" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#3a4060">ACW</text>
 
-                    <!-- Flow_1iyksw6: GA bottom → down → CO top (M1180,3440 L1180,3490) -->
-                    <line x1="625" y1="229" x2="625" y2="262" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <!-- Post-Call AI  x=2170 y=2890 w=300 h=390 -->
+                    <rect x="2170" y="2890" width="300" height="390" fill="#091010" stroke="#1e2333" stroke-width="1.5"/>
+                    <rect x="2170" y="2890" width="300" height="32" fill="#071008"/>
+                    <line x1="2170" y1="2922" x2="2470" y2="2922" stroke="#1e2333" stroke-width="1"/>
+                    <text x="2320" y="2911" text-anchor="middle"
+                          font-family="Inter,sans-serif" font-size="10" font-weight="600"
+                          letter-spacing="0.15em" fill="#1a6a40">POST-CALL AI</text>
 
+                    <!-- ═══════════════════════════════════
+                         FLOWS — exact waypoints from BPMN
+                         ═══════════════════════════════════ -->
 
+                    <!-- Flow_1ltqlbq: start → Activity_1pe6vzz: (830,2988)→(830,3050) -->
+                    <path d="M830,2988 L830,3050" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
 
-                    <!-- ARROW 1: Consultation right → up → Ender Turing bottom -->
-                    <path d="M680,296 L752,296 L752,130" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
-                    <!-- ARROW 2: Ender Turing right → right → down → Summary CRM left -->
-                    <path d="M802,95 L840,95 L840,299 L870,299" fill="none" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
-                    <!-- solid arrow: Summary CRM → Agents validation -->
-                    <line x1="958" y1="260" x2="958" y2="116" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
+                    <!-- Flow_0fx420z (msg): (830,3130)→(830,3210)→(1140,3210)→(1140,3130) -->
+                    <path d="M830,3130 L830,3210 L1140,3210 L1140,3130"
+                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
 
+                    <!-- Flow_0efeqjh (msg): (1140,3050)→(1140,2960)→(1420,2960)→(1420,3060) -->
+                    <path d="M1140,3050 L1140,2960 L1420,2960 L1420,3060"
+                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
 
+                    <!-- Flow_10me152 (msg): (1430,3140)→(1430,3200)→(1640,3200) -->
+                    <path d="M1430,3140 L1430,3200 L1640,3200"
+                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
 
+                    <!-- Flow_00s14zl: (1690,3110)→(1690,3160) -->
+                    <path d="M1690,3110 L1690,3160" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
 
-                    <!-- ===== ACW ===== -->
-                    <rect x="882" y="50" width="152" height="66" rx="8" fill="#0a0e18" stroke="#2a3a58" stroke-width="1.8"/>
-                    <circle cx="908" cy="67" r="7" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
-                    <path d="M899,81 Q908,75 917,81" fill="none" stroke="#8ab0e0" stroke-width="1.4"/>
-                    <text x="958" y="76" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">Agents</text>
-                    <text x="958" y="91" text-anchor="middle" font-size="11" fill="#c0d8f0" font-weight="700">validation</text>
+                    <!-- Flow_0hmcrqm: (1740,3200)→(1790,3200)→(1790,3020) -->
+                    <path d="M1740,3200 L1790,3200 L1790,3020" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
 
-                    <!-- Summary CRM -->
-                    <rect x="870" y="260" width="176" height="78" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
-                    <text x="958" y="285" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Summary</text>
-                    <text x="958" y="300" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">avtomation CRM</text>
-                    <text x="958" y="315" text-anchor="middle" font-size="10" fill="#30d890" font-weight="600">EnderTuring</text>
-                    <!-- dashed to Deep Analysis -->
-                    <line x1="1034" y1="83" x2="1118" y2="83" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
+                    <!-- Flow_1ijlu9a: (1740,2980)→(1690,2980)→(1690,3030) -->
+                    <path d="M1740,2980 L1690,2980 L1690,3030" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
 
-                    <!-- ===== DEEP ANALYSIS ===== -->
-                    <line x1="1118" y1="83" x2="1188" y2="83" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5"/>
-                    <line x1="1188" y1="83" x2="1188" y2="112" stroke="#3a4a65" stroke-width="1.4" stroke-dasharray="7,5" marker-end="url(#a5)"/>
-                    <rect x="1118" y="114" width="192" height="68" rx="8" fill="#041408" stroke="#0d5030" stroke-width="1.8"/>
-                    <text x="1214" y="144" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Ender Turing</text>
-                    <text x="1214" y="159" text-anchor="middle" font-size="11" fill="#50e8a0" font-weight="700">Deep Analysis</text>
-                    <line x1="1214" y1="182" x2="1214" y2="216" stroke="#5a6e90" stroke-width="1.8" marker-end="url(#a1)"/>
-                    <circle cx="1214" cy="236" r="18" fill="#080b12" stroke="#5a6e90" stroke-width="3"/>
-                    <circle cx="1214" cy="236" r="11" fill="#3a4a65"/>
-                  </svg>
+                    <!-- Flow_0swjr2s (msg): (1810,3020)→(1810,3200)→(1990,3200) -->
+                    <path d="M1810,3020 L1810,3200 L1990,3200"
+                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
+
+                    <!-- Flow_00ygp82: (2040,3160)→(2040,3020) -->
+                    <path d="M2040,3160 L2040,3020" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
+
+                    <!-- Flow_0hi4imq (msg): (2090,2980)→(2350,2980)→(2350,3050) -->
+                    <path d="M2090,2980 L2350,2980 L2350,3050"
+                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
+
+                    <!-- Flow_0vsnzzc: (2350,3130)→(2350,3192) -->
+                    <path d="M2350,3130 L2350,3192" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
+
+                    <!-- ═══════════════════════════════════
+                         NODES — exact x,y,w,h from BPMN
+                         ═══════════════════════════════════ -->
+
+                    <!-- Event_15bkou2 start: x=812 y=2952 w=36 h=36 → cx=830 cy=2970 -->
+                    <circle cx="830" cy="2970" r="16" fill="none" stroke="#3a4060" stroke-width="2"/>
+
+                    <!-- Activity_1pe6vzz: x=780 y=3050 w=100 h=80  (Cisco → real-time streaming, Cisco blue) -->
+                    <rect x="780" y="3050" width="100" height="80" rx="5"
+                          fill="rgba(42,90,128,.15)" stroke="#2a5a80" stroke-width="1.5"/>
+                    <text x="830" y="3080" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5080a0">Cisco →</text>
+                    <text x="830" y="3094" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5080a0">real-time</text>
+                    <text x="830" y="3108" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#5080a0">streaming</text>
+
+                    <!-- Activity_05q1727: x=1090 y=3050 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google blue) -->
+                    <rect x="1090" y="3050" width="100" height="80" rx="5"
+                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
+                    <text x="1140" y="3071" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">Google</text>
+                    <text x="1140" y="3084" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">DialogflowCX \</text>
+                    <text x="1140" y="3097" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">11labs →</text>
+                    <text x="1140" y="3110" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">Consultation</text>
+                    <text x="1140" y="3122" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a6090">& Intent</text>
+                    <!-- price -->
+                    <text x="1140" y="3143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2a4a80">DialogflowCX ~$35 000 · 11labs ~$50 000</text>
+
+                    <!-- Activity_1czdrgc: x=1380 y=3060 w=100 h=80  fill=#bbdefb stroke=#0d4372 -->
+                    <rect x="1380" y="3060" width="100" height="80" rx="5"
+                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
+                    <text x="1430" y="3081" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">Google</text>
+                    <text x="1430" y="3094" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">DialogflowCX \</text>
+                    <text x="1430" y="3107" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">11labs →</text>
+                    <text x="1430" y="3120" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">transcribes →</text>
+                    <text x="1430" y="3133" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#3a6090">summary</text>
+                    <!-- price -->
+                    <text x="1430" y="3152" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2a4a80">DialogflowCX ~$35 000 · 11labs ~$50 000</text>
+
+                    <!-- Activity_02xei6q: x=1740 y=2940 w=100 h=80  (Транскрибація real-time, neutral) -->
+                    <rect x="1740" y="2940" width="100" height="80" rx="5"
+                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+                    <text x="1790" y="2968" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8aaa">Транскрибація</text>
+                    <text x="1790" y="2982" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#7a8aaa">real-time</text>
+
+                    <!-- Activity_1382q5a: x=1640 y=3030 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google Agent Assist top) -->
+                    <rect x="1640" y="3030" width="100" height="80" rx="5"
+                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
+                    <text x="1690" y="3051" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Google Agent</text>
+                    <text x="1690" y="3064" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Assist \ власна</text>
+                    <text x="1690" y="3077" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">розробка</text>
+                    <text x="1690" y="3090" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Copilot на</text>
+                    <text x="1690" y="3103" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a6090">Gemini</text>
+                    <!-- price -->
+                    <text x="1690" y="3122" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2a4a80">Agent Assist ~$200 000</text>
+
+                    <!-- Activity_0c5vccr: x=1640 y=3160 w=100 h=80  (Consultation, neutral+person) -->
+                    <rect x="1640" y="3160" width="100" height="80" rx="5"
+                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+                    <!-- person icon -->
+                    <circle cx="1662" cy="3185" r="7" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
+                    <path d="M1651,3200 Q1662,3193 1673,3200" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
+                    <text x="1690" y="3215" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6a7a9a">Consultation</text>
+
+                    <!-- Activity_0ljn02g: x=1990 y=2940 w=100 h=80  (Agents validation, neutral+person) -->
+                    <rect x="1990" y="2940" width="100" height="80" rx="5"
+                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+                    <circle cx="2012" cy="2965" r="7" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
+                    <path d="M2001,2980 Q2012,2973 2023,2980" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
+                    <text x="2040" y="2990" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6a7a9a">Agents</text>
+                    <text x="2040" y="3004" text-anchor="middle" font-family="Inter,sans-serif" font-size="11" fill="#6a7a9a">validation</text>
+
+                    <!-- Activity_1pgwtp3: x=1990 y=3160 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google Agent bottom) -->
+                    <rect x="1990" y="3160" width="100" height="80" rx="5"
+                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
+                    <text x="2040" y="3181" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Google Agent</text>
+                    <text x="2040" y="3194" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Assist \ власна</text>
+                    <text x="2040" y="3207" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">розробка</text>
+                    <text x="2040" y="3220" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#5090c8">Copilot на</text>
+                    <text x="2040" y="3233" text-anchor="middle" font-family="Inter,sans-serif" font-size="9.5" fill="#3a6090">Gemini</text>
+                    <!-- price -->
+                    <text x="2040" y="3252" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2a4a80">Agent Assist ~$200 000</text>
+
+                    <!-- Activity_1e9guve: x=2300 y=3050 w=100 h=80  fill=#bbdefb stroke=#0d4372 -->
+                    <rect x="2300" y="3050" width="100" height="80" rx="5"
+                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
+                    <text x="2350" y="3071" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">CCAI Insights \</text>
+                    <text x="2350" y="3084" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">Ender Turing</text>
+                    <text x="2350" y="3097" text-anchor="middle" font-family="Inter,sans-serif" font-size="10" fill="#5090c8">Deep Analysis</text>
+                    <!-- price -->
+                    <text x="2350" y="3143" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#2a4a80">CCAI Insights ~$60 000</text>
+                    <text x="2350" y="3155" text-anchor="middle" font-family="Inter,sans-serif" font-size="9" fill="#1a5030">Ender Turing ~$7 500</text>
+
+                    <!-- Event_1bvukv9 end: x=2332 y=3192 w=36 h=36 → cx=2350 cy=3210 -->
+                    <circle cx="2350" cy="3210" r="16" fill="none" stroke="#3a4060" stroke-width="4"/>
+                    <circle cx="2350" cy="3210" r="9"  fill="#3a4060"/>
+
+                    </svg>
                 </div>
             </div>
         </div>'''
@@ -934,105 +1037,458 @@ def generate_asis_tab() -> str:
     """Generate HTML for the AS-IS BPMN tab."""
     return '''        <!-- ═══ AS-IS ═══ -->
     <div id="p-as" class="panel tab-content" data-content="asis">
-      <div class="hero">
-        <div>
-          <h2 style="color:#ff7040">AS-IS &mdash; <span style="color:var(--text)">Поточний процес</span></h2>
-          <p>6 учасників з BPMN: Клієнт · Cisco · EVA (Omilia) · Запис (MP3) · Оператор · Робоче місце</p>
-        </div>
-        <div class="chips">
-          <div class="chip" style="border-color:#1a3060;color:#4a8cff">Cisco — телефонія</div>
-          <div class="chip" style="border-color:#4a3000;color:#f0a030">EVA — Omilia IVR</div>
-          <div class="chip" style="border-color:var(--warn-b);color:var(--warn)">Без AI</div>
-          <div class="chip" style="border-color:var(--warn-b);color:var(--warn)">ACW вручну</div>
+<div class="page-header">
+  <div class="page-title">AS-IS — Поточний процес</div>
+  <div class="page-sub">6 учасників: Клієнт · Cisco/IVR · EVA (Omilia) · Запис (MP3) · Оператор · Робоче місце / CRM</div>
+</div>
+
+<div class="legend">
+  <div class="leg"><div class="leg-dot" style="background:#2a7a3a"></div>Лише Україна</div>
+  <div class="leg"><div class="leg-dot" style="background:#8a7a20"></div>Лише Європа</div>
+  <div class="leg"><div class="leg-dot" style="background:#c05020"></div>Оператор / CRM</div>
+  <div class="leg"><div class="leg-dot" style="background:#2a5a80"></div>Cisco — телефонія</div>
+  <div class="leg"><div class="leg-dot" style="background:#1e2233"></div>Без AI</div>
+</div>
+
+<div class="bpmn-wrap">
+<svg viewBox="155 75 2890 1310" xmlns="http://www.w3.org/2000/svg"
+     preserveAspectRatio="xMidYMid meet" style="background:#0f1117;">
+      <defs>
+        <pattern id="g" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="0.5" cy="0.5" r="0.5" fill="#1a1d2a"/>
+        </pattern>
+        <marker id="aBlk" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9 Z" fill="#3a4060"/>
+        </marker>
+        <marker id="aOra" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9 Z" fill="#7a4a10"/>
+        </marker>
+        <marker id="aGrn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9 Z" fill="#1a6a30"/>
+        </marker>
+        <marker id="aMsg" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9 Z" fill="#2a2f45"/>
+        </marker>
+        <marker id="aRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+          <path d="M0,1 L9,5 L0,9 Z" fill="#8a3010"/>
+        </marker>
+      </defs>
+
+      <rect x="155" y="75" width="2895" height="1310" fill="url(#g)"/>
+
+      <!-- ═══ SWIMLANES ═══ -->
+
+      <!-- Клієнт y=80..280 -->
+      <rect x="160" y="80"   width="2880" height="200" fill="#0c0e16" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="80"   width="30"   height="200" fill="#090b12"/>
+      <line x1="190" y1="80"  x2="190" y2="280" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,180) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" fill="#3d4260">Клієнт</text>
+
+      <!-- Телефонія y=280..420 -->
+      <rect x="160" y="280"  width="2880" height="140" fill="#090f18" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="280"  width="30"   height="140" fill="#070d16"/>
+      <line x1="190" y1="280" x2="190" y2="420" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,350) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" fill="#2a5a80">Телефонія \ IVR</text>
+
+      <!-- EVA (лише Україна) y=420..670 — green tint -->
+      <rect x="160" y="420"  width="2880" height="250" fill="#091210" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="420"  width="30"   height="250" fill="#071008"/>
+      <line x1="190" y1="420" x2="190" y2="670" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,545) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" fill="#2a7a3a">EVA (лише Україна)</text>
+
+      <!-- Запис MP3 y=670..930 -->
+      <rect x="160" y="670"  width="2880" height="260" fill="#0d0f18" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="670"  width="30"   height="260" fill="#0a0c14"/>
+      <line x1="190" y1="670" x2="190" y2="930" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,800) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" fill="#3d4260">Запис (MP3)</text>
+
+      <!-- Оператор y=930..1140 — red/orange tint -->
+      <rect x="160" y="930"  width="2880" height="210" fill="#140e08" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="930"  width="30"   height="210" fill="#110c06"/>
+      <line x1="190" y1="930" x2="190" y2="1140" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,1035) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="16" fill="#b04020">Оператор</text>
+
+      <!-- Робоче місце y=1140..1375 — red/orange tint -->
+      <rect x="160" y="1140" width="2880" height="235" fill="#130e09" stroke="#1e2333" stroke-width="1.5"/>
+      <rect x="160" y="1140" width="30"   height="235" fill="#100c07"/>
+      <line x1="190" y1="1140" x2="190" y2="1375" stroke="#1e2333" stroke-width="1"/>
+      <text transform="translate(173,1257) rotate(-90)" text-anchor="middle" font-family="Inter,sans-serif" font-size="15" fill="#b04020">Робоче місце оператора \ CRM</text>
+
+      <!-- ═══ FLOWS ═══ -->
+
+      <!-- start → здійснює -->
+      <path d="M248,200 L300,200" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+
+      <!-- msg: здійснює → маршрутизує -->
+      <path d="M350,240 L350,310" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- msg: маршрутизує → початок запису -->
+      <path d="M350,390 L350,710" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- msg: маршрутизує → первинна консультація (EVA) -->
+      <path d="M350,390 L350,475 L500,475 L500,560" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- Europe flow: маршрутизує → вибір мови (orange) -->
+      <path d="M400,350 L660,350" stroke="#7a4a10" stroke-width="1.5" fill="none" marker-end="url(#aOra)"/>
+
+      <!-- вибір мови → очікування черга -->
+      <path d="M760,350 L910,350" stroke="#7a4a10" stroke-width="1.5" fill="none" marker-end="url(#aOra)"/>
+
+      <!-- черга → переадресація -->
+      <path d="M1010,350 L1120,350" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+
+      <!-- EVA flows (green) -->
+      <!-- первинна → gateway -->
+      <path d="M550,600 L685,600" stroke="#1a6a30" stroke-width="1.5" fill="none" marker-end="url(#aGrn)"/>
+      <!-- gateway → очікування (Так, вгору) -->
+      <path d="M710,575 L710,520" stroke="#1a6a30" stroke-width="1.5" fill="none" marker-end="url(#aGrn)"/>
+      <text x="716" y="551" font-family="Inter,sans-serif" font-size="14" fill="#2a8a40">Так</text>
+      <!-- gateway → передати оператору (Ні) -->
+      <path d="M735,600 L910,600" stroke="#1a6a30" stroke-width="1.5" fill="none" marker-end="url(#aGrn)"/>
+      <text x="820" y="592" font-family="Inter,sans-serif" font-size="14" fill="#2a8a40">Ні</text>
+      <!-- передати → очікування черга (msg) -->
+      <path d="M960,560 L960,390" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- EVA очікування → завершує дзвінок (msg long) -->
+      <path d="M760,480 L840,480 L840,120 L2080,120 L2080,160" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- ЗАПИС flows -->
+      <!-- завершує дзвінок → завершення запису (msg) -->
+      <path d="M2130,200 L2190,200 L2190,710" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- завершення → gateway -->
+      <path d="M2240,750 L2305,750" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+      <!-- gateway EVA (blue) → збереження -->
+      <path d="M2355,750 L2760,750" stroke="#1a5a8a" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+      <text x="2450" y="742" font-family="Inter,sans-serif" font-size="14" fill="#1a5a8a">EVA (лише Україна)</text>
+      <!-- збереження → end EVA -->
+      <path d="M2860,750 L2952,750" stroke="#1a5a8a" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+      <!-- gateway → фіксація (оператор) -->
+      <path d="M2330,775 L2330,830" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aBlk)"/>
+      <text x="2340" y="808" font-family="Inter,sans-serif" font-size="14" fill="#4a5a70">Оператор</text>
+      <!-- фіксація → створення картки (msg) -->
+      <path d="M2330,910 L2330,1230" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- ОПЕРАТОР flows -->
+      <!-- переадресація → приймає (msg) -->
+      <path d="M1220,350 L1310,350 L1310,1000" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- приймає → аналіз -->
+      <path d="M1380,1040 L1460,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- аналіз → консультує -->
+      <path d="M1560,1040 L1650,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- консультує → gateway -->
+      <path d="M1750,1040 L1875,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- gateway → очікування (Так) -->
+      <path d="M1925,1040 L2030,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <text x="1949" y="1032" font-family="Inter,sans-serif" font-size="14" fill="#e8834a">Так</text>
+      <!-- gateway → консультує (Ні, loop back) -->
+      <path d="M1900,1065 L1900,1120 L1700,1120 L1700,1080" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <text x="1796" y="1116" font-family="Inter,sans-serif" font-size="14" fill="#7a3010">Ні</text>
+      <!-- очікування → описує запит (msg) -->
+      <path d="M2080,1000 L2080,240" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- очікування → завершення резюме -->
+      <path d="M2130,1040 L2420,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- резюме → тематики -->
+      <path d="M2520,1040 L2580,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- тематики → тегування -->
+      <path d="M2680,1040 L2760,1040" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+      <!-- тегування → закриття картки (msg) -->
+      <path d="M2810,1080 L2810,1230" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+
+      <!-- CRM flows -->
+      <!-- аналіз ↔ аналіз_crm bidirectional msg -->
+      <path d="M1512,1240 L1512,1085" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <path d="M1508,1082 L1508,1237" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- приймає дзвінок → описує (msg) -->
+      <path d="M1350,1000 L1350,240" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <path d="M1400,200 L1510,200 L1510,1000" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- створення → доповнення картки (msg) -->
+      <path d="M2380,1270 L2470,1270 L2470,1080" stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aMsg)"/>
+      <!-- закриття → end -->
+      <path d="M2860,1270 L2952,1270" stroke="#8a3010" stroke-width="1.5" fill="none" marker-end="url(#aRed)"/>
+
+      <!-- ═══ NODES ═══ -->
+
+      <!-- ── КЛІЄНТ ── -->
+      <circle cx="230" cy="200" r="16" fill="none" stroke="#3a4060" stroke-width="2"/>
+      <!-- здійснює дзвінок -->
+      <rect x="300" y="160" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="350" y="197" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#7a8aaa">Здійснює</text>
+      <text x="350" y="211" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#7a8aaa">дзвінок</text>
+      <!-- описує запит -->
+      <rect x="1300" y="160" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="1350" y="204" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#7a8aaa">Описує запит</text>
+      <!-- завершує дзвінок -->
+      <rect x="2030" y="160" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="2080" y="197" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#7a8aaa">Завершує</text>
+      <text x="2080" y="211" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#7a8aaa">дзвінок</text>
+
+      <!-- ── ТЕЛЕФОНІЯ (Cisco blue) ── -->
+      <rect x="300"  y="310" width="100" height="80" rx="5" fill="rgba(42,90,128,.15)" stroke="#2a5a80" stroke-width="1.5"/>
+      <text x="350"  y="344" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5080a0">Маршрутизує</text>
+      <text x="350"  y="358" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5080a0">дзвінок</text>
+
+      <!-- вибір мови — EUROPE YELLOW -->
+      <rect x="660"  y="310" width="100" height="80" rx="5" fill="rgba(140,120,0,.12)" stroke="#8a7a10" stroke-width="1.5"/>
+      <text x="710"  y="333" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#aa9820">(лише Європа)</text>
+      <text x="710"  y="347" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#c0b030">Вибір мови</text>
+      <text x="710"  y="361" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#c0b030">розмови</text>
+
+      <rect x="910"  y="310" width="100" height="80" rx="5" fill="rgba(42,90,128,.15)" stroke="#2a5a80" stroke-width="1.5"/>
+      <text x="960"  y="344" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#5080a0">Очікування</text>
+      <text x="960"  y="358" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#5080a0">в черзі</text>
+
+      <rect x="1120" y="310" width="100" height="80" rx="5" fill="rgba(42,90,128,.15)" stroke="#2a5a80" stroke-width="1.5"/>
+      <text x="1170" y="341" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5080a0">Переадресація</text>
+      <text x="1170" y="355" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#5080a0">на оператора</text>
+
+      <!-- ── EVA (UKRAINE GREEN) ── -->
+      <rect x="450"  y="560" width="100" height="80" rx="5" fill="rgba(20,90,40,.18)" stroke="#1a6a30" stroke-width="1.5"/>
+      <text x="500"  y="584" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">Первинна</text>
+      <text x="500"  y="597" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">консультація:</text>
+      <text x="500"  y="610" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">трекінг \ графік</text>
+
+      <!-- gateway EVA -->
+      <rect x="685"  y="575" width="50" height="50" rx="0" fill="rgba(20,90,40,.12)" stroke="#1a6a30" stroke-width="1.5" transform="rotate(45,710,600)"/>
+      <text x="710"  y="605" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" fill="#1a6a30">✕</text>
+      <text x="710" y="643" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#2a7a40">Чи вирішено</text>
+      <text x="710" y="657" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#2a7a40">запит клієнта?</text>
+
+      <rect x="660"  y="440" width="100" height="80" rx="5" fill="rgba(20,90,40,.18)" stroke="#1a6a30" stroke-width="1.5"/>
+      <text x="710"  y="474" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#3aaa50">Очікування</text>
+      <text x="710"  y="488" text-anchor="middle" font-family="Inter,sans-serif" font-size="14" fill="#3aaa50">інших питань</text>
+
+      <rect x="910"  y="560" width="100" height="80" rx="5" fill="rgba(20,90,40,.18)" stroke="#1a6a30" stroke-width="1.5"/>
+      <text x="960"  y="584" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">Передати</text>
+      <text x="960"  y="598" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">запит</text>
+      <text x="960"  y="612" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">оператору</text>
+
+      <!-- ── ЗАПИС ── -->
+      <rect x="300"  y="710" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="350"  y="740" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">Початок</text>
+      <text x="350"  y="754" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">запису</text>
+      <text x="350"  y="768" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">розмови</text>
+
+      <rect x="2140" y="710" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="2190" y="737" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">Завершення</text>
+      <text x="2190" y="751" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">запису</text>
+      <text x="2190" y="765" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">розмови</text>
+
+      <!-- gateway визначення каналу -->
+      <rect x="2305" y="725" width="50" height="50" rx="0" fill="#13161f" stroke="#3a4060" stroke-width="1.5" transform="rotate(45,2330,750)"/>
+      <text x="2330" y="754" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" fill="#3a4060">✕</text>
+      <text x="2330" y="696" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3a4060">Визначення</text>
+      <text x="2330" y="710" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3a4060">каналу</text>
+      <text x="2330" y="724" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3a4060">консультації</text>
+
+      <!-- збереження в Omilia (EVA GREEN) -->
+      <rect x="2760" y="710" width="100" height="80" rx="5" fill="rgba(20,90,40,.18)" stroke="#1a6a30" stroke-width="1.5"/>
+      <text x="2810" y="737" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">Збереження</text>
+      <text x="2810" y="751" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">запису</text>
+      <text x="2810" y="765" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#3aaa50">у Omilia</text>
+      <circle cx="2970" cy="750" r="16" fill="rgba(20,90,40,.2)" stroke="#1a6a30" stroke-width="4"/>
+
+      <!-- фіксація запиту (neutral) -->
+      <rect x="2280" y="830" width="100" height="80" rx="5" fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
+      <text x="2330" y="855" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">Фіксація</text>
+      <text x="2330" y="869" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">запиту</text>
+      <text x="2330" y="883" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#6a7a9a">оператором</text>
+
+      <!-- ── ОПЕРАТОР (RED/ORANGE) ── -->
+      <rect x="1280" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="1330" y="1030" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Приймає дзвінок,</text>
+      <text x="1330" y="1046" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">починає розмову</text>
+
+      <rect x="1460" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="1510" y="1016" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Аналіз запитань,</text>
+      <text x="1510" y="1030" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">пошук у базі</text>
+      <text x="1510" y="1044" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">знань,</text>
+      <text x="1510" y="1058" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">накладної</text>
+
+      <rect x="1650" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="1700" y="1033" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Консультує та</text>
+      <text x="1700" y="1047" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">шукає рішення</text>
+
+      <!-- gateway клієнт задоволений -->
+      <rect x="1875" y="1015" width="50" height="50" rx="0" fill="rgba(140,40,10,.15)" stroke="#9a3a10" stroke-width="1.5" transform="rotate(45,1900,1040)"/>
+      <text x="1900" y="1044" text-anchor="middle" font-family="Inter,sans-serif" font-size="17" fill="#9a3a10">✕</text>
+      <text x="1900" y="984" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8a3a20">Клієнт</text>
+      <text x="1900" y="998" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8a3a20">задоволений</text>
+      <text x="1900" y="1012" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#8a3a20">відповіддю?</text>
+
+      <rect x="2030" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2080" y="1016" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Очікування</text>
+      <text x="2080" y="1030" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">інших питань</text>
+      <text x="2080" y="1044" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">чи завершення</text>
+      <text x="2080" y="1058" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">дзвінка</text>
+
+      <rect x="2420" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2470" y="1016" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Заповнення</text>
+      <text x="2470" y="1030" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">резюме,</text>
+      <text x="2470" y="1044" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">запиту на інші</text>
+      <text x="2470" y="1058" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">відділи</text>
+
+      <rect x="2580" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2630" y="1023" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Заповнення</text>
+      <text x="2630" y="1037" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">тематик, тегів,</text>
+      <text x="2630" y="1051" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">тону дзвінка</text>
+
+      <rect x="2760" y="1000" width="100" height="80" rx="5" fill="rgba(160,50,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2810" y="1033" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">Тегування та</text>
+      <text x="2810" y="1047" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#d06030">маркування</text>
+
+      <!-- ── CRM (RED/ORANGE) ── -->
+      <rect x="1460" y="1240" width="100" height="80" rx="5" fill="rgba(150,45,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="1510" y="1270" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">Аналіз</text>
+      <text x="1510" y="1284" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">історії клієнта</text>
+
+      <rect x="2280" y="1230" width="100" height="80" rx="5" fill="rgba(150,45,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2330" y="1255" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">Створення</text>
+      <text x="2330" y="1269" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">нової картки</text>
+      <text x="2330" y="1283" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">звернення</text>
+
+      <rect x="2760" y="1230" width="100" height="80" rx="5" fill="rgba(150,45,10,.14)" stroke="#9a3a10" stroke-width="1.5"/>
+      <text x="2810" y="1260" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">Закриття</text>
+      <text x="2810" y="1274" text-anchor="middle" font-family="Inter,sans-serif" font-size="12" fill="#c05828">картки</text>
+      <circle cx="2970" cy="1270" r="16" fill="none" stroke="#9a3a10" stroke-width="4"/>
+
+      </svg>
+</div>
+
+      <!-- PROBLEMS -->
+      <div class="section">
+        <div class="sec-label">Проблеми AS-IS</div>
+        <div class="prob-grid">
+          <div class="prob-card">
+            <div class="prob-title">Контекст губиться при ескалації</div>
+            <div class="prob-text">EVA [Передати запит] → Cisco [Черга] → Оператор отримує дзвінок без жодного контексту.</div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-title">Оператор шукає вручну</div>
+            <div class="prob-text">Аналіз запитань + пошук у БЗ та накладній — повністю ручний процес під час розмови.</div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-title">ACW — 3 ручних кроки</div>
+            <div class="prob-text">Заповнення резюме → Теги + тон → Маркування. Все вручну, 3–7 хвилин на дзвінок.</div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-title">Запис не аналізується</div>
+            <div class="prob-text">MP3 зберігається або фіксується вручну. QA — вибіркова, ручна, повільна.</div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-title">Черга без обробки</div>
+            <div class="prob-text">Якщо оператор зайнятий — клієнт просто чекає. Немає автоматичної обробки.</div>
+          </div>
+          <div class="prob-card">
+            <div class="prob-title">Нульова аналітика</div>
+            <div class="prob-text">Немає BI, топ-причин звернень, тональності, compliance.</div>
+          </div>
         </div>
       </div>
-      <div class="diag-wrap"><svg width="100%" style="min-width:900px;display:block" viewBox="-4.0 -4.0 2888.0 1298.0" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <marker id="ah_s" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-        <path d="M0,0 L8,3 L0,6 Z" fill="#3a4a65"/>
-      </marker>
-      <marker id="ah_m" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-        <path d="M0,0 L8,3 L0,6 Z" fill="#2a5a8a"/>
-      </marker>
-      <marker id="ah_n" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
-        <path d="M0,0 L8,3 L0,6 Z" fill="#0c4020"/>
-      </marker>
-    </defs>
-    <rect x="0.0" y="0.0" width="2880.0" height="200.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="0.0" width="30" height="200.0" fill="#0d1320" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,100.0)" x="15.0" y="100.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a5888" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text>
-    <rect x="0.0" y="200.0" width="2880.0" height="140.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="200.0" width="30" height="140.0" fill="#060f1e" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,270.0)" x="15.0" y="270.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3a7cee" font-family="JetBrains Mono,monospace" font-weight="600">Cisco</text>
-    <rect x="0.0" y="340.0" width="2880.0" height="250.0" fill="#150d00" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="340.0" width="30" height="250.0" fill="#150d00" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,465.0)" x="15.0" y="465.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#c08828" font-family="JetBrains Mono,monospace" font-weight="600">EVA</text>
-    <rect x="0.0" y="590.0" width="2880.0" height="260.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="590.0" width="30" height="260.0" fill="#030c12" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,720.0)" x="15.0" y="715.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">Запис</text><text transform="rotate(-90,15.0,720.0)" x="15.0" y="725.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#3090b8" font-family="JetBrains Mono,monospace" font-weight="600">(MP3)</text>
-    <rect x="0.0" y="850.0" width="2880.0" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="850.0" width="30" height="210.0" fill="#0e0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,955.0)" x="15.0" y="955.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#8860d0" font-family="JetBrains Mono,monospace" font-weight="600">Оператор</text>
-    <rect x="0.0" y="1060.0" width="2880.0" height="230.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><rect x="0.0" y="1060.0" width="30" height="230.0" fill="#0a0618" stroke="#1a2540" stroke-width="0.8"/><text transform="rotate(-90,15.0,1175.0)" x="15.0" y="1170.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#7048c0" font-family="JetBrains Mono,monospace" font-weight="600">Робоче</text><text transform="rotate(-90,15.0,1175.0)" x="15.0" y="1180.0" text-anchor="middle" dominant-baseline="middle" font-size="11.6" fill="#7048c0" font-family="JetBrains Mono,monospace" font-weight="600">місце</text>
-    <path d="M88.0,120.0 L140.0,120.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M850.0,270.0 L960.0,270.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M390.0,520.0 L525.0,520.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M575.0,520.0 L750.0,520.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="665.5" y="509.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
-    <path d="M550.0,495.0 L550.0,440.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="565.0" y="472.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
-    <path d="M2080.0,670.0 L2145.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M2195.0,670.0 L2420.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="2320.0" y="660.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">EVA</text>
-    <path d="M2170.0,695.0 L2170.0,750.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="2210.0" y="720.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Оператор</text>
-    <path d="M2520.0,670.0 L2632.0,670.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M1740.0,985.0 L1740.0,1040.0 L1540.0,1040.0 L1540.0,1000.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1641.5" y="1029.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Ні</text>
-    <path d="M1400.0,960.0 L1490.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M1590.0,960.0 L1715.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M1765.0,960.0 L1870.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/><text x="1818.0" y="949.0" font-size="13.0" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600" text-anchor="middle">Так</text>
-    <path d="M2360.0,960.0 L2420.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M2520.0,960.0 L2600.0,960.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M2700.0,1190.0 L2792.0,1190.0" fill="none" stroke="#3a4a65" stroke-width="1.3" marker-end="url(#ah_s)"/>
-    <path d="M190.0,160.0 L190.0,230.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1920.0,920.0 L1920.0,160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1970.0,120.0 L2030.0,120.0 L2030.0,630.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M190.0,310.0 L190.0,630.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1060.0,270.0 L1150.0,270.0 L1150.0,920.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1350.0,1160.0 L1350.0,1000.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1350.0,1000.0 L1350.0,1160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1190.0,920.0 L1190.0,160.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M1240.0,120.0 L1350.0,120.0 L1350.0,920.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M2650.0,1000.0 L2650.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M190.0,310.0 L190.0,520.0 L290.0,520.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M800.0,480.0 L800.0,310.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M550.0,360.0 L550.0,40.0 L1920.0,40.0 L1920.0,80.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M2170.0,830.0 L2170.0,1150.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <path d="M2220.0,1190.0 L2310.0,1190.0 L2310.0,1000.0" fill="none" stroke="#2a5a8a" stroke-width="1.3" stroke-dasharray="6,3" marker-end="url(#ah_m)"/>
-    <circle cx="70.0" cy="120.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="1.5"/>
-    <rect x="140.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="190.0" y="118.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Здійснює</text><text x="190.0" y="129.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
-    <rect x="1140.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1190.0" y="123.5" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Описує запит</text>
-    <rect x="1870.0" y="80.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1920.0" y="118.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Завершує</text><text x="1920.0" y="129.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
-    <rect x="140.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="190.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Маршрутизує</text><text x="190.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">дзвінок</text>
-    <rect x="750.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="800.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Очікування в</text><text x="800.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">черзі</text>
-    <rect x="960.0" y="230.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="1010.0" y="268.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Переадресація</text><text x="1010.0" y="279.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">на оператора</text>
-    <rect x="290.0" y="480.0" width="100.0" height="80.0" rx="4" fill="#0a0e18" stroke="#252e45" stroke-width="1.3"/><text x="340.0" y="518.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">Первинна</text><text x="340.0" y="529.0" text-anchor="middle" font-size="12.3" fill="#dde6f5" font-family="Mulish,sans-serif" font-weight="700">консультація</text>
-    <polygon points="550.0,495.0 575.0,520.0 550.0,545.0 525.0,520.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="544.0" y1="514.0" x2="556.0" y2="526.0" stroke="#c8a030" stroke-width="1.2"/><line x1="556.0" y1="514.0" x2="544.0" y2="526.0" stroke="#c8a030" stroke-width="1.2"/><text x="550.0" y="555.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Чи вирішено</text><text x="550.0" y="565.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">запит клієнта?</text>
-    <rect x="500.0" y="360.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="550.0" y="398.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="550.0" y="409.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">інших питань</text>
-    <rect x="750.0" y="480.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="800.0" y="518.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Передати запит</text><text x="800.0" y="529.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">оператору</text>
-    <rect x="140.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="190.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Початок запису</text><text x="190.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">розмови</text>
-    <rect x="1980.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2030.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Завершення</text><text x="2030.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">запису розмови</text>
-    <polygon points="2170.0,645.0 2195.0,670.0 2170.0,695.0 2145.0,670.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="2164.0" y1="664.0" x2="2176.0" y2="676.0" stroke="#c8a030" stroke-width="1.2"/><line x1="2176.0" y1="664.0" x2="2164.0" y2="676.0" stroke="#c8a030" stroke-width="1.2"/><text x="2170.0" y="608.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Визначення</text><text x="2170.0" y="620.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">каналу</text><text x="2170.0" y="632.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">консультації</text>
-    <rect x="2120.0" y="750.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2170.0" y="788.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Фіксація запиту</text><text x="2170.0" y="799.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">оператором</text>
-    <rect x="2420.0" y="630.0" width="100.0" height="80.0" rx="4" fill="#060f1e" stroke="#1a3060" stroke-width="1.3"/><text x="2470.0" y="668.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">Збереження</text><text x="2470.0" y="679.0" text-anchor="middle" font-size="12.3" fill="#7aaeff" font-family="Mulish,sans-serif" font-weight="700">запису розмови</text>
-    <circle cx="2650.0" cy="670.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="3"/><circle cx="2650.0" cy="670.0" r="14.0" fill="#3a4a65"/>
-    <rect x="1120.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1170.0" y="952.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Приймає</text><text x="1170.0" y="963.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінок,</text><text x="1170.0" y="974.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">починає розмову</text><rect x="1124.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1141.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="1300.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1350.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Аналіз</text><text x="1350.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">запитань, пошук</text><text x="1350.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">у базі знань,</text><text x="1350.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">накладної</text><rect x="1304.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1321.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="1490.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1540.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Консультує та</text><text x="1540.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">шукає рішення</text><rect x="1494.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1511.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <polygon points="1740.0,935.0 1765.0,960.0 1740.0,985.0 1715.0,960.0" fill="#12100a" stroke="#6a5010" stroke-width="1.5"/><line x1="1734.0" y1="954.0" x2="1746.0" y2="966.0" stroke="#c8a030" stroke-width="1.2"/><line x1="1746.0" y1="954.0" x2="1734.0" y2="966.0" stroke="#c8a030" stroke-width="1.2"/><text x="1740.0" y="900.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">Клієнт</text><text x="1740.0" y="912.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">задоволений</text><text x="1740.0" y="924.0" text-anchor="middle" font-size="10.9" fill="#c8a030" font-family="JetBrains Mono,monospace" font-weight="600">відповіддю?</text>
-    <rect x="1870.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="1920.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Очікування</text><text x="1920.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">інших питань чи</text><text x="1920.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">завершення</text><text x="1920.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">дзвінка</text><rect x="1874.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="1891.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="2260.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2310.0" y="947.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Заповнення</text><text x="2310.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">резюме, запиту</text><text x="2310.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">на інші відділи</text><text x="2310.0" y="980.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">(опціонально)</text><rect x="2264.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2281.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="2420.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2470.0" y="952.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Заповнення</text><text x="2470.0" y="963.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">тематик, тегів,</text><text x="2470.0" y="974.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">тону дзвінка</text><rect x="2424.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2441.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="2600.0" y="920.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2650.0" y="958.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Тегування та</text><text x="2650.0" y="969.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">маркування</text><rect x="2604.0" y="924.0" width="34" height="8" rx="2" fill="#501800"/><text x="2621.0" y="931.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="1300.0" y="1160.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="1304.0" y="1164.0" width="34" height="8" rx="2" fill="#501800"/><text x="1321.0" y="1171.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="1350.0" y="1198.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Аналіз історії</text><text x="1350.0" y="1209.0" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">клієнта</text>
-    <rect x="2120.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><text x="2170.0" y="1182.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Створення нової</text><text x="2170.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">картки</text><text x="2170.0" y="1204.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">звернення</text><rect x="2124.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2141.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text>
-    <rect x="2600.0" y="1150.0" width="100.0" height="80.0" rx="4" fill="#1a0800" stroke="#8a3000" stroke-width="1.3"/><rect x="2604.0" y="1154.0" width="34" height="8" rx="2" fill="#501800"/><text x="2621.0" y="1161.0" text-anchor="middle" font-size="8.0" fill="#ff6030" font-family="JetBrains Mono,monospace" font-weight="700">MANUAL</text><text x="2650.0" y="1193.5" text-anchor="middle" font-size="12.3" fill="#ff9878" font-family="Mulish,sans-serif" font-weight="700">Закриття картки</text>
-    <circle cx="2810.0" cy="1190.0" r="18.0" fill="#0b0e14" stroke="#3a4a65" stroke-width="3"/><circle cx="2810.0" cy="1190.0" r="14.0" fill="#3a4a65"/>
-    </svg></div>
-      <div class="sl" style="padding-top:24px">Проблеми AS-IS</div>
-      <div class="pg">
-        <div class="pgc w"><div class="pgc-t">Контекст губиться при ескалації</div><div class="pgc-d">EVA [Передати запит] → Cisco [Черга] → Оператор отримує дзвінок без жодного контексту.</div></div>
-        <div class="pgc w"><div class="pgc-t">Оператор шукає вручну</div><div class="pgc-d">Аналіз запитань + пошук у БЗ та накладній — повністю ручний процес під час розмови.</div></div>
-        <div class="pgc w"><div class="pgc-t">ACW — 3 ручних кроки</div><div class="pgc-d">Заповнення резюме → Теги + тон → Маркування. Все вручну, 3–7 хвилин на дзвінок.</div></div>
-        <div class="pgc w"><div class="pgc-t">Запис не аналізується</div><div class="pgc-d">MP3 зберігається або фіксується вручну. QA — вибіркова, ручна, повільна.</div></div>
-        <div class="pgc w"><div class="pgc-t">Черга без обробки</div><div class="pgc-d">Якщо оператор зайнятий — клієнт просто чекає. Немає автоматичної обробки.</div></div>
-        <div class="pgc w"><div class="pgc-t">Нульова аналітика</div><div class="pgc-d">Немає BI, топ-причин звернень, тональності, compliance.</div></div>
+
+      <!-- SYSTEMS -->
+      <div class="section" style="border-bottom:none;">
+        <div class="sec-label">Задіяні системи по регіонах</div>
+        <div class="sys-table">
+          <div class="sys-head">
+            <div class="sh cat">Категорія</div>
+            <div class="sh ua">🇺🇦 Інструменти оператора України</div>
+            <div class="sh eu">🇪🇺 Інструменти оператора Європи</div>
+          </div>
+
+          <!-- Телефонія -->
+          <div class="sys-row">
+            <div class="sc cat">Телефонія</div>
+            <div class="sc ua">
+              <div class="badge b-ok">Cisco</div>
+              <ul class="dl">
+                <li>Підтримує media-forking аудіопотоків із голосового обладнання в реальному часі</li>
+                <li>Дозволяє real-time стрімінг аудіо на сторонні AI-сервіси</li>
+              </ul>
+            </div>
+            <div class="sc eu">
+              <div class="badge b-bad">Binotel</div>
+              <ul class="dl">
+                <li class="bad">Записує дзвінки лише через 30–60 сек після завершення розмови</li>
+                <li class="bad">Передача і стрімінг аудіо в реальному часі на сторонні сервіси не реалізовані</li>
+                <li class="bad">Media-forking під час дзвінка не реалізований</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Робоче місце -->
+          <div class="sys-row">
+            <div class="sc cat">Робоче місце / CRM</div>
+            <div class="sc ua">
+              <div class="badge b-ok">Кастомне РМ</div>
+              <ul class="dl">
+                <li>Інтегрована авторизація в телефонію, "Єдине вікно", перенесені частини AWIS</li>
+                <li>Автоматизовані дані клієнта (ім'я / телефон) та остання ЕН із звернення</li>
+                <li>Створення заявки на виклик кур'єра, замовлення додаткових послуг</li>
+                <li>Система підкидає кілька тематик, що можуть бути вибрані</li>
+              </ul>
+            </div>
+            <div class="sc eu">
+              <div class="badge b-ms">Microsoft Platform Power App</div>
+              <ul class="dl">
+                <li>Підтягує ім'я / претензії / звернення попередні, є генерація промокоду</li>
+                <li class="bad">Немає шаблонів листів до клієнтів</li>
+                <li class="bad">Часто немає всіх звернень зафіксованих (на митниці перемаркували — не змінено)</li>
+                <li class="bad">Клієнт мусить продиктувати номер ЕН — часто помилки, займає найбільше часу</li>
+                <li class="bad">Тематики повністю вручну та польською. Резюме — українською, мова розмови — польська</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Інтеграція -->
+          <div class="sys-row">
+            <div class="sc cat">Інтеграція зі сховищем</div>
+            <div class="sc ua">
+              <div class="badge b-warn">AWIS</div>
+              <ul class="dl">
+                <li>Використовується точково в кейсах, де РМ ще не покриває функціонал поки що</li>
+                <li>В подальшому відмовитись</li>
+              </ul>
+            </div>
+            <div class="sc eu">
+              <div class="badge b-warn" style="background:rgba(100,100,100,.08);color:#6a7090;border-color:rgba(100,100,100,.2);">Операційний модуль</div>
+              <ul class="dl">
+                <li>Виклик кур'єра / зміна даних / переадресація / пошук посилки — ніде не підтягуються</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Сайт -->
+          <div class="sys-row">
+            <div class="sc cat">Сайт</div>
+            <div class="sc ua">
+              <ul class="dl">
+                <li>Довідкова інформація (умови, правила тощо)</li>
+                <li>Tracking Service (дані по ЕН / переадресація)</li>
+              </ul>
+            </div>
+            <div class="sc eu">
+              <ul class="dl">
+                <li>Трекінг (дані по ЕН)</li>
+                <li>Скільки буде коштувати відправка</li>
+                <li>Довідкова інформація (заборонені товари / пакування / товари без мита)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Додаткові -->
+          <div class="sys-row">
+            <div class="sc cat">Додаткові сервіси</div>
+            <div class="sc ua">
+              <div style="margin-bottom:8px;"><span class="badge b-warn">CRM стара</span> <span style="font-size:12px;color:#4a4f66;">— додатковий спосіб отримувати дані (Міжнародний відділ)</span></div>
+              <div><span class="badge b-warn">Cargos</span> <span style="font-size:12px;color:#4a4f66;">— інформаційний ресурс; дані йдуть в AWIS</span></div>
+            </div>
+            <div class="sc eu">
+              <div style="margin-bottom:6px;"><span class="badge b-sys">Creatio</span> <span style="font-size:12px;color:#4a4f66;">— диспетчеризація</span></div>
+              <div style="margin-bottom:6px;"><span class="badge b-sys">Excel</span> <span style="font-size:12px;color:#4a4f66;">— відділення в країнах</span></div>
+              <div><span class="badge b-sys">Калькулятор</span> <span style="font-size:12px;color:#4a4f66;">— комп'ютерний</span></div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>'''
 
@@ -1876,7 +2332,6 @@ def generate_html(
 
         /* Recommendations Tab Styles */
         .recommendations-section {{
-            max-width: 900px;
             margin: 0 auto;
         }}
 
@@ -2304,6 +2759,57 @@ def generate_html(
         .pgc.w .pgc-t{{color:var(--warn)}}
         .pgc.g .pgc-t{{color:var(--ai)}}
         .pgc-d{{font-size:10.5px;line-height:1.65;color:#a0b0c8}}
+
+        /* ── AS-IS / TO-BE tab styles ── */
+        .bpmn-wrap{{width:100vw;position:relative;left:50%;right:50%;margin-left:-50vw;margin-right:-50vw;
+          border-top:1px solid #1a1d2a;border-bottom:1px solid #1a1d2a;overflow-x:auto;background:#0f1117}}
+        .bpmn-wrap svg{{display:block;width:100%;height:auto}}
+        .page-header{{padding:36px 48px 0}}
+        .page-title{{font-size:22px;font-weight:600;color:#e8834a;margin-bottom:6px;letter-spacing:-0.01em}}
+        .page-sub{{font-size:12px;color:#3d4260;letter-spacing:0.01em}}
+        #p-as .legend,#p-to .legend{{gap:8px;padding:14px 48px;margin:0}}
+        #p-as .leg,#p-to .leg{{display:flex;align-items:center;gap:6px;font-size:11px;color:#4a4f66;
+          padding:4px 10px;border:1px solid #1e2233;border-radius:3px;background:#0d0f18;
+          font-family:-apple-system,sans-serif;font-weight:400;letter-spacing:0;text-transform:none}}
+        .leg-dot{{width:8px;height:8px;border-radius:1px;flex-shrink:0}}
+        .section{{padding:36px 48px;border-bottom:1px solid #1a1d2a}}
+        .sec-label{{font-size:10px;font-weight:600;letter-spacing:0.2em;text-transform:uppercase;
+          color:#3a3f55;margin-bottom:20px;display:flex;align-items:center;gap:8px}}
+        .sec-label::before{{content:'//';color:#e8834a;font-weight:400}}
+        .prob-grid{{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}}
+        .prob-card{{background:#130e08;padding:20px 22px;border:1px solid rgba(232,131,74,.25);border-radius:6px}}
+        .prob-title{{font-size:13px;font-weight:600;color:#e8834a;margin-bottom:8px}}
+        .prob-text{{font-size:12px;color:#5a5060;line-height:1.6}}
+        .sys-table{{border:1px solid #1a1d2a;border-radius:3px;overflow:hidden}}
+        .sys-head{{display:grid;grid-template-columns:180px 1fr 1fr;background:#0d0f18;border-bottom:1px solid #1a1d2a}}
+        .sh{{padding:12px 18px;font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;border-right:1px solid #1a1d2a}}
+        .sh:last-child{{border-right:none}}
+        .sh.cat{{color:#3a3f55}}
+        .sh.ua{{color:#6bb3e8}}
+        .sh.eu{{color:#e8a84a}}
+        .sys-row{{display:grid;grid-template-columns:180px 1fr 1fr;border-bottom:1px solid #1a1d2a}}
+        .sys-row:last-child{{border-bottom:none}}
+        .sc{{padding:16px 18px;border-right:1px solid #1a1d2a;font-size:12px;color:#4a4f66;line-height:1.6}}
+        .sc:last-child{{border-right:none}}
+        .sc.cat{{font-size:11px;font-weight:600;color:#6a7090;background:#0d0f18}}
+        .sc.ua{{border-left:2px solid rgba(107,179,232,.2)}}
+        .sc.eu{{border-left:2px solid rgba(232,168,74,.2)}}
+        .badge{{display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px;margin-bottom:8px}}
+        .b-ok{{background:rgba(74,232,160,.08);color:#4ae8a0;border:1px solid rgba(74,232,160,.2)}}
+        .b-warn{{background:rgba(232,131,74,.08);color:#e8834a;border:1px solid rgba(232,131,74,.2)}}
+        .b-bad{{background:rgba(232,90,74,.08);color:#e85a4a;border:1px solid rgba(232,90,74,.2)}}
+        .b-sys{{background:rgba(107,179,232,.08);color:#6bb3e8;border:1px solid rgba(107,179,232,.2)}}
+        .b-ms{{background:rgba(0,120,212,.1);color:#4a90d9;border:1px solid rgba(0,120,212,.25)}}
+        ul.dl{{list-style:none;padding:0;margin:0}}
+        ul.dl li{{padding-left:12px;position:relative;margin-bottom:4px;font-size:12px;color:#4a4f66}}
+        ul.dl li::before{{content:'·';position:absolute;left:0;color:#2a2f45}}
+        ul.dl li.bad{{color:rgba(232,90,74,.85)}}
+        ul.dl li.bad::before{{content:'⚠';font-size:9px;top:2px;color:#e85a4a}}
+        @media(max-width:700px){{
+          .prob-grid{{grid-template-columns:1fr}}
+          .sys-head,.sys-row{{grid-template-columns:120px 1fr}}
+          .sh.eu,.sc.eu{{display:none}}
+        }}
 
     </style>
 </head>
