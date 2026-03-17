@@ -403,8 +403,12 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
         </div>'''
 
 
-def generate_recommendations_tab() -> str:
+def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
     """Generate HTML for the recommendations tab."""
+
+    def _score(provider: str) -> str:
+        raw = final_scores.get(provider, "—")
+        return raw if raw.endswith("%") else (raw + "%" if raw != "—" else raw)
 
     # ------------------------------------------------------------------
     # Priority provider cards (full-width)
@@ -413,7 +417,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(34,211,238,.3)",
         label_color="#22d3ee",
         label_text="Real-Time Assist · Agent Copilot · #1 Score",
-        score_text="85.1%",
+        score_text=_score("Cresta"),
         title="Cresta AI",
         subtitle="Real-Time Assist · Agent Copilot · Ocean-1",
         indent="                    ",
@@ -434,7 +438,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(245,200,66,.3)",
         label_color="#f5c842",
         label_text="Enterprise-рішення · #2 Score",
-        score_text="81.5%",
+        score_text=_score("Google Cloud CCAI"),
         title="Google Cloud CCAI",
         subtitle="Contact Center AI · Agent Assist · Dialogflow CX · Gemini",
         indent="                    ",
@@ -457,7 +461,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(62,207,142,.25)",
         label_color="#10b981",
         label_text="Співвідношення ціна / якість",
-        score_text="67.6%",
+        score_text=_score("Ender Turing"),
         title="Ender Turing",
         subtitle="Локальний продукт із найкращим розумінням українського говору",
         indent="                    ",
@@ -479,7 +483,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Call Recording · Voice Bot",
-        score_text="45.1%",
+        score_text=_score("Uni Talk"),
         title="Uni Talk",
         subtitle="Локальний продукт · Голосовий бот",
         indent="                    ",
@@ -506,7 +510,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(74,158,255,.25)",
         label_color="#60a5fa",
         label_text="AI Ecosystem · Azure OpenAI",
-        score_text="78.4%",
+        score_text=_score("Microsoft Copilot"),
         title="Microsoft Copilot",
         subtitle="Dynamics 365 · Power Platform",
         indent="                    ",
@@ -529,7 +533,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(168,85,247,.25)",
         label_color="#a855f7",
         label_text="Enterprise Cloud Contact Center",
-        score_text="74.9%",
+        score_text=_score("NICE"),
         title="NICE",
         subtitle="Enlighten AI · Autopilot",
         indent="                    ",
@@ -551,7 +555,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(251,146,60,.25)",
         label_color="#fb923c",
         label_text="Contact Center as a Service",
-        score_text="72.7%",
+        score_text=_score("Genesys Cloud CX"),
         title="Genesys Cloud CX",
         subtitle="Genesys AI · Agent Assist",
         indent="                    ",
@@ -573,7 +577,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(168,85,247,.25)",
         label_color="#a855f7",
         label_text="Conversational AI · Bot-first",
-        score_text="71.5%",
+        score_text=_score("NICE Cognigy"),
         title="NICE Cognigy",
         subtitle="Omnichannel",
         indent="                    ",
@@ -593,7 +597,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Text-first · AI Chatbots",
-        score_text="61.2%",
+        score_text=_score("Live Person"),
         title="Live Person",
         subtitle="Conversational Cloud",
         indent="                    ",
@@ -612,7 +616,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Call Tracking · Cloud PBX",
-        score_text="57.7%",
+        score_text=_score("Ringostat"),
         title="Ringostat",
         subtitle="AI Analytics",
         indent="                    ",
@@ -633,7 +637,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Generative AI · Text-first",
-        score_text="57.3%",
+        score_text=_score("Decagon"),
         title="Decagon",
         subtitle="Customer Support Automation",
         indent="                    ",
@@ -653,7 +657,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Voice Assistants · Conversational IVR",
-        score_text="55.7%",
+        score_text=_score("Poly AI"),
         title="Poly AI",
         subtitle="Voice Assistants",
         indent="                    ",
@@ -673,7 +677,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#9ca3af",
         label_text="Local Voice · AI Provider",
-        score_text="40.3%",
+        score_text=_score("Get Vocal"),
         title="Get Vocal",
         subtitle="Local Voice AI",
         indent="                    ",
@@ -693,7 +697,7 @@ def generate_recommendations_tab() -> str:
         border_rgba="rgba(156,163,175,.25)",
         label_color="#60a5fa",
         label_text="Голосовий асистент · STT-шар",
-        score_text="40%",
+        score_text=_score("11 Labs"),
         title="ElevenLabs",
         subtitle="Speech-to-Text · Scribe v2 · Streaming · Pre-Call",
         indent="                    ",
@@ -731,28 +735,28 @@ def generate_recommendations_tab() -> str:
 
                 <!-- Provider Cards Grid - Row 1 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{cresta_card}
-
 {google_card}
+
+{ender_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 2 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{nice_card}
+{cresta_card}
 
-{microsoft_card}
+{nice_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 3 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{genesys_card}
-
 {cognigy_card}
+
+{genesys_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 4 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{ender_card}
+{microsoft_card}
 
 {liveperson_card}
                 </div>
@@ -761,19 +765,19 @@ def generate_recommendations_tab() -> str:
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
 {decagon_card}
 
-{polyai_card}
+{ringostat_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 6 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{ringostat_card}
+{polyai_card}
 
-{unitalk_card}
+{elevenlabs_card}
                 </div>
 
                 <!-- Provider Cards Grid - Row 7 -->
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-{elevenlabs_card}
+{unitalk_card}
 
 {getvocal_card}
                 </div>
@@ -1643,10 +1647,10 @@ def generate_html(
         "Google Cloud CCAI",
         "Ender Turing",
         "Cresta",
-        "Microsoft Copilot",
         "NICE",
         "NICE Cognigy",
         "Genesys Cloud CX",
+        "Microsoft Copilot",
         "Live Person",
         "Decagon",
         "Ringostat",
@@ -3013,7 +3017,7 @@ def generate_html(
 
 {category_tabs}
 
-{generate_recommendations_tab()}
+{generate_recommendations_tab(final_scores)}
 
 {generate_asis_tab()}
 
