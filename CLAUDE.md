@@ -41,6 +41,29 @@ Provider column order in the CSV must match the `PROVIDERS` list in the script (
 
 **6 categories** with their weights: Copilot (15%), Постобробка/ACW (25%), Аналітика & QA (15%), PreCall AI (5%), IT & Security (30%), Бізнес (10%).
 
+## STT Provider Constraints (docs/)
+
+**Deepgram** — виключений з усієї документації. Deepgram для uk-UA підтримує **лише транскрипцію** (STT). Sentiment analysis, entity extraction, topic modeling, summarization — доступні тільки для англійської мови. Не включати Deepgram у жодні варіанти чи рекомендації в `docs/`.
+
+**ElevenLabs** — використовується **виключно в Блоці 2 (Pre-Call AI)** як голосовий асистент (ElevenLabs Conversational AI). ElevenLabs **не слухає розмову оператора з клієнтом** — це продукт що розмовляє з клієнтом до з'єднання з оператором. Не включати ElevenLabs як STT-провайдер для Блоків 3, 4, 5.
+
+**Верифіковані STT-провайдери для uk-UA (для транскрипції розмов оператор-клієнт):**
+- **OpenAI Whisper API** — верифікована підтримка uk-UA (Whisper large-v3), batch режим. $0.006/хв — найдешевший хмарний STT. Рекомендований для Блоку 3 (Post-Call Batch), Варіант 1 ⭐.
+- **Google STT Chirp 3** — верифікована підтримка uk-UA, real-time та batch режими. Рекомендований для Блоку 4 (Real-time Copilot). Варіант 2 для Блоку 3 (Google-first стек).
+- **Azure Speech** — верифікована підтримка uk-UA. Альтернатива Google для real-time.
+- **OpenAI Whisper Large v3 self-hosted** — підтримує uk-UA, але публічних WER-даних немає. Доступний як self-hosted (faster-whisper) для Блоку 3 Варіант 3.
+
+## AI Provider Model (docs/)
+
+**Vendor-managed продукти** (Google CCAI, Google STT, Gemini через Vertex AI) — мають готову інфраструктуру, managed сервіси (Cloud Run, Pub/Sub, GCS triggers), офіційну підтримку і партнерські програми. One-time розробка нижча, операційна підтримка простіша.
+
+**Raw API провайдери** (OpenAI Whisper, GPT-4o, Claude) — надають лише HTTP endpoint'и без готової contact center інтеграції. Вся pipeline розробка (SRS Bridge, оркестрація, error handling, retry логіка, моніторинг, CRM connector) — повністю на команді розробки НП. Це збільшує one-time вартість і терміни впровадження, а також вимагає підтримки команди після launch. **Це мінус для замовника**, але якщо cloud-економіка краща — варіант залишається в розгляді.
+
+При порівнянні варіантів завжди вказувати:
+- Чи є провайдер vendor-managed продуктом або raw API
+- Який обсяг розробки падає на команду НП
+- One-time вартість розробки поряд з місячною cloud-вартістю
+
 ## Modifying the Dashboard
 
 - **To change HTML/CSS/JS**: edit the f-string templates inside `generate_html()`, `generate_provider_card()`, `generate_criteria_row()`, etc. in `update_index.py`, then re-run the script.
