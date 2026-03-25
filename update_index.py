@@ -824,223 +824,715 @@ def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
                   <div class="leg"><div class="leg-dot" style="background:#0d4372"></div>Google / AI сервіси</div>
                   <div class="leg"><div class="leg-dot" style="background:#2a5a80"></div>Cisco — телефонія</div>
                   <div class="leg"><div class="leg-dot" style="background:#3a4060"></div>Дії оператора</div>
-                  <div class="leg"><div class="leg-dot" style="background:#2a2f45"></div>Message flow</div>
+                  <div class="leg"><div class="leg-dot" style="background:#2a2f45;border:1px solid #3a3f55"></div>Потік повідомлень</div>
                 </div>
 
                 <div style="border:1px solid var(--border2);border-radius:10px;overflow:hidden;background:var(--bg)">
-                    <svg viewBox="640 2882 1830 440"
-                         xmlns="http://www.w3.org/2000/svg"
-                         preserveAspectRatio="xMidYMid meet"
-                         style="display:block;width:100%;height:auto;background:var(--bg);">
+                    <svg viewBox="0 0 1420 490" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <pattern id="dots" width="22" height="22" patternUnits="userSpaceOnUse">
+    <circle cx="1" cy="1" r="0.65" fill="rgba(255,255,255,0.065)"/>
+  </pattern>
+  <marker id="A" markerWidth="9" markerHeight="9" refX="7.5" refY="4" orient="auto">
+    <path d="M0,0.5 L0,7.5 L9,4 z" fill="rgba(88,166,255,0.72)"/>
+  </marker>
+  <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+    <feGaussianBlur stdDeviation="3.5" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="glow-end" x="-60%" y="-60%" width="220%" height="220%">
+    <feGaussianBlur stdDeviation="6" result="b"/>
+    <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
+  <filter id="sh">
+    <feDropShadow dx="0" dy="2" stdDeviation="5" flood-color="rgba(0,0,0,0.55)"/>
+  </filter>
+</defs>
+ 
+<!-- Background -->
+<rect width="1420" height="490" fill="#0d1117"/>
+<rect width="1420" height="490" fill="url(#dots)"/>
+ 
+<!-- Pool border -->
+<rect x="8" y="8" width="1404" height="474" rx="8"
+      fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+<!-- Pool label strip -->
+<rect x="8" y="8" width="30" height="474" rx="8"
+      fill="rgba(255,255,255,0.018)" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+<text fill="rgba(255,255,255,0.22)" font-family="JetBrains Mono,monospace" font-size="8.5"
+      letter-spacing="0.13em" text-anchor="middle"
+      transform="translate(23,245) rotate(-90)">КОМПОЗИТОРНА АРХІТЕКТУРА ЗАКРИТТЯ ВИМОГ</text>
+ 
+<!-- ═══════════════════════════════════════════════
+  COORDINATE MAP  (all centers)
+  
+  START           cx=84,   cy=255
+  Cisco CUBE      cx=231,  cy=255  box: x=160 y=200 w=142 h=110
+  Голос.асист.    cx=231,  cy=97   box: x=160 y=54  w=142 h=86
+  Gateway1        cx=380,  cy=255  diamond
+  
+  TOP ROW  cy=160:
+    Консультація   cx=473  box: x=410 y=118 w=126 h=84
+    Аналіз GPT     cx=721  box: x=660 y=110 w=122 h=100
+    ACW            cx=961  box: x=900 y=118 w=122 h=84
+    END top        cx=1104 cy=160
+ 
+  BOTTOM ROW  cy=390:
+    SRS Bridge     cx=472  box: x=410 y=352 w=124 h=76
+    Streaming STT  cx=633  box: x=578 y=352 w=110 h=76
+    Gateway2       cx=750  cy=390  diamond
+    ШІ аналіз      cx=880  box: x=820 y=352 w=120 h=76
+    Gateway3       cx=990  cy=390  diamond
+    Власна БД      cx=1121 box: x=1060 y=352 w=122 h=76
+    Analytics+QA   cx=1277 box: x=1218 y=352 w=118 h=76
+    END bottom     cx=1392 cy=390
+ 
+  FLOWS:
+  1.  START(84,255) → Cisco left(160,255)
+  2a. Cisco top(231,200) ↑ → Голос bot(231,140)
+  2b. Голос bot(244,140) ↓ → Cisco top(244,200)  dashed
+  3.  Cisco right(302,255) → G1 left(350,255)
+  4.  G1 top(380,225) ↑ L(380,160) → Консульт left(410,160)    label "Основний дзвінок"
+  5.  G1 bot(380,285) ↓ L(380,390) → SRS left(410,390)         label "Копія аудіо"
+  6.  Аналіз left(660,160) ← Консульт right(536,160)  [arrow points LEFT to Консульт]
+        wait — arrow is FROM Аналіз TO Консульт (leftward)
+        so: path from (660,160) to (536,160), marker at left end → marker-end on path going right-to-left
+  7.  Аналіз right(782,160) → ACW left(900,160)
+  8.  ACW right(1022,160) → END top(1083,160)
+  9.  SRS right(534,390) → STT left(578,390)
+  10. STT right(688,390) → G2 left(720,390)
+  11. G2 top(750,360) ↑ L(750,160) → Аналіз bot(721,210) — enters bottom of Аналіз box
+        Actually Аналіз box bottom = y=210, so path: (750,360)→(750,160)→enter right side? 
+        In the original photo Gateway2 arrow goes UP and enters Аналіз from below-right
+        path: G2(750,360) up to y=210, then left to x=721, up into box bottom(721,210)
+  12. G2 right(780,390) → ШІ left(820,390)
+  13. ШІ right(940,390) → G3 left(960,390)
+  14. G3 top(990,360) ↑ L(990,160) → ACW left(900,160)  [feeds same horizontal as Аналіз→ACW]
+  15. G3 right(1020,390) → ВБД left(1060,390)
+  16. ВБД right(1182,390) → Anal left(1218,390)
+  17. Anal right(1336,390) → END bot(1371,390)
+═══════════════════════════════════════════════ -->
+ 
+<!-- ════ FLOWS ════ -->
+ 
+<!-- 1. START → Cisco -->
+<path d="M104,255 L160,255" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 2a. Cisco → Голос (up, solid) -->
+<path d="M218,200 L218,140" stroke="rgba(88,166,255,0.6)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+<!-- 2b. Голос → Cisco (down, dashed) -->
+<path d="M244,140 L244,200" stroke="rgba(88,166,255,0.5)" stroke-width="1.5" fill="none" stroke-dasharray="4,3" marker-end="url(#A)"/>
+ 
+<!-- 3. Cisco → G1 -->
+<path d="M302,255 L350,255" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 4. G1 UP → Консультація -->
+<path d="M380,225 L380,160 L410,160" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+<text x="388" y="195" fill="#6b7a8a" font-family="Inter,sans-serif" font-size="9.5">Основний</text>
+<text x="388" y="208" fill="#6b7a8a" font-family="Inter,sans-serif" font-size="9.5">дзвінок</text>
+ 
+<!-- 5. G1 DOWN → SRS Bridge -->
+<path d="M380,285 L380,390 L410,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+<text x="388" y="332" fill="#6b7a8a" font-family="Inter,sans-serif" font-size="9.5">Копія аудіо</text>
+ 
+<!-- 6. Аналіз → Консультація (leftward, "Виведення підказок") -->
+<path d="M660,160 L536,160" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+<text x="597" y="151" fill="#6b7a8a" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Виведення підказок</text>
 
-                    <defs>
-                      <pattern id="g2" width="10" height="10" patternUnits="userSpaceOnUse">
-                        <circle cx="0.5" cy="0.5" r="0.5" fill="#1a1d2a"/>
-                      </pattern>
-                      <marker id="aB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                        <path d="M0,1 L9,5 L0,9 Z" fill="#3a4060"/>
-                      </marker>
-                      <marker id="aE" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
-                        <path d="M0,1 L9,5 L0,9 Z" fill="#0d4372"/>
-                      </marker>
-                      <marker id="aM" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto">
-                        <path d="M0,1 L9,5 L0,9 Z" fill="#2a2f45"/>
-                      </marker>
-                    </defs>
+ 
+<!-- 8. ACW → END top -->
+<path d="M1022,160 L1083,160" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 9. SRS → Streaming STT -->
+<path d="M534,390 L578,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 10. Streaming STT → G2 -->
+<path d="M688,390 L720,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 11. G2 UP → Аналіз GPT (enters from bottom of Аналіз box) -->
+<path d="M750,360 L750,210 L721,210" stroke="rgba(88,166,255,0.55)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 12. G2 RIGHT → ШІ аналіз -->
+<path d="M780,390 L820,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 13. ШІ аналіз → G3 -->
+<path d="M940,390 L960,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 14. G3 UP → ACW (vertical up then left along top row) -->
+<path d="M990,360 L990,160 L1022,160" stroke="rgba(88,166,255,0.55)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 15. G3 RIGHT → Власна БД -->
+<path d="M1020,390 L1060,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 16. Власна БД → Analytics + QA -->
+<path d="M1182,390 L1218,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+<!-- 17. Analytics + QA → END bottom -->
+<path d="M1336,390 L1371,390" stroke="rgba(88,166,255,0.65)" stroke-width="1.5" fill="none" marker-end="url(#A)"/>
+ 
+ 
+<!-- ════ NODES ════ -->
+ 
+<!-- START EVENT -->
+<circle cx="84" cy="255" r="20" fill="#0d1117"
+        stroke="rgba(88,166,255,0.72)" stroke-width="2" filter="url(#glow)"/>
+<text x="84" y="286" fill="#7d8590" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Клієнт</text>
+<text x="84" y="299" fill="#7d8590" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">телефонує</text>
+ 
+<!-- ГОЛОСОВИЙ АСИСТЕНТ (blue, top-left) -->
+<rect x="160" y="54" width="142" height="86" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.85)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="176" y="75" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="231" y="83" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Голосовий</text>
+<text x="231" y="98" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">асистент</text>
+<text x="231" y="113" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8.5" text-anchor="middle">(11labs\Google</text>
+<text x="231" y="127" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8.5" text-anchor="middle">\OpenAI)</text>
+ 
+<!-- CISCO CUBE (neutral) -->
+<rect x="160" y="200" width="142" height="110" rx="8" fill="#141e2e"
+      stroke="rgba(45,106,159,0.52)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="176" y="222" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="231" y="232" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="12" font-weight="600" text-anchor="middle">Cisco CUBE</text>
+<text x="231" y="250" fill="#8b949e" font-family="JetBrains Mono,monospace" font-size="11" text-anchor="middle">12.6(2)</text>
+<text x="231" y="268" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle">SIPREC · media-fork</text>
+ 
+<!-- GATEWAY 1 -->
+<polygon points="380,225 410,255 380,285 350,255"
+         fill="#0d1117" stroke="rgba(88,166,255,0.78)" stroke-width="1.5" filter="url(#glow)"/>
+<text x="380" y="262" fill="rgba(88,166,255,0.9)" font-family="sans-serif"
+      font-size="22" font-weight="bold" text-anchor="middle">+</text>
+ 
+<!-- КОНСУЛЬТАЦІЯ ОПЕРАТОРА (neutral, top) -->
+<rect x="410" y="118" width="126" height="84" rx="8" fill="#141e2e"
+      stroke="rgba(255,255,255,0.12)" stroke-width="1.5" filter="url(#sh)"/>
+<circle cx="428" cy="139" r="8" fill="none" stroke="#8b949e" stroke-width="1.5"/>
+<path d="M416,156 Q416,148 428,148 Q440,148 440,156" fill="none" stroke="#8b949e" stroke-width="1.5"/>
+<text x="473" y="156" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="500" text-anchor="middle">Консультація</text>
+<text x="473" y="171" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="500" text-anchor="middle">оператора</text>
+<text x="473" y="192" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle">РМ КЦ</text>
+ 
+<!-- АНАЛІЗ GPT (blue, top) -->
+<rect x="660" y="110" width="122" height="100" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.88)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="676" y="131" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="721" y="139" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Аналіз (GPT \</text>
+<text x="721" y="155" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Google Agent</text>
+<text x="721" y="171" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Assist)</text>
+<text x="721" y="188" fill="#1e5878" font-family="JetBrains Mono,monospace" font-size="7.5" text-anchor="middle">повʼязані підказки</text>
+ 
+<!-- ACW У РМ КЦ (neutral, top) -->
+<rect x="900" y="118" width="122" height="84" rx="8" fill="#141e2e"
+      stroke="rgba(255,255,255,0.12)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="916" y="140" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="961" y="148" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="500" text-anchor="middle">ACW у РМ КЦ</text>
+<text x="961" y="163" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">(&lt; 15 сек)</text>
+<text x="961" y="188" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle">автозаповнення</text>
+ 
+<!-- END EVENT TOP -->
+<circle cx="1104" cy="160" r="21" fill="#0d1117"
+        stroke="rgba(88,166,255,0.78)" stroke-width="2.5" filter="url(#glow-end)"/>
+<circle cx="1104" cy="160" r="14" fill="rgba(88,166,255,0.13)"/>
+ 
+<!-- SRS BRIDGE (neutral, bottom) -->
+<rect x="410" y="352" width="124" height="76" rx="8" fill="#141e2e"
+      stroke="rgba(45,106,159,0.52)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="426" y="373" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="472" y="382" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="12" font-weight="500" text-anchor="middle">SRS Bridge</text>
+<text x="472" y="399" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8.5" text-anchor="middle">Cisco SIPREC SRS</text>
+ 
+<!-- STREAMING STT (blue, bottom) -->
+<rect x="578" y="352" width="110" height="76" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.85)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="594" y="373" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="633" y="381" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Streaming</text>
+<text x="633" y="397" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">(Google STT)</text>
+<text x="633" y="413" fill="#1e5878" font-family="JetBrains Mono,monospace" font-size="8" text-anchor="middle">real-time</text>
+ 
+<!-- GATEWAY 2 -->
+<polygon points="750,360 780,390 750,420 720,390"
+         fill="#0d1117" stroke="rgba(88,166,255,0.78)" stroke-width="1.5" filter="url(#glow)"/>
+<text x="750" y="397" fill="rgba(88,166,255,0.9)" font-family="sans-serif"
+      font-size="22" font-weight="bold" text-anchor="middle">+</text>
+ 
+<!-- ШІ АНАЛІЗ GPT\Gemini (blue, bottom) -->
+<rect x="820" y="352" width="120" height="76" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.85)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="836" y="373" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="880" y="381" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">ШІ аналіз</text>
+<text x="880" y="397" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">(GPT \ Gemini)</text>
+ 
+<!-- GATEWAY 3 -->
+<polygon points="990,360 1020,390 990,420 960,390"
+         fill="#0d1117" stroke="rgba(88,166,255,0.78)" stroke-width="1.5" filter="url(#glow)"/>
+<text x="990" y="397" fill="rgba(88,166,255,0.9)" font-family="sans-serif"
+      font-size="22" font-weight="bold" text-anchor="middle">+</text>
+ 
+<!-- ВЛАСНА БАЗА ДАНИХ (blue, bottom) -->
+<rect x="1060" y="352" width="122" height="76" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.85)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1076" y="373" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="1121" y="381" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">Власна база</text>
+<text x="1121" y="396" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="10.5" font-weight="600" text-anchor="middle">даних \ Google</text>
+<text x="1121" y="411" fill="#2e6a9f" font-family="JetBrains Mono,monospace" font-size="8.5" text-anchor="middle">BigQuery</text>
+ 
+<!-- ANALYTICS + QA (blue, bottom) -->
+<rect x="1218" y="352" width="118" height="76" rx="8" fill="#0f1d2e"
+      stroke="rgba(45,106,159,0.85)" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1234" y="373" fill="rgba(88,166,255,0.55)" font-size="13">⚙</text>
+<text x="1277" y="381" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="11" font-weight="600" text-anchor="middle">Analytics + QA</text>
+<text x="1277" y="396" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">(Ender Turing \</text>
+<text x="1277" y="411" fill="#c9d1d9" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Google)</text>
+ 
+<!-- END EVENT BOTTOM -->
+<circle cx="1392" cy="390" r="21" fill="#0d1117"
+        stroke="rgba(88,166,255,0.78)" stroke-width="2.5" filter="url(#glow-end)"/>
+<circle cx="1392" cy="390" r="14" fill="rgba(88,166,255,0.13)"/>
+ 
+<!-- Top glow line -->
+<line x1="0" y1="0" x2="1420" y2="0" stroke="rgba(88,166,255,0.07)" stroke-width="2"/>
+ 
+</svg>
+                </div>
 
-                    <rect x="640" y="2870" width="1830" height="420" fill="url(#g2)"/>
+                <!-- ══════ BLOCK DESCRIPTIONS ══════ -->
+                <div style="margin-top:28px;">
 
-                    <!-- ═══════════════════════════════════
-                         SWIMLANE BACKGROUNDS
-                         (exact from BPMN: x=670 y=2890 each w=300 h=390)
-                         ═══════════════════════════════════ -->
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:0.14em;color:var(--muted);margin-bottom:12px;text-transform:uppercase;">Пріоритет впровадження</div>
+                  <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:32px;">
+                    <thead>
+                      <tr style="background:var(--card);">
+                        <th style="padding:8px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;">БЛОК</th>
+                        <th style="padding:8px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;">НАЗВА</th>
+                        <th style="padding:8px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;">ПРІОРИТЕТ</th>
+                        <th style="padding:8px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:0.1em;">ПОЯСНЕННЯ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">1</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--text);font-weight:600;">SIPREC медіа-форкінг</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);"><span style="font-size:11px;color:#4a7090;background:rgba(42,90,128,.1);border:1px solid rgba(42,90,128,.2);border-radius:4px;padding:2px 8px;">Фундамент</span></td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">Дублює аудіо кожного дзвінка для AI-обробки</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">2</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--text);">Pre-Call AI</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);"><span style="font-size:11px;color:#5090c8;background:rgba(13,67,114,.1);border:1px solid rgba(13,67,114,.2);border-radius:4px;padding:2px 8px;">Ітерація 3</span></td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">Голосовий асистент відповідає клієнту до оператора</td>
+                      </tr>
+                      <tr style="background:rgba(48,216,144,.04);">
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">3</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--text);font-weight:600;">Post-Call Processing + ACW</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);"><span style="font-size:11px;color:var(--ai);background:rgba(48,216,144,.12);border:1px solid rgba(48,216,144,.3);border-radius:4px;padding:2px 8px;">Ітерація 1 </span></td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">Автозаповнення ACW &lt; 15с</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">4</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--text);">Real-time In-Call Copilot</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);"><span style="font-size:11px;color:#5090c8;background:rgba(13,67,114,.1);border:1px solid rgba(13,67,114,.2);border-radius:4px;padding:2px 8px;">Ітерація 2</span></td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">Підказки оператору під час дзвінка</td>
+                      </tr>
+                      <tr style="background:rgba(48,216,144,.04);">
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">5</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--text);font-weight:600;">Analytics + QA</td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);"><span style="font-size:11px;color:var(--ai);background:rgba(48,216,144,.12);border:1px solid rgba(48,216,144,.3);border-radius:4px;padding:2px 8px;">Ітерація 1 </span></td>
+                        <td style="padding:8px 10px;border:1px solid var(--border2);color:var(--sub);">100% аналітика та успішність операторів</td>
+                      </tr>
+                    </tbody>
+                  </table>
 
-                    <!-- Telephony\IVR  x=670 y=2890 w=300 h=390 -->
-                    <rect x="670" y="2890" width="300" height="390" fill="#090f18" stroke="#1e2333" stroke-width="1.5"/>
-                    <!-- header row -->
-                    <rect x="670" y="2890" width="300" height="32" fill="#08101a"/>
-                    <line x1="670" y1="2922" x2="970" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="820" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#2a5a80">TELEPHONY \ IVR</text>
+                  <!-- ─── SECTION 1: SIPREC ─── -->
+                  <div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                      <div style="width:30px;height:30px;border-radius:50%;background:#2a5a80;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">1</div>
+                      <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text);">Підключення до потоку аудіо телефонії</div>
+                        <div style="font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">SIPREC МЕДІА-ФОРКІНГ &middot; ФУНДАМЕНТ</div>
+                      </div>
+                    </div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:10px;"><b style="color:var(--text);">Завдання:</b> створити функціонал для дубляжу аудіо з кожного дзвінка до AI-систем</div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:14px;"><b style="color:var(--text);">Механізм:</b> Cisco UCCE 12.6(2) підтримує media-forking — паралельну копію аудіопотоку за протоколом SIPREC (RFC 7866). Cisco виступає як SRC (Session Recording Client), AI-система — як SRS (Session Recording Server). Один форкований потік може інтегруватись у функціонал підказок та постобробки.</div>
+                    <details style="margin:0 0 16px;">
+                      <summary style="cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border2);border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px;outline:none;user-select:none;"><span style="font-size:9px;margin-right:2px;">▶</span> Архітектура потоку</summary>
+                      <pre style="background:#070a11;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a85a8;line-height:1.75;overflow-x:auto;margin:0 0 16px;white-space:pre;">Cisco UCCE
+│ копія аудіо
+▼
+Сервер (SRS міст)
+│
+│ аудіо потік
+▼
+Google STT Chirp 3
+— розпізнає мову в реальному часі під час дзвінка
+— транскрипт накопичується паралельно з розмовою
+│                              │
+│ репліка (під час дзвінка)    │ повний транскрипт (після BYE)
+▼                              ▼
+GPT-4o mini                     GPT-4o
+— підказка оператору           — аналіз транскрипту
+— ~0.5–1 сек                   — резюме, тема, disposition
+│                              │ ~3–5 сек
+▼                              ▼
+Віджет у РМ КЦ                 Картка у РМ КЦ (ACW)</pre>
+                    </details>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 1: Google CCAI Connector</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Готова інтеграція Cisco + Google. Cisco UCCE 12.6 має вбудовану підтримку Google AI через готовий Google Connector — окремий компонент у середовищі Cisco. Не може слугувати конектором для інших ШІ.</div>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 2: Власна розробка конектора</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Для роботи з OpenAI необхідно розробляти власне рішення приймання аудіо від Cisco і передачі до ШІ.</div>
+                      </div>
+                    </div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Порівняння шляхів</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Критерій</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Google CCAI</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Власний сервер + GPT</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Власна розробка</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Не потрібна, налаштовує вендор</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Потрібна</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Одноразова вартість</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$10,000</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$50,000</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Підказки оператору</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Cisco Finesse / РМ КЦ</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">РМ КЦ</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Підтримка Cisco</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Нативна</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#c06060;">Ні</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рекомендація</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Якщо POC підтвердить ACW &lt; 15 сек</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Якщо Google не задовольняє вимогу</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                    <!-- Pre AI  x=970 y=2890 w=300 h=390 -->
-                    <rect x="970" y="2890" width="300" height="390" fill="#090e18" stroke="#1e2333" stroke-width="1.5"/>
-                    <rect x="970" y="2890" width="300" height="32" fill="#08101a"/>
-                    <line x1="970" y1="2922" x2="1270" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="1120" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#4a5a80">PRE AI</text>
+                  <!-- ─── SECTION 2: POST-CALL ACW ─── -->
+                  <div style="background:var(--card);border:2px solid rgba(48,216,144,.35);border-radius:12px;padding:24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                      <div style="width:30px;height:30px;border-radius:50%;background:var(--ai);display:flex;align-items:center;justify-content:center;color:#080b12;font-weight:700;font-size:13px;flex-shrink:0;">2</div>
+                      <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text);">Post-Call Processing + ACW</div>
+                        <div style="font-size:10px;color:var(--ai);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">ПОСТОБРОБКА &middot; ІТЕРАЦІЯ 1  НАЙВИЩИЙ ПРІОРИТЕТ</div>
+                      </div>
+                    </div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:10px;"><b style="color:var(--text);">Завдання:</b> Cisco під час кожного дзвінка автоматично створює паралельну копію аудіо і передає її на сервер обробки, одразу пересилаючи аудіо на розпізнавання мови (STT) у реальному часі, не чекаючи завершення дзвінка. STT розпізнає слова по мірі того, як вони звучать. Коли дзвінок завершується — транскрипт вже повністю готовий, без жодної додаткової затримки на обробку.</div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:14px;">LLM генерує структурований аналіз: резюме, класифікація теми, витяг сутностей, оцінка по чек-листу. Результат автоматично заповнює звернення оператора в РМ КЦ та зберігається в базі даних для подальшої глибинної аналітики.</div>
+                                        <details style="margin:0 0 16px;">
+                      <summary style="cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border2);border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px;outline:none;user-select:none;">
+                        <span style="font-size:9px;margin-right:2px;">▶</span> Архітектура процесу
+                      </summary>
+                      <pre style="background:#070a11;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a85a8;line-height:1.75;overflow-x:auto;margin:0 0 16px;white-space:pre;">Cisco CUBE
+│ SIPREC RTP G.711 µ-law 8kHz (real-time, під час дзвінка)
+▼
+SIPREC SRS Bridge (мікросервіс)
+- Приймає RTP-фрейми в реальному часі
+- Конвертує G.711 → LINEAR16 16kHz чанки
+- Стримить чанки до Google STT через gRPC під час дзвінка
+- Після завершення: закриває gRPC стрім → транскрипт готовий
+│
+▼
+AI API (синхронний)
+- Input: повний транскрипт + system prompt з бізнес-логікою
+- Output: summary, topic, subtopic, sentiment, entities, disposition_code
+- Час відповіді: ~3–5с
+│ Structured JSON
+▼
+CRM Connector (Cloud Function / мікросервіс)
+- POST /api/v1/calls/{{call_id}}/acw → РМ КЦ
+- Час: ~1–2с
+│ ← &lt; 15с після завершення
+▼
+BigQuery / власна БД (транскрипти + аналітика)</pre>
+                    </details>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 1: Google STT (streaming) + Gemini</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">LLM із низькою вартістю та малим контекстним вікном. Для базових задач резюме, тема, чек-ліст — достатньо. Повністю Google-стек: один контракт, нативна GCP-екосистема.</div>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;border-left:2px solid var(--ai);padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 2: Google STT (streaming) + GPT </div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Краща якість LLM-аналізу: розуміє контекст, тон, нюанси скарг і ескалацій. Рекомендований варіант.</div>
+                      </div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border2);border-radius:6px;padding:12px 16px;margin-bottom:16px;font-size:11.5px;color:var(--sub);line-height:1.7;"><b style="color:var(--text);">Чому Google STT + GPT, а не Whisper?</b> Розпізнавання мовлення OpenAI Whisper працює лише після завершення дзвінка: спочатку потрібно зберегти весь аудіофайл, потім відправити на сервер і дочекатись результату. Для дзвінка 3 хв це займає близько 30 сек тільки на розпізнавання + ще час аналізу. Google STT streaming розпізнає в реальному часі — транскрипт готовий одразу після завершення дзвінка.</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Порівняння варіантів</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Критерій</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Google STT + Gemini</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Google STT + GPT </th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Щомісячна вартість</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$37,500</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$39,500</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Якість LLM-аналізу</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Середня (Gemini Flash)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Вища (GPT-4o)</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Vendor lock-in</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Повністю Google</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google STT + OpenAI</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Власна розробка</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Вендор</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Так</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рекомендація</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">—</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Протестувати LLM-промпти на GPT-4o і Gemini Flash — оцінити якість вручну: 50 дзвінків із ручною перевіркою операторів</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                    <!-- Data Pipeline  x=1270 y=2890 w=300 h=390 -->
-                    <rect x="1270" y="2890" width="300" height="390" fill="#0a0f18" stroke="#1e2333" stroke-width="1.5"/>
-                    <rect x="1270" y="2890" width="300" height="32" fill="#08101a"/>
-                    <line x1="1270" y1="2922" x2="1570" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="1420" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#4a5a80">DATA PIPELINE</text>
+                  <!-- ─── SECTION 3: ANALYTICS + QA ─── -->
+                  <div style="background:var(--card);border:2px solid rgba(48,216,144,.35);border-radius:12px;padding:24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                      <div style="width:30px;height:30px;border-radius:50%;background:var(--ai);display:flex;align-items:center;justify-content:center;color:#080b12;font-weight:700;font-size:13px;flex-shrink:0;">3</div>
+                      <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text);">Post-Call Analytics + QA</div>
+                        <div style="font-size:10px;color:var(--ai);font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">АНАЛІТИКА &middot; ІТЕРАЦІЯ 1  НАЙВИЩИЙ ПРІОРИТЕТ</div>
+                      </div>
+                    </div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:14px;"><b style="color:var(--text);">Завдання:</b> отримання транскриптів і LLM-аналізу після постобробки, виконання глибокого QA-скорингу кожного дзвінка, візуалізація дашбордів корисної аналітики, QA-профілів операторів і виявлення системних трендів.</div>
+                                        <details style="margin:0 0 16px;">
+                      <summary style="cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border2);border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px;outline:none;user-select:none;">
+                        <span style="font-size:9px;margin-right:2px;">▶</span> Архітектура потоку даних
+                      </summary>
+                      <pre style="background:#070a11;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a85a8;line-height:1.75;overflow-x:auto;margin:0 0 16px;white-space:pre;">STT Pipeline
+→ Транскрипт JSON + LLM-аналіз (BigQuery або власна БД)
+│
+├─── [P1] QA Scoring Engine ──────→ QA Score + Scorecard
+│         (Ender Turing / Google)
+│
+├─── [P1] Topic + Sentiment Analytics ──→ Тренди
+│         (CCAI Insights)
+│
+└─── [P3] Custom Analytics Pipeline
+     → BigQuery ML (кластеризація, прогнозування)
+     → Semantic Search (пошук за ключовими словами та синонімами)
+     → Power BI дашборди</pre>
+                    </details>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;border-left:2px solid var(--ai);padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;">Варіант 1: Ender Turing </div>
+                        <div style="font-size:11px;font-weight:600;color:var(--ai);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.1em;">Переваги</div>
+                        <ul style="margin:0 0 12px;padding-left:16px;font-size:11.5px;color:var(--sub);line-height:1.7;">
+                          <li style="margin-bottom:4px;">Модуль аналітики 100% дзвінків та QA операторів. Менеджер відкриває браузер і бачить повну картину і може проаналізувати будь-який період, тематику чи оператора</li>
+                          <li style="margin-bottom:4px;">Передбачувані витрати за ліцензію, фіксована вартість незалежно від кількості дзвінків. Готові на гнучкість — якщо оператор працює пів ставки</li>
+                          <li style="margin-bottom:4px;">Ціна найнижча на ринку із якісних перевірених продуктів</li>
+                          <li>Більше гнучкості під наші потреби — швидше рухатимуться у розробку</li>
+                        </ul>
+                        <div style="font-size:11px;font-weight:600;color:#c06060;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.1em;">Ризики</div>
+                        <ul style="margin:0;padding-left:16px;font-size:11.5px;color:var(--sub);line-height:1.7;">
+                          <li style="margin-bottom:4px;">Відсутність мов усіх країн, де є наші відділення</li>
+                          <li>Немає можливості підключатися до потоку аудіо, швидкої постобробки для клієнтів масштабів Нової Пошти. Для інтеграції потрібна додатково розробка функціоналу передачі файлу</li>
+                        </ul>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;">Варіант 2: Google CCAI Insights + Quality AI</div>
+                        <div style="font-size:11px;font-weight:600;color:var(--ai);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.1em;">Переваги</div>
+                        <ul style="margin:0 0 12px;padding-left:16px;font-size:11.5px;color:var(--sub);line-height:1.7;">
+                          <li style="margin-bottom:4px;">Нативні інтеграції із іншими блоками: Google CCAI Agent Assist / Google Dialogflow CX — CCAI Insights бачить дані з усіх компонентів в одному інтерфейсі нативно</li>
+                          <li>Верифікована глибина аналізу Google Insights, що використовує той самий стек що лежить в основі Google Search і Gemini + повна технічна документація</li>
+                        </ul>
+                        <div style="font-size:11px;font-weight:600;color:#c06060;margin-bottom:6px;text-transform:uppercase;letter-spacing:0.1em;">Ризики</div>
+                        <ul style="margin:0;padding-left:16px;font-size:11.5px;color:var(--sub);line-height:1.7;">
+                          <li style="margin-bottom:4px;">Вартість, що зростає із обсягом. Продукти вимагають окремих підписок і налаштувань</li>
+                          <li>Відсутність гнучкості і менше розвитку, порівняно із платформою-стартапом</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Порівняння варіантів</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Критерій</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Ender Turing </th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Google Insights + Quality AI</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Орієнтовна вартість/міс</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">$30,000–60,000</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">$90,000–160,000</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Модель ціноутворення</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Per-seat — фіксована за ліцензію</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Per-conversation — росте з обсягом</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Технічна документація</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#c06060;">Здебільшого відсутня</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Повна і змістовна</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Глибина topic/entity аналізу</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Базова</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Задокументована</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Generative summary</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT (припускається)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Gemini</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Enterprise SLA</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#c06060;">Невідомо</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">99.9%+ з гарантіями</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Час до production</td><td style="padding:7px 10px;border:1px solid var(--border2);color:#4ab870;">Швидше</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Довше</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рекомендація</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Якщо пріоритет — coaching UI і вартість</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Якщо пріоритет — глибина аналізу і Google-стек</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                    <!-- In-Call AI / Copilot  x=1570 y=2890 w=300 h=390 -->
-                    <rect x="1570" y="2890" width="300" height="390" fill="#091018" stroke="#1e2333" stroke-width="1.5"/>
-                    <rect x="1570" y="2890" width="300" height="32" fill="#08101a"/>
-                    <line x1="1570" y1="2922" x2="1870" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="1720" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#1a50a0">IN-CALL AI / COPILOT</text>
+                  <!-- ─── SECTION 4: REAL-TIME COPILOT ─── -->
+                  <div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                      <div style="width:30px;height:30px;border-radius:50%;background:#0d4372;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">4</div>
+                      <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text);">Real-time In-Call AI Copilot</div>
+                        <div style="font-size:10px;color:#5090c8;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">ПІДКАЗКИ ОПЕРАТОРУ &middot; ІТЕРАЦІЯ 2</div>
+                      </div>
+                    </div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:14px;"><b style="color:var(--text);">Завдання:</b> поки оператор розмовляє з клієнтом, AI Copilot в реальному часі транскрибує розмову, аналізує транскрипт і генерує підказки, відображаючи їх у РМ КЦ. Оператор бачить релевантні статті бази знань, FAQ-відповіді і next-best-action — автоматично, без будь-яких дій. Очікувана latency: &lt; 2с.</div>
+                                        <details style="margin:0 0 16px;">
+                      <summary style="cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border2);border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px;outline:none;user-select:none;">
+                        <span style="font-size:9px;margin-right:2px;">▶</span> Архітектура рішення
+                      </summary>
+                      <pre style="background:#070a11;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a85a8;line-height:1.75;overflow-x:auto;margin:0 0 16px;white-space:pre;">Cisco CUBE (SIPREC media fork)
+│ RTP G.711 µ-law 8kHz
+▼
+SIPREC SRS Bridge
+- Декодує G.711 → PCM 16kHz
+- Буферизація 100ms chunks
+- Роздільні канали: operator + customer
+│ gRPC / WebSocket binary
+▼
+Real-time STT (Google STT Chirp)
+- Interim results (часткові, для відображення)
+- Final results (стабільні, для аналізу)
+│ incremental utterance events
+▼
+Agent Assist / GPT Backend
+- analyzeContent per utterance
+- Повертає suggestions (статті, FAQ, next-action)
+│ WebSocket push
+▼
+Copilot UI Widget (sidebar РМ КЦ)
+- Відображає підказки оператору
+- Live transcript
+- Чеклист виконання стандартів
+│ operator interaction logging
+▼
+BigQuery (suggestions_log: shown / accepted / rejected)</pre>
+                    </details>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Необхідний функціонал</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11.5px;margin-bottom:16px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Рівень</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Рішення</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Пояснення</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рівень 1: Real-time STT</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google STT Chirp (gRPC Streaming)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Нативна інтеграція стрімінгу розмови з Google CCAI Agent Assist, що мінімалізує час між STT і Agent Assist + використовується у ACW процесі. Офіційна підтримка Cisco + Google через CCAI</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рівень 2: AI Copilot Backend</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Agent Assist / GPT</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">AI отримує репліку від STT і повертає підказки: релевантні статті з бази знань, FAQ-відповіді, NBA (запропонувати промокод при скарзі)</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Рівень 3: Copilot UI Widget</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Sidebar РМ КЦ</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Frontend-компонент що відображається у Cisco Finesse sidebar або вбудовується у РМ КЦ і відображає підказки від Agent Assist у реальному часі</td></tr>
+                      </tbody>
+                    </table>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 1: Google Agent Assist</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Офіційна інтеграція Cisco UCCE + Google — без кастомної розробки. Уся розробка інтеграції на вендорі. Knowledge Base: підказки з реальних документів → Gemini знаходить релевантну статтю і генерує відповідь у контексті поточної репліки клієнта. Підказки на рівні останньої репліки — латентність &lt; 1 с. <b>Обмеження:</b> Agent Assist аналізує кожну репліку окремо та не враховує контекст всього діалогу.</div>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 2: GPT (власна розробка)</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Google STT передає кожну репліку у GPT, який генерує підказку на основі system prompt із закладеною гнучкою бізнес-логікою. Дає кращий контекст розуміння діалогу.</div>
+                      </div>
+                    </div>
+                    <div style="background:var(--card);border:1px solid var(--border2);border-radius:6px;padding:12px 16px;font-size:11.5px;color:var(--sub);line-height:1.7;"><b style="color:var(--text);">Коли обирати:</b> якщо підказки — це переважно "знайди правильну статтю / питання-відповідь" і швидкість — рекомендовано Google Agent Assist, після тестування якісного виявлення ключових сутностей.</div>
+                  </div>
 
-                    <!-- ACW  x=1870 y=2890 w=300 h=390 -->
-                    <rect x="1870" y="2890" width="300" height="390" fill="#0d0f18" stroke="#1e2333" stroke-width="1.5"/>
-                    <rect x="1870" y="2890" width="300" height="32" fill="#0a0c14"/>
-                    <line x1="1870" y1="2922" x2="2170" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="2020" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#3a4060">ACW</text>
+                  <!-- ─── SECTION 5: PRE-CALL AI ─── -->
+                  <div style="background:var(--card);border:1px solid var(--border2);border-radius:12px;padding:24px;margin-bottom:24px;">
+                    <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+                      <div style="width:30px;height:30px;border-radius:50%;background:#0d4372;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:13px;flex-shrink:0;">5</div>
+                      <div>
+                        <div style="font-size:15px;font-weight:700;color:var(--text);">Pre-Call AI та попередня обробка</div>
+                        <div style="font-size:10px;color:#5090c8;font-family:'JetBrains Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;margin-top:2px;">ГОЛОСОВИЙ АСИСТЕНТ &middot; ІТЕРАЦІЯ 3</div>
+                      </div>
+                    </div>
+                    <div style="font-size:12.5px;color:var(--sub);line-height:1.75;margin-bottom:14px;"><b style="color:var(--text);">Завдання:</b> Pre-Call AI перехоплює вхідний дзвінок до з'єднання з живим оператором. Голосовий асистент ідентифікує клієнта, визначає тему звернення, збирає контекст, надає просту консультацію та ескалює до черги / оператора. Фокус функціоналу на швидшому наданні відповіді клієнту та зниженні навантаження на операторів.</div>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Механізм: як працює Pre-Call Flow</div>
+                    <div style="font-size:12px;color:var(--sub);line-height:1.7;margin-bottom:10px;">Pre-Call AI у UCCE реалізується через <b style="color:var(--text);">Cisco Customer Voice Portal</b> — стандартний IVR-шар у UCCE-архітектурі.</div>
+                    <details style="margin:0 0 16px;">
+                      <summary style="cursor:pointer;padding:10px 16px;background:var(--card);border:1px solid var(--border2);border-radius:6px 6px 0 0;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;list-style:none;display:flex;align-items:center;gap:8px;outline:none;user-select:none;"><span style="font-size:9px;margin-right:2px;">▶</span> CVP Flow</summary>
+                      <pre style="background:#070a11;border:1px solid var(--border2);border-top:none;border-radius:0 0 6px 6px;padding:14px 18px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#5a85a8;line-height:1.75;overflow-x:auto;margin:0 0 16px;white-space:pre;">Клієнт дзвонить
+│ PSTN / SIP Trunk
+▼
+Cisco CUBE (border element)
+- SIP termination, NAT/security
+│ SIP
+▼
+Cisco CUCM 12.6 (call control)
+- Routing rule → направляє до CVP
+│ SIP
+▼
+Cisco CVP 12.6 (Customer Voice Portal)
+- VoiceXML IVR engine
+- Приймає дзвінок, запускає VXML-script
+- Native Dialogflow CX integration (Cognitive Collaboration)
+│ HTTPS Dialogflow API
+▼
+Голосовий асистент (intent detection, uk-UA)
+- Визначає тему звернення
+- Webhook → РМ КЦ для ідентифікації
+│ HTTPS Webhook
+▼
+РМ КЦ API (REST)
+GET /api/v1/customers/lookup?phone=+380501234567
+→ {{ customer_id, name, last_calls, open_cases }}
+│ Результат → CVP → CUCM routing
+▼
+CUCM Routing → Cisco Finesse (оператор)
++ CTI screen-pop через UCCE CTI Server:
+{{ CTI screen-pop: тема, customer_id, summary }}</pre>
+                    </details>
+                    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 1: Dialogflow CX</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Швидкі відповіді, мало розуміння контексту, читає пряме питання/дію. Vendor-managed Google. <b>~$81,200/міс · ~$20–40K one-time.</b></div>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;border-left:2px solid var(--ai);padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 2: ElevenLabs </div>
+                        <div style="font-size:11px;font-weight:600;color:var(--ai);margin-bottom:5px;">Переваги</div>
+                        <ul style="margin:0 0 8px;padding-left:14px;font-size:11px;color:var(--sub);line-height:1.65;">
+                          <li style="margin-bottom:3px;">Найкраща якість української та підтверджена підтримка усіх необхідних мов</li>
+                          <li style="margin-bottom:3px;">Гнучко налаштовуються до 40 кастомних запитів менеджером. Результати автоматично передаються через post-call webhook до РМ КЦ: тема, ТТН, місто, тип проблеми, скарга, теги</li>
+                          <li>Найшвидше впровадження через нативну інтеграцію з Cisco</li>
+                        </ul>
+                        <div style="font-size:11px;font-weight:600;color:#c06060;margin-bottom:5px;">Ризики</div>
+                        <ul style="margin:0;padding-left:14px;font-size:11px;color:var(--sub);line-height:1.65;">
+                          <li>Дорога вартість</li>
+                        </ul>
+                        <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;"><b>Обирати якщо:</b> результати тестування uk-UA підтверджено кращі за інших і готові платити за кращий клієнтський досвід. <b>~$15–25K one-time.</b></div>
+                      </div>
+                      <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
+                        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 3: OpenAI API (власна розробка)</div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Глибоке розуміння контексту, більше розуміння стану клієнта і чим викликані його дії. Уніфікована база знань із чатами. Немає обмежень платформи через власну розробку всього рішення. <b>~$43–81K/міс · ~$40–70K one-time.</b></div>
+                      </div>
+                    </div>
 
-                    <!-- Post-Call AI  x=2170 y=2890 w=300 h=390 -->
-                    <rect x="2170" y="2890" width="300" height="390" fill="#091010" stroke="#1e2333" stroke-width="1.5"/>
-                    <rect x="2170" y="2890" width="300" height="32" fill="#071008"/>
-                    <line x1="2170" y1="2922" x2="2470" y2="2922" stroke="#1e2333" stroke-width="1"/>
-                    <text x="2320" y="2911" text-anchor="middle"
-                          font-family="JetBrains Mono,monospace" font-size="10" font-weight="600"
-                          letter-spacing="0.15em" fill="#1a6a40">POST-CALL AI</text>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">AI-моделі кожного рішення</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:16px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Компонент</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 1: Dialogflow CX</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 2: ElevenLabs</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 3: OpenAI</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">STT (розпізнавання)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google STT Chirp 3</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs Scribe v2</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">OpenAI Whisper Large v3</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">NLU (розуміння наміру)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow CX NLU (rule-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs NLU (LLM-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o (повний LLM)</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogue management</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow CX flows/pages</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs agent config</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o system prompt</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">TTS (синтез мови)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google Neural2 / Studio uk-UA</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs TTS (voice cloning)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">OpenAI TTS</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Entity extraction</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow entities (rule-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Scribe v2 (LLM-based, до 40 полів)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o Function Calling</td></tr>
+                      </tbody>
+                    </table>
 
-                    <!-- ═══════════════════════════════════
-                         FLOWS — exact waypoints from BPMN
-                         ═══════════════════════════════════ -->
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">AI у кожної задачі Pre-Call AI</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:16px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Задача</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Найкраща AI</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Чому</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Детермінований routing</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow CX NLU</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Rule-based: "трекінг" → завжди черга Трекінг. 100% передбачуваний</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Enterprise SLA + підтримка</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Зріла компанія з документованими SLA, партнерською мережею</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Бренд-голос (TTS)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs TTS</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Єдина платформа з voice cloning — клієнт чує голос, а не роботизований Google</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Entity extraction (легке налаштування)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">UI конфігурація без коду (до 40 полів). Dialogflow і OpenAI потребують розробника</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">STT uk-UA точність</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs Scribe v2</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">3.1% WER, 4 акценти української</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Гнучкість бізнес-логіки</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o (OpenAI)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Будь-яка логіка = текст у system prompt. Без обмежень платформи</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Складний діалог / контекст</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o (OpenAI)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Найпотужніший LLM: розуміє "посилка вже тиждень не їде, я злий" як контекст ескалації</td></tr>
+                      </tbody>
+                    </table>
 
-                    <!-- Flow_1ltqlbq: start → Activity_1pe6vzz: (830,2988)→(830,3050) -->
-                    <path d="M830,2988 L830,3050" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
+                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">Оцінка вартості</div>
+                    <table style="width:100%;border-collapse:collapse;font-size:11.5px;">
+                      <thead><tr style="background:var(--card);">
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Модель</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Розробка</th>
+                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">API вартість/міс</th>
+                      </tr></thead>
+                      <tbody>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Варіант 1: Dialogflow CX</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Vendor-managed</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$20–40K</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$81,200</td></tr>
+                        <tr style="background:rgba(48,216,144,.04);"><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Варіант 2: ElevenLabs </td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Vendor-managed</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$15–25K</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$90,000–120,000</td></tr>
+                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Варіант 3: OpenAI API</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Власна розробка</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Вартість годин команди + ~$40–70K</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">~$43,000–81,000</td></tr>
+                      </tbody>
+                    </table>
+                  </div>
 
-                    <!-- Flow_0fx420z (msg): (830,3130)→(830,3210)→(1140,3210)→(1140,3130) -->
-                    <path d="M830,3130 L830,3210 L1140,3210 L1140,3130"
-                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
-
-                    <!-- Flow_0efeqjh (msg): (1140,3050)→(1140,2960)→(1420,2960)→(1420,3060) -->
-                    <path d="M1140,3050 L1140,2960 L1420,2960 L1420,3060"
-                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
-
-                    <!-- Flow_10me152 (msg): (1430,3140)→(1430,3200)→(1640,3200) -->
-                    <path d="M1430,3140 L1430,3200 L1640,3200"
-                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
-
-                    <!-- Flow_00s14zl: (1690,3110)→(1690,3160) -->
-                    <path d="M1690,3110 L1690,3160" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
-
-                    <!-- Flow_0hmcrqm: (1740,3200)→(1790,3200)→(1790,3020) -->
-                    <path d="M1740,3200 L1790,3200 L1790,3020" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
-
-                    <!-- Flow_1ijlu9a: (1740,2980)→(1690,2980)→(1690,3030) -->
-                    <path d="M1740,2980 L1690,2980 L1690,3030" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
-
-                    <!-- Flow_0swjr2s (msg): (1810,3020)→(1810,3200)→(1990,3200) -->
-                    <path d="M1810,3020 L1810,3200 L1990,3200"
-                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
-
-                    <!-- Flow_00ygp82: (2040,3160)→(2040,3020) -->
-                    <path d="M2040,3160 L2040,3020" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
-
-                    <!-- Flow_0hi4imq (msg): (2090,2980)→(2350,2980)→(2350,3050) -->
-                    <path d="M2090,2980 L2350,2980 L2350,3050"
-                          stroke="#2a2f45" stroke-width="1.5" fill="none" stroke-dasharray="7,5" marker-end="url(#aM)"/>
-
-                    <!-- Flow_0vsnzzc: (2350,3130)→(2350,3192) -->
-                    <path d="M2350,3130 L2350,3192" stroke="#3a4060" stroke-width="1.5" fill="none" marker-end="url(#aB)"/>
-
-                    <!-- ═══════════════════════════════════
-                         NODES — exact x,y,w,h from BPMN
-                         ═══════════════════════════════════ -->
-
-                    <!-- Event_15bkou2 start: x=812 y=2952 w=36 h=36 → cx=830 cy=2970 -->
-                    <circle cx="830" cy="2970" r="16" fill="none" stroke="#3a4060" stroke-width="2"/>
-
-                    <!-- Activity_1pe6vzz: x=780 y=3050 w=100 h=80  (Cisco → real-time streaming, Cisco blue) -->
-                    <rect x="780" y="3050" width="100" height="80" rx="5"
-                          fill="rgba(42,90,128,.15)" stroke="#2a5a80" stroke-width="1.5"/>
-                    <text x="830" y="3080" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#5080a0">Cisco →</text>
-                    <text x="830" y="3094" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#5080a0">real-time</text>
-                    <text x="830" y="3108" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#5080a0">streaming</text>
-
-                    <!-- Activity_05q1727: x=1090 y=3050 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google blue) -->
-                    <rect x="1090" y="3050" width="100" height="80" rx="5"
-                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
-                    <text x="1140" y="3071" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">Google</text>
-                    <text x="1140" y="3084" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">DialogflowCX \</text>
-                    <text x="1140" y="3097" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">11labs →</text>
-                    <text x="1140" y="3110" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">Consultation</text>
-                    <text x="1140" y="3122" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#3a6090">& Intent</text>
-                    <!-- price -->
-                    <text x="1140" y="3143" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#2a4a80">DialogflowCX ~$35 000 · 11labs ~$50 000</text>
-
-                    <!-- Activity_1czdrgc: x=1380 y=3060 w=100 h=80  fill=#bbdefb stroke=#0d4372 -->
-                    <rect x="1380" y="3060" width="100" height="80" rx="5"
-                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
-                    <text x="1430" y="3081" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">Google</text>
-                    <text x="1430" y="3094" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">DialogflowCX \</text>
-                    <text x="1430" y="3107" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">11labs →</text>
-                    <text x="1430" y="3120" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">transcribes →</text>
-                    <text x="1430" y="3133" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#3a6090">summary</text>
-                    <!-- price -->
-                    <text x="1430" y="3152" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#2a4a80">DialogflowCX ~$35 000 · 11labs ~$50 000</text>
-
-                    <!-- Activity_02xei6q: x=1740 y=2940 w=100 h=80  (Транскрибація real-time, neutral) -->
-                    <rect x="1740" y="2940" width="100" height="80" rx="5"
-                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
-                    <text x="1790" y="2968" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#7a8aaa">Транскрибація</text>
-                    <text x="1790" y="2982" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#7a8aaa">real-time</text>
-
-                    <!-- Activity_1382q5a: x=1640 y=3030 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google Agent Assist top) -->
-                    <rect x="1640" y="3030" width="100" height="80" rx="5"
-                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
-                    <text x="1690" y="3051" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Google Agent</text>
-                    <text x="1690" y="3064" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Assist \ власна</text>
-                    <text x="1690" y="3077" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">розробка</text>
-                    <text x="1690" y="3090" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Copilot на</text>
-                    <text x="1690" y="3103" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#3a6090">Gemini</text>
-                    <!-- price -->
-                    <text x="1690" y="3122" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#2a4a80">Agent Assist ~$200 000</text>
-
-                    <!-- Activity_0c5vccr: x=1640 y=3160 w=100 h=80  (Consultation, neutral+person) -->
-                    <rect x="1640" y="3160" width="100" height="80" rx="5"
-                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
-                    <!-- person icon -->
-                    <circle cx="1662" cy="3185" r="7" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
-                    <path d="M1651,3200 Q1662,3193 1673,3200" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
-                    <text x="1690" y="3215" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#6a7a9a">Consultation</text>
-
-                    <!-- Activity_0ljn02g: x=1990 y=2940 w=100 h=80  (Agents validation, neutral+person) -->
-                    <rect x="1990" y="2940" width="100" height="80" rx="5"
-                          fill="#13161f" stroke="#3a4060" stroke-width="1.5"/>
-                    <circle cx="2012" cy="2965" r="7" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
-                    <path d="M2001,2980 Q2012,2973 2023,2980" fill="none" stroke="#4a5a80" stroke-width="1.3"/>
-                    <text x="2040" y="2990" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#6a7a9a">Agents</text>
-                    <text x="2040" y="3004" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="11" fill="#6a7a9a">validation</text>
-
-                    <!-- Activity_1pgwtp3: x=1990 y=3160 w=100 h=80  fill=#bbdefb stroke=#0d4372 (Google Agent bottom) -->
-                    <rect x="1990" y="3160" width="100" height="80" rx="5"
-                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
-                    <text x="2040" y="3181" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Google Agent</text>
-                    <text x="2040" y="3194" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Assist \ власна</text>
-                    <text x="2040" y="3207" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">розробка</text>
-                    <text x="2040" y="3220" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#5090c8">Copilot на</text>
-                    <text x="2040" y="3233" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9.5" fill="#3a6090">Gemini</text>
-                    <!-- price -->
-                    <text x="2040" y="3252" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#2a4a80">Agent Assist ~$200 000</text>
-
-                    <!-- Activity_1e9guve: x=2300 y=3050 w=100 h=80  fill=#bbdefb stroke=#0d4372 -->
-                    <rect x="2300" y="3050" width="100" height="80" rx="5"
-                          fill="rgba(13,67,114,.22)" stroke="#0d4372" stroke-width="1.5"/>
-                    <text x="2350" y="3071" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">CCAI Insights \</text>
-                    <text x="2350" y="3084" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">Ender Turing</text>
-                    <text x="2350" y="3097" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="10" fill="#5090c8">Deep Analysis</text>
-                    <!-- price -->
-                    <text x="2350" y="3143" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#2a4a80">CCAI Insights ~$60 000</text>
-                    <text x="2350" y="3155" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,sans-serif" font-size="9" fill="#1a5030">Ender Turing ~$7 500</text>
-
-                    <!-- Event_1bvukv9 end: x=2332 y=3192 w=36 h=36 → cx=2350 cy=3210 -->
-                    <circle cx="2350" cy="3210" r="16" fill="none" stroke="#3a4060" stroke-width="4"/>
-                    <circle cx="2350" cy="3210" r="9"  fill="#3a4060"/>
-
-                    </svg>
                 </div>
             </div>
         </div>"""
