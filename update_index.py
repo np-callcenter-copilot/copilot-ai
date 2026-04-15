@@ -49,6 +49,7 @@ PROVIDERS = [
     "11 Labs",
     "Poly AI",
     "Get Vocal",
+    "Verint",
 ]
 
 PROVIDER_DISPLAY_NAMES = {
@@ -66,6 +67,7 @@ PROVIDER_DISPLAY_NAMES = {
     "11 Labs": "11 Labs",
     "Poly AI": "Poly AI",
     "Get Vocal": "Get Vocal",
+    "Verint": "Verint",
 }
 
 CATEGORY_MAP = {
@@ -153,7 +155,7 @@ def parse_csv(filepath: str, delimiter: str = ";") -> tuple:
         # TCO row (values match pattern like "150 - 200 000")
         if len(row) > 4:
             tco_pattern = r"^\d+\s*-\s*\d+\s*000$"
-            if any(re.match(tco_pattern, str(cell).strip()) for cell in row[4:16]):
+            if any(re.match(tco_pattern, str(cell).strip()) for cell in row[4:19]):
                 for j, provider in enumerate(PROVIDERS):
                     if len(row) > j + 4:
                         val = row[j + 4].strip()
@@ -349,7 +351,7 @@ def generate_criteria_row(criterion: Criterion, providers: List[str]) -> str:
         )
 
     n = len(providers)
-    return f"""                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 250px repeat({n}, 1fr);">
+    return f"""                    <div class="criteria-row" onclick="toggleExpand(this)" style="grid-template-columns: 200px repeat({n}, 1fr);">
                         <div class="criteria-name">
                             <span class="priority-badge {priority_class}">{weight_label}</span>
                             {criterion.name}
@@ -388,7 +390,7 @@ def generate_category_tab(cat_id: str, category: Category, providers: List[str])
             <div class="summary-section">
                 <h3 class="summary-title">{category.name} ({category.weight_percent}%) - Оцінка провайдерів</h3>
                 <div class="comparison-table">
-                    <div class="table-header" style="grid-template-columns: 250px repeat({len(providers)}, 1fr);">
+                    <div class="table-header" style="grid-template-columns: 200px repeat({len(providers)}, 1fr);">
                         <div>Критерій</div>
 {header_cols}
                     </div>
@@ -715,16 +717,74 @@ def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
         ],
     )
 
+    verint_card = _render_strategy_card(
+        border_rgba="rgba(59,130,246,.25)",
+        label_color="#3b82f6",
+        label_text="Enterprise WEM · Da Vinci AI",
+        score_text=_score("Verint"),
+        title="Verint",
+        subtitle="CX Automation Platform · Da Vinci AI · WFM Leader",
+        indent="                    ",
+        pros=[
+            "Транскрипція uk-UA підтверджена документацією (Verint Speech Transcription, on-prem, LVCSR)",
+            "Лідер Workforce Management — найкращий модуль прогнозування навантаження та планування графіків",
+            "Quality Bot автоматизує оцінку 100% дзвінків. Глибока аналітика з drill-down до цитат",
+            "Wrap Up Bot — автоматичне резюме дзвінка з економією ~35 сек. Coaching Bot — навчання операторів на помилках",
+            "Enterprise-рівень безпеки: SOC 2, ISO 27001, GDPR. Масштабування 1000+ операторів",
+            "Phonetic boosting та language customization для покращення точності розпізнавання",
+        ],
+        cons=[
+            "Sentiment, Topics, Auto Language Detection — тільки через Communications Analytics, підтримка uk-UA не підтверджена",
+            "Транскрипція uk-UA доступна лише on-premise (Verint Speech Transcription), не в хмарі",
+            "Робота з суржиком не задокументована — потрібне тестування phonetic boosting",
+            "Enterprise pricing — очікувана вартість $200-350K/рік",
+            "Відсутність інтеграцій з Binotel та Power Platform. Тривалий онбординг",
+        ],
+    )
+
+    # Sort all recommendation cards by score descending, 3 per row
+    _all_rec_cards = [
+        (cresta_card, _score("Cresta")),
+        (google_card, _score("Google Cloud CCAI")),
+        (ender_card, _score("Ender Turing")),
+        (unitalk_card, _score("Uni Talk")),
+        (microsoft_card, _score("Microsoft Copilot")),
+        (nice_card, _score("NICE")),
+        (genesys_card, _score("Genesys Cloud CX")),
+        (cognigy_card, _score("NICE Cognigy")),
+        (liveperson_card, _score("Live Person")),
+        (ringostat_card, _score("Ringostat")),
+        (decagon_card, _score("Decagon")),
+        (polyai_card, _score("Poly AI")),
+        (elevenlabs_card, _score("11 Labs")),
+        (getvocal_card, _score("Get Vocal")),
+        (verint_card, _score("Verint")),
+    ]
+    _all_rec_cards.sort(
+        key=lambda x: float(x[1].replace("%", "").replace(",", ".") or "0"),
+        reverse=True,
+    )
+    _rec_rows = []
+    for i in range(0, len(_all_rec_cards), 3):
+        _chunk = [c[0] for c in _all_rec_cards[i : i + 3]]
+        _mb = "20px" if i + 3 >= len(_all_rec_cards) else "16px"
+        _rec_rows.append(
+            f'                <div style="display:grid;grid-template-columns:repeat({len(_chunk)},1fr);gap:16px;margin-bottom:{_mb};">\n'
+            + "\n".join(_chunk)
+            + "\n                </div>"
+        )
+    rec_provider_grid = "\n\n".join(_rec_rows)
+
     return f"""        <div class="tab-content" data-content="recommendations">
             <div class="recommendations-section">
                 <div class="rec-header">
                     <div class="rec-eyebrow">Фінальний розділ</div>
                     <h3 class="rec-title">Ключові висновки аналізу</h3>
                     <p class="rec-lead">
-                        Аналіз 14 рішень за методологією MSC для AI Copilot контакт-центру на 1 000 операторів.
-                        Оскільки ми вже маємо високорозвинену екосистему контакт-центру — готове робоче місце оператора,
-                        дерево тематик, функціонуючу базу знань та власну систему аналітики — класичний підхід до
-                        закупівлі монолітних рішень стає недоцільним.
+                        Порівняльна оцінка 15 провайдерів за методологією MSC. Вага критеріїв відповідає
+                        пріоритетам контакт-центру на 1 000 операторів з високорозвиненою екосистемою —
+                        готовим робочим місцем оператора, деревом тематик, функціонуючою базою знань
+                        та власною системою аналітики.
                     </p>
                 </div>
 
@@ -733,54 +793,7 @@ def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
                     <div class="rec-divider-line"></div>
                 </div>
 
-                <!-- Provider Cards Grid - Row 1 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{google_card}
-
-{ender_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 2 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{cresta_card}
-
-{nice_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 3 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{cognigy_card}
-
-{genesys_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 4 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{microsoft_card}
-
-{liveperson_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 5 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{decagon_card}
-
-{ringostat_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 6 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;">
-{polyai_card}
-
-{elevenlabs_card}
-                </div>
-
-                <!-- Provider Cards Grid - Row 7 -->
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
-{unitalk_card}
-
-{getvocal_card}
-                </div>
+{rec_provider_grid}
 
                 <div class="rec-divider">
                     <span class="rec-divider-label">Ключові висновки</span>
@@ -802,7 +815,7 @@ def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
                     <div class="strategy-label" style="color: var(--muted);">Важливий висновок</div>
                     <div class="strategy-title">Жоден провайдер не закриває 100% вимог</div>
                     <div class="strategy-text">
-                        Кожне з 14 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
+                        Кожне з 15 проаналізованих рішень має глибокі переваги в одному домені й важливі для нас архітектурні прогалини в іншому.
                         Ідеальне рішення — це <strong style="color:#e0e6ed;">композитна архітектура з лідерів у своїх нішах</strong> або перегляд пріоритизації та ваги must-вимог.
                     </div>
                 </div>
@@ -1460,46 +1473,22 @@ CUCM Routing → Cisco Finesse (оператор)
                     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
                       <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
                         <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 1: Dialogflow CX</div>
-                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Швидкі відповіді, мало розуміння контексту, читає пряме питання/дію. Vendor-managed Google. <b>~$81,200/міс · ~$20–40K one-time.</b></div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Швидкі відповіді, мало розуміння контексту, читає пряме питання/дію. </div>
                       </div>
                       <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;border-left:2px solid var(--ai);padding:16px;">
                         <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 2: ElevenLabs </div>
-                        <div style="font-size:11px;font-weight:600;color:var(--ai);margin-bottom:5px;">Переваги</div>
                         <ul style="margin:0 0 8px;padding-left:14px;font-size:11px;color:var(--sub);line-height:1.65;">
                           <li style="margin-bottom:3px;">Найкраща якість української та підтверджена підтримка усіх необхідних мов</li>
                           <li style="margin-bottom:3px;">Гнучко налаштовуються до 40 кастомних запитів менеджером. Результати автоматично передаються через post-call webhook до РМ КЦ: тема, ТТН, місто, тип проблеми, скарга, теги</li>
-                          <li>Найшвидше впровадження через нативну інтеграцію з Cisco</li>
                         </ul>
-                        <div style="font-size:11px;font-weight:600;color:#c06060;margin-bottom:5px;">Ризики</div>
-                        <ul style="margin:0;padding-left:14px;font-size:11px;color:var(--sub);line-height:1.65;">
-                          <li>Дорога вартість</li>
-                        </ul>
-                        <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;"><b>Обирати якщо:</b> результати тестування uk-UA підтверджено кращі за інших і готові платити за кращий клієнтський досвід. <b>~$15–25K one-time.</b></div>
+                        <div style="font-size:11px;color:var(--muted);margin-top:8px;line-height:1.5;"><b>Обирати якщо:</b> результати тестування uk-UA підтверджено кращі за інших і готові платити за кращий клієнтський досвід.</div>
                       </div>
                       <div style="background:var(--card);border:1px solid var(--border2);border-radius:8px;padding:16px;">
                         <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;">Варіант 3: OpenAI API (власна розробка)</div>
-                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Глибоке розуміння контексту, більше розуміння стану клієнта і чим викликані його дії. Уніфікована база знань із чатами. Немає обмежень платформи через власну розробку всього рішення. <b>~$43–81K/міс · ~$40–70K one-time.</b></div>
+                        <div style="font-size:11.5px;color:var(--sub);line-height:1.7;">Глибоке розуміння контексту, більше розуміння стану клієнта і чим викликані його дії. Уніфікована база знань із чатами. Немає обмежень платформи через власну розробку всього рішення. </div>
                       </div>
                     </div>
-
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">AI-моделі кожного рішення</div>
-                    <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:16px;">
-                      <thead><tr style="background:var(--card);">
-                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Компонент</th>
-                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 1: Dialogflow CX</th>
-                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 2: ElevenLabs</th>
-                        <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Варіант 3: OpenAI</th>
-                      </tr></thead>
-                      <tbody>
-                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">STT (розпізнавання)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google STT Chirp 3</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs Scribe v2</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">OpenAI Whisper Large v3</td></tr>
-                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">NLU (розуміння наміру)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow CX NLU (rule-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs NLU (LLM-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o (повний LLM)</td></tr>
-                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogue management</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow CX flows/pages</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs agent config</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o system prompt</td></tr>
-                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">TTS (синтез мови)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Google Neural2 / Studio uk-UA</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">ElevenLabs TTS (voice cloning)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">OpenAI TTS</td></tr>
-                        <tr><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Entity extraction</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Dialogflow entities (rule-based)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">Scribe v2 (LLM-based, до 40 полів)</td><td style="padding:7px 10px;border:1px solid var(--border2);color:var(--sub);">GPT-4o Function Calling</td></tr>
-                      </tbody>
-                    </table>
-
-                    <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">AI у кожної задачі Pre-Call AI</div>
+                  <div style="font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:8px;">AI у кожної задачі Pre-Call AI</div>
                     <table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:16px;">
                       <thead><tr style="background:var(--card);">
                         <th style="padding:7px 10px;text-align:left;border:1px solid var(--border2);color:var(--muted);font-weight:600;">Задача</th>
@@ -2139,25 +2128,15 @@ def generate_html(
     tobe_bpmn_xml: str = "",
 ) -> str:
     """Generate the complete HTML document."""
-    _DISPLAY_ORDER = [
-        "Google Cloud CCAI",
-        "Ender Turing",
-        "Cresta",
-        "NICE",
-        "NICE Cognigy",
-        "Genesys Cloud CX",
-        "Microsoft Copilot",
-        "Live Person",
-        "Decagon",
-        "Ringostat",
-        "Poly AI",
-        "11 Labs",
-        "Uni Talk",
-        "Get Vocal",
-    ]
-    sorted_providers = [p for p in _DISPLAY_ORDER if p in PROVIDERS] + [
-        p for p in PROVIDERS if p not in _DISPLAY_ORDER
-    ]
+    # Sort providers by final score descending
+    def _sort_key(p: str) -> float:
+        raw = final_scores.get(p, "0%")
+        try:
+            return float(str(raw).replace("%", "").replace(",", "."))
+        except (ValueError, AttributeError):
+            return 0.0
+
+    sorted_providers = sorted(PROVIDERS, key=_sort_key, reverse=True)
 
     # Per-provider dict of category subtotal strings
     category_scores: Dict[str, Dict[str, str]] = {
@@ -2181,29 +2160,21 @@ def generate_html(
         )
         for rank, provider in enumerate(sorted_providers, 1)
     ]
-    _row_sizes = [2, 4, 4, 4]
+    # 5 rows × 3 providers per row
     _rows = []
-    _idx = 0
-    for _size in _row_sizes:
-        _chunk = _all_cards[_idx : _idx + _size]
+    for _idx in range(0, len(_all_cards), 3):
+        _chunk = _all_cards[_idx : _idx + 3]
         if _chunk:
             _rows.append(
-                f'<div class="fs-row fs-row-{_size}">\n'
+                '<div class="fs-row fs-row-3">\n'
                 + "\n".join(_chunk)
                 + "\n</div>"
             )
-        _idx += _size
-    if _idx < len(_all_cards):
-        _rows.append(
-            '<div class="fs-row fs-row-4">\n'
-            + "\n".join(_all_cards[_idx:])
-            + "\n</div>"
-        )
     provider_cards = "\n".join(_rows)
 
     category_order = ["copilot", "acw", "analytics", "precall", "it", "business"]
     category_tabs = "\n".join(
-        generate_category_tab(cat_id, categories[cat_id], PROVIDERS)
+        generate_category_tab(cat_id, categories[cat_id], sorted_providers)
         for cat_id in category_order
         if cat_id in categories
     )
@@ -2483,7 +2454,8 @@ def generate_html(
         }}
 
         .provider-column {{
-            line-height: 1.3;
+            line-height: 1.2;
+            font-size: 10px;
         }}
 
         .criteria-row {{
@@ -2501,7 +2473,7 @@ def generate_html(
         }}
 
         .criteria-name {{
-            font-size: 13px;
+            font-size: 11px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -2545,10 +2517,10 @@ def generate_html(
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            width: 32px;
-            height: 32px;
-            border-radius: 6px;
-            font-size: 12px;
+            width: 28px;
+            height: 28px;
+            border-radius: 5px;
+            font-size: 11px;
             font-weight: 700;
         }}
 
@@ -2619,26 +2591,26 @@ def generate_html(
 
         .summary-grid {{
             display: grid;
-            grid-template-columns: repeat(7, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 16px;
         }}
 
         .summary-card {{
             background: rgba(255, 255, 255, 0.03);
             border-radius: var(--radius-card);
-            padding: 16px;
+            padding: 12px;
             text-align: center;
         }}
 
         .summary-card h5 {{
-            font-size: 12px;
+            font-size: 11px;
             color: var(--muted);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             font-weight: 600;
         }}
 
         .summary-card .value {{
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 700;
             color: #10b981;
         }}
@@ -2854,7 +2826,7 @@ def generate_html(
                 grid-template-columns: repeat(4, 1fr);
             }}
             .summary-grid {{
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(3, 1fr);
             }}
         }}
 
