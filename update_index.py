@@ -726,19 +726,15 @@ def generate_recommendations_tab(final_scores: Dict[str, str]) -> str:
         subtitle="CX Automation Platform · Da Vinci AI · WFM Leader",
         indent="                    ",
         pros=[
-            "Транскрипція uk-UA підтверджена документацією (Verint Speech Transcription, on-prem, LVCSR)",
-            "Лідер Workforce Management — найкращий модуль прогнозування навантаження та планування графіків",
-            "Quality Bot автоматизує оцінку 100% дзвінків. Глибока аналітика з drill-down до цитат",
-            "Wrap Up Bot — автоматичне резюме дзвінка з економією ~35 сек. Coaching Bot — навчання операторів на помилках",
-            "Enterprise-рівень безпеки: SOC 2, ISO 27001, GDPR. Масштабування 1000+ операторів",
-            "Phonetic boosting та language customization для покращення точності розпізнавання",
+            "Функціонал українською підтверджена документацією (Verint Speech Transcription, on-prem, LVCSR)",
+            "Зафіксований продукт представництва NovaIT",
         ],
         cons=[
-            "Sentiment, Topics, Auto Language Detection — тільки через Communications Analytics, підтримка uk-UA не підтверджена",
-            "Транскрипція uk-UA доступна лише on-premise (Verint Speech Transcription), не в хмарі",
-            "Робота з суржиком не задокументована — потрібне тестування phonetic boosting",
-            "Enterprise pricing — очікувана вартість $200-350K/рік",
-            "Відсутність інтеграцій з Binotel та Power Platform. Тривалий онбординг",
+            "Sentiment, Topics, Auto Language Detection — тільки через Communications Analytics, підтримка української не підтверджена",
+            "Транскрипція українською доступна лише on-premise (Verint Speech Transcription), не в хмарі",
+            "Відсутність успішних кейсів в Україні",
+            "Очікувана вартість $200-350K/рік",
+            "Немає підтримки мов країн присутності",
         ],
     )
 
@@ -3317,7 +3313,7 @@ def generate_html(
         <header>
             <div class="header-tag">НОВА ПОШТА • R&D • 2025</div>
             <h1>AI Copilot<br>Аналіз провайдерів</h1>
-            <p class="subtitle">Порівняльна оцінка 14 провайдерів за методологією MSC. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
+            <p class="subtitle">Порівняльна оцінка 15 провайдерів за методологією MSC. Вага критеріїв відповідає пріоритетам запуску контакт-центру на 1000 операторів.</p>
 
             <div class="legend">
                 <div class="legend-item">
